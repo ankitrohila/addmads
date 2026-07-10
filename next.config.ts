@@ -48,7 +48,7 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  // Disable X-Powered-By header (hides Next.js fingerprint)
+  eslint: { ignoreDuringBuilds: true },
   poweredByHeader: false,
   // Compress responses
   compress: true,

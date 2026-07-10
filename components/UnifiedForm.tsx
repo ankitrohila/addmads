@@ -315,7 +315,7 @@ export default function UnifiedForm({
     if (zohoUrl) {
       const fd = new FormData()
       Object.entries(data).forEach(([k, v]) => fd.append(k, v))
-      try { await fetch(zohoUrl, { method: 'POST', body: fd, mode: 'no-cors' }) } catch (_) {}
+      try { await fetch(zohoUrl, { method: 'POST', body: fd, mode: 'no-cors' }) } catch { }
     }
 
     const leads = JSON.parse(localStorage.getItem('addmads_leads') ?? '[]')
