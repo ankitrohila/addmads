@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MEGA_MENU_CATEGORIES } from '@/constants'
@@ -247,7 +246,6 @@ export default function ServiceDetailPage() {
 
   return (
     <>
-      <Cursor />
       <Navbar />
 
       <main style={{ paddingTop: 'var(--nav-h)' }}>
