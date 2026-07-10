@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import type { Metadata, Viewport } from 'next'
 import { Inter, Inter_Tight } from 'next/font/google'
 import CursorProvider from '@/components/CursorProvider'
