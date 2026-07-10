@@ -309,17 +309,39 @@ export default function UnifiedForm({
     if (!validate()) return
     setLoading(true)
 
-    const data: Record<string, string> = { ...form, timestamp: new Date().toISOString() }
+    const nameParts = form.name.trim().split(/\s+/)
+    const firstName = nameParts.length > 1 ? nameParts.slice(0, -1).join(' ') : form.name.trim()
+    const lastName  = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '.'
 
-    const zohoUrl = process.env.NEXT_PUBLIC_ZOHO_FORM_URL
-    if (zohoUrl) {
-      const fd = new FormData()
-      Object.entries(data).forEach(([k, v]) => fd.append(k, v))
-      try { await fetch(zohoUrl, { method: 'POST', body: fd, mode: 'no-cors' }) } catch { }
-    }
+    const description = [
+      form.service  ? `Service: ${form.service}`  : '',
+      form.budget   ? `Budget: ${form.budget}`    : '',
+      form.message  ? `Message: ${form.message}`  : '',
+    ].filter(Boolean).join('\n')
 
+    const fd = new FormData()
+    // Zoho Web-to-Lead security tokens
+    fd.append('xnQsjsdp', '4c7905d5759a0daffb3468ae9a3699cdb4a57be9e884a22532d13d9b5cc98998')
+    fd.append('zc_gad', '')
+    fd.append('xmIwtLD', '32a1e2d59c171a4b580dd87720a20d10a8b9b3bd70960328052dd2fa712820137fda61d6c2fa85d6cc23b2727a7993c0')
+    fd.append('actionType', 'TGVhZHM=')
+    fd.append('returnURL', 'https://addmads.com/contact')
+    // Visible fields mapped to Zoho Lead field names
+    fd.append('Company', 'Website Lead')
+    fd.append('First Name', firstName)
+    fd.append('Last Name', lastName)
+    fd.append('Email', form.email)
+    fd.append('Phone', form.phone)
+    fd.append('Lead Source', 'Web Site')
+    fd.append('Description', description)
+
+    try {
+      await fetch('https://crm.zoho.in/crm/WebToLeadForm', { method: 'POST', body: fd, mode: 'no-cors' })
+    } catch { }
+
+    const localData = { ...form, timestamp: new Date().toISOString() }
     const leads = JSON.parse(localStorage.getItem('addmads_leads') ?? '[]')
-    leads.push(data)
+    leads.push(localData)
     localStorage.setItem('addmads_leads', JSON.stringify(leads))
 
     setLoading(false)
