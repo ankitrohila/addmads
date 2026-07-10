@@ -1,0 +1,7 @@
+<svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- "Add" text in white -->
+  <text x="50" y="350" font-family="Arial, sans-serif" font-size="240" font-weight="bold" fill="#FFFFFF" letter-spacing="-8">Add</text>
+  
+  <!-- "Mads" text in red -->
+  <text x="600" y="350" font-family="Arial, sans-serif" font-size="240" font-weight="bold" fill="#E60000" letter-spacing="-8">Mads</text>
+</svg>
