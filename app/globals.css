@@ -258,7 +258,36 @@ html.lenis, html.lenis body { height: auto; }
   button { cursor: pointer; }
   a { cursor: pointer; }
 
-  /* Services: single column — text above, cards below */
+  /* ── Hero ── */
+  #hero h1 {
+    white-space: normal !important;
+    font-size: clamp(2.4rem, 14vw, 3.5rem) !important;
+  }
+  /* The scrolling row becomes a normal wrapping flex on mobile */
+  [data-hero-row] {
+    flex-wrap: wrap !important;
+    gap: clamp(16px, 4vw, 24px) !important;
+    padding-left: var(--container-px) !important;
+    padding-right: var(--container-px) !important;
+    transform: none !important;
+  }
+  .hero-cta-group {
+    order: -1;
+    flex-wrap: wrap;
+    gap: 12px !important;
+  }
+  /* shade overlay not needed on mobile */
+  [data-hero-shade] { display: none !important; }
+  /* subtitle: full width on mobile */
+  [data-hero-desc] {
+    position: static !important;
+    max-width: 100% !important;
+    text-align: left !important;
+    margin-top: 24px !important;
+    padding: 0 var(--container-px) !important;
+  }
+
+  /* ── Services (homepage stacked cards) ── */
   .services-section {
     align-items: flex-start !important;
     padding-top: calc(var(--nav-h) + 16px) !important;
@@ -275,7 +304,6 @@ html.lenis, html.lenis body { height: auto; }
     height: clamp(280px, 38vh, 360px) !important;
     padding-top: 0 !important;
     overflow: visible !important;
-    /* clip at section level — only show cards within stack bounds */
     clip-path: inset(0 0 0 0 round 20px);
   }
   .services-card-item { top: 0 !important; bottom: 0 !important; }
@@ -290,7 +318,7 @@ html.lenis, html.lenis body { height: auto; }
   .services-card-image { height: clamp(140px, 20vh, 200px) !important; }
   .services-card-desc { padding: 10px 16px 14px !important; }
 
-  /* Metrics: single column, unstick left */
+  /* ── Metrics ── */
   .metrics-grid {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
@@ -300,10 +328,63 @@ html.lenis, html.lenis body { height: auto; }
     top: auto !important;
   }
 
-  /* Testimonials: shrink composition to fit viewport */
+  /* ── Testimonials ── */
   .testimonial-comp {
     width: clamp(300px, 88vw, 500px) !important;
     height: clamp(320px, 52vh, 480px) !important;
+  }
+
+  /* ── Footer services: hide vertical list, show horizontal scroll ── */
+  .footer-services-desktop { display: none !important; }
+  .footer-services-mobile {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    padding-bottom: 8px !important;
+    scrollbar-width: none !important;
+  }
+  .footer-services-mobile::-webkit-scrollbar { display: none; }
+  .footer-services-mobile li { scroll-snap-align: start; }
+
+  /* ── Footer grid: 2-column on mobile ── */
+  footer [style*="grid"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  /* Make brand column full width */
+  footer [data-f]:first-child {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* ── General layout guards ── */
+  section { overflow-x: hidden; }
+  img { max-width: 100%; height: auto; }
+
+  /* Testi card width on mobile */
+  .testi-card {
+    width: clamp(280px, 85vw, 400px) !important;
+  }
+}
+
+/* ─── Tablet (768–1023px) ─────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --container-px: clamp(24px, 4vw, 40px);
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* footer 2-col on tablet */
+  footer [style*="repeat(auto-fit"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .testi-card {
+    width: clamp(300px, 56vw, 500px) !important;
   }
 }
 

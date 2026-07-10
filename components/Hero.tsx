@@ -36,6 +36,7 @@ export default function Hero() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const DELAY = 3.1
+      const isMobile = window.innerWidth < 768
 
       // Entrance animations
       gsap.fromTo(movingRef.current,
@@ -49,6 +50,9 @@ export default function Hero() {
 
       // Asterisk spins continuously
       gsap.to(asteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
+
+      // Skip horizontal pin scroll on mobile — just show the text statically
+      if (isMobile) return
 
       const moving = movingRef.current
       const outer  = outerRef.current
@@ -161,6 +165,7 @@ export default function Hero() {
         {/* Scrolling title row */}
         <div
           ref={movingRef}
+          data-hero-row
           style={{
             position: 'relative',
             display: 'flex',
@@ -251,6 +256,7 @@ export default function Hero() {
           ─────────────────────────────────────────────────────────────────────── */}
           <div
             ref={shadeRef}
+            data-hero-shade
             style={{
               position: 'absolute',
               left: 0,
@@ -294,6 +300,7 @@ export default function Hero() {
         {/* Subtitle — absolute bottom right */}
         <div
           ref={descRef}
+          data-hero-desc
           style={{
             position: 'absolute',
             bottom: 'clamp(40px, 5vw, 72px)',

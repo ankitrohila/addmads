@@ -119,7 +119,8 @@ export default function Footer() {
             <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 16 }}>
               Services
             </h4>
-            <ul style={{
+            {/* Desktop: vertical scroll list */}
+            <ul className="footer-services-desktop" style={{
               listStyle: 'none',
               display: 'flex',
               flexDirection: 'column',
@@ -136,6 +137,21 @@ export default function Footer() {
                     onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(223,223,223,0.7)'}
                   >{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+            {/* Mobile: horizontal slide scroll */}
+            <ul className="footer-services-mobile" style={{ listStyle: 'none', display: 'none' }}>
+              {FOOTER_SERVICES.map(l => (
+                <li key={l.label} style={{ flexShrink: 0 }}>
+                  <Link href={l.href} style={{
+                    fontFamily: 'var(--font-sans)', fontSize: '0.8125rem',
+                    color: 'rgba(223,223,223,0.75)', textDecoration: 'none',
+                    display: 'block', padding: '6px 14px',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: 20, whiteSpace: 'nowrap',
+                  }}>{l.label}</Link>
                 </li>
               ))}
             </ul>

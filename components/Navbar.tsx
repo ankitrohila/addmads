@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import gsap from 'gsap'
 import clsx from 'clsx'
-import { NAV_LINKS, CONTACT_PHONE } from '@/constants'
+import { NAV_LINKS, CONTACT_PHONE, MEGA_MENU_CATEGORIES } from '@/constants'
 import MegaMenu from './MegaMenu'
 
 export default function Navbar() {
@@ -16,6 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const menuLinksRef = useRef<(HTMLElement | null)[]>([])
   const lastY = useRef(0)
@@ -31,7 +32,6 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    // Only delay on homepage (loader runs there); instant on all other pages
     const isHome = pathname === '/'
     gsap.fromTo(
       navRef.current,
@@ -56,6 +56,7 @@ export default function Navbar() {
 
     if (menuOpen) {
       document.body.style.overflow = 'hidden'
+      setServicesOpen(false)
       gsap.set(menu, { display: 'flex' })
       gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, {
         clipPath: 'inset(0 0 0% 0)', duration: 0.75, ease: 'power4.inOut',
@@ -197,30 +198,132 @@ export default function Navbar() {
           padding: 'var(--container-px)',
           flexDirection: 'column',
           justifyContent: 'flex-end',
+          overflowY: 'auto',
         }}
       >
         <ul className="list-none space-y-1">
           {NAV_LINKS.map((link, i) => (
             <li key={link.label} ref={el => { menuLinksRef.current[i] = el }} style={{ opacity: 0 }}>
-              <Link
-                href={link.href}
-                onClick={() => { setMenuOpen(false); setMegaMenuOpen(false) }}
-                style={{
-                  fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(2.5rem, 12vw, 4.5rem)',
-                  fontWeight: 500,
-                  color: '#D1D1D1',
-                  display: 'block',
-                  paddingTop: 12,
-                  paddingBottom: 12,
-                  transition: 'color 0.3s ease',
-                  lineHeight: 1.1,
-                }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
-                onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1D1D1'}
-              >
-                {link.label}
-              </Link>
+              {link.hasSubmenu ? (
+                <div>
+                  {/* Services row: label + toggle */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Link
+                      href={link.href}
+                      onClick={() => { setMenuOpen(false); setServicesOpen(false) }}
+                      style={{
+                        fontFamily: 'var(--font-tight)',
+                        fontSize: 'clamp(2.5rem, 12vw, 4.5rem)',
+                        fontWeight: 500,
+                        color: '#D1D1D1',
+                        display: 'block',
+                        paddingTop: 12,
+                        paddingBottom: 12,
+                        transition: 'color 0.3s ease',
+                        lineHeight: 1.1,
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                    <button
+                      onClick={() => setServicesOpen(prev => !prev)}
+                      style={{
+                        background: 'rgba(255,255,255,0.08)',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        borderRadius: 8,
+                        width: 40,
+                        height: 40,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        color: '#FFFFFF',
+                        fontSize: '1rem',
+                        flexShrink: 0,
+                        transition: 'transform 0.3s ease',
+                        transform: servicesOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+                      }}
+                      aria-label="Toggle services"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* Services accordion dropdown */}
+                  {servicesOpen && (
+                    <div style={{
+                      paddingBottom: 16,
+                      borderBottom: '1px solid rgba(255,255,255,0.07)',
+                      marginBottom: 8,
+                    }}>
+                      {MEGA_MENU_CATEGORIES.map(cat => (
+                        <div key={cat.id} style={{ marginBottom: 16 }}>
+                          <Link
+                            href={cat.href}
+                            onClick={() => { setMenuOpen(false); setServicesOpen(false) }}
+                            style={{
+                              fontFamily: 'var(--font-sans)',
+                              fontSize: '0.8125rem',
+                              fontWeight: 700,
+                              letterSpacing: '0.08em',
+                              textTransform: 'uppercase',
+                              color: '#E60000',
+                              display: 'block',
+                              marginBottom: 8,
+                              textDecoration: 'none',
+                            }}
+                          >
+                            {cat.label} →
+                          </Link>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}>
+                            {cat.services.map(svc => (
+                              <Link
+                                key={svc.href}
+                                href={svc.href}
+                                onClick={() => { setMenuOpen(false); setServicesOpen(false) }}
+                                style={{
+                                  fontFamily: 'var(--font-sans)',
+                                  fontSize: '0.875rem',
+                                  color: 'rgba(255,255,255,0.65)',
+                                  textDecoration: 'none',
+                                  padding: '5px 12px',
+                                  background: 'rgba(255,255,255,0.07)',
+                                  borderRadius: 20,
+                                  border: '1px solid rgba(255,255,255,0.1)',
+                                  display: 'inline-block',
+                                  transition: 'all 0.2s ease',
+                                }}
+                              >
+                                {svc.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href={link.href}
+                  onClick={() => { setMenuOpen(false); setMegaMenuOpen(false) }}
+                  style={{
+                    fontFamily: 'var(--font-tight)',
+                    fontSize: 'clamp(2.5rem, 12vw, 4.5rem)',
+                    fontWeight: 500,
+                    color: '#D1D1D1',
+                    display: 'block',
+                    paddingTop: 12,
+                    paddingBottom: 12,
+                    transition: 'color 0.3s ease',
+                    lineHeight: 1.1,
+                  }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1D1D1'}
+                >
+                  {link.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
