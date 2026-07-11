@@ -74,6 +74,7 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
         display: 'none',
         background: 'rgba(255,255,255,0.98)',
         backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         borderLeft: '1px solid rgba(17,17,17,0.1)',
         borderRight: '1px solid rgba(17,17,17,0.1)',
         borderBottom: '1px solid rgba(17,17,17,0.1)',

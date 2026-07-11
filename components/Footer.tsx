@@ -172,21 +172,47 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Contact Details */}
           <div data-f style={{ opacity: 0 }}>
             <h4 style={{ fontFamily: 'var(--font-sans)', fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 20 }}>
-              Legal
+              Contact
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {COL_LEGAL.map(l => (
-                <li key={l.label}>
-                  <Link href={l.href} style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: 'rgba(223,223,223,0.85)', textDecoration: 'none', transition: 'color 0.3s' }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(223,223,223,0.85)'}
-                  >{l.label}</Link>
-                </li>
-              ))}
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <li>
+                <a href="mailto:info@addmads.com" style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: 'rgba(223,223,223,0.85)', textDecoration: 'none', display: 'flex', alignItems: 'flex-start', gap: 10, transition: 'color 0.3s' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(223,223,223,0.85)'}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  info@addmads.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919876543210" style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: 'rgba(223,223,223,0.85)', textDecoration: 'none', display: 'flex', alignItems: 'flex-start', gap: 10, transition: 'color 0.3s' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(223,223,223,0.85)'}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.18 6.18l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  +91 98765 43210
+                </a>
+              </li>
+              <li>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: 'rgba(223,223,223,0.85)', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Sonipat, Haryana, India
+                </span>
+              </li>
             </ul>
+
+            {/* Legal links below contact */}
+            <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {COL_LEGAL.map(l => (
+                <Link key={l.label} href={l.href} style={{ fontFamily: 'var(--font-sans)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.28)', textDecoration: 'none', transition: 'color 0.3s' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.28)'}
+                >{l.label}</Link>
+              ))}
+            </div>
           </div>
 
         </div>

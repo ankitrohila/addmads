@@ -19,17 +19,38 @@ export default function FeaturedWork() {
   const outerRefs   = useRef<(HTMLDivElement | null)[]>([])
   const imgWrapRefs = useRef<(HTMLDivElement | null)[]>([])
   const infoRefs    = useRef<(HTMLDivElement | null)[]>([])
+  const cardRefs    = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768
+
     const ctx = gsap.context(() => {
+      if (isMobile) {
+        // Mobile: each card slides up + reveals as it enters the viewport
+        cardRefs.current.forEach((card) => {
+          if (!card) return
+          gsap.fromTo(card,
+            { opacity: 0, y: 60 },
+            {
+              opacity: 1, y: 0, duration: 0.85, ease: 'power3.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 82%',
+                toggleActions: 'play none none none',
+              },
+            }
+          )
+        })
+        return
+      }
+
+      // Desktop: full-screen → card sticky transform
       PROJECTS.forEach((_, i) => {
         const outer   = outerRefs.current[i]
         const imgWrap = imgWrapRefs.current[i]
         const info    = infoRefs.current[i]
         if (!outer || !imgWrap || !info) return
 
-        // Each outer is 200vh; inner sticky holds for 100vh.
-        // ScrollTrigger drives the image-to-card transformation over that 100vh.
         ScrollTrigger.create({
           trigger: outer,
           start: 'top top',
@@ -38,22 +59,13 @@ export default function FeaturedWork() {
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const p = self.progress
+            const hPad   = p * 48
+            const tPad   = p * 32
+            const bPad   = p * 110
+            const radius = p * 20
 
-            // Image insets from all edges: full-screen → card with dark background visible
-            const hPad   = p * 48    // horizontal inset (px)
-            const tPad   = p * 32    // top inset
-            const bPad   = p * 110   // bottom inset (extra space for title below card)
-            const radius = p * 20    // border-radius
+            gsap.set(imgWrap, { top: tPad, left: hPad, right: hPad, bottom: bPad, borderRadius: radius })
 
-            gsap.set(imgWrap, {
-              top:          tPad,
-              left:         hPad,
-              right:        hPad,
-              bottom:       bPad,
-              borderRadius: radius,
-            })
-
-            // Info text fades in once card is mostly formed (p > 0.6)
             const infoP = Math.max(0, Math.min((p - 0.6) / 0.4, 1))
             gsap.set(info, { opacity: infoP, y: (1 - infoP) * 14 })
           },
@@ -64,10 +76,12 @@ export default function FeaturedWork() {
     return () => ctx.revert()
   }, [])
 
+  const isMobileRender = typeof window !== 'undefined' && window.innerWidth < 768
+
   return (
     <div id="work" data-dark>
 
-      {/* ── Section header — scrolls normally above the cards ── */}
+      {/* Section header */}
       <div style={{
         background: '#111111',
         padding: 'clamp(56px, 7vw, 96px) var(--container-px) clamp(40px, 5vw, 72px)',
@@ -122,94 +136,102 @@ export default function FeaturedWork() {
         </a>
       </div>
 
-      {/* ── Per-project sticky card sections ── */}
-      {PROJECTS.map((project, i) => (
-        /*
-          Outer: 200vh tall — sticky inner holds for 100vh (outer.height - inner.height)
-          Phase 1 (0–100vh scroll): image transforms full-screen → card
-          Phase 2 (100vh+): card naturally scrolls upward and out
-        */
-        <div
-          key={project.id}
-          ref={el => { outerRefs.current[i] = el }}
-          style={{ height: '200vh', background: '#111111' }}
-        >
-          <div style={{
-            position: 'sticky',
-            top: 0,
-            height: '100vh',
-            background: '#111111',
-            overflow: 'hidden',
-          }}>
-            {/* Image wrapper — transitions from inset:0 (full-screen) to padded card */}
-            <div
-              ref={el => { imgWrapRefs.current[i] = el }}
-              style={{
-                position: 'absolute',
-                top: 0, left: 0, right: 0, bottom: 0,
-                overflow: 'hidden',
-                zIndex: 2,
-              }}
-            >
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                sizes="100vw"
-                style={{ objectFit: 'cover' }}
-              />
+      {/* Mobile: simple stacked cards */}
+      <div className="fw-mobile-cards" style={{ display: 'none', background: '#111111', padding: '0 var(--container-px) clamp(48px,6vw,80px)' }}>
+        {PROJECTS.map((project, i) => (
+          <div
+            key={project.id}
+            ref={el => { cardRefs.current[i] = el }}
+            style={{
+              borderRadius: 16,
+              overflow: 'hidden',
+              marginBottom: i < N - 1 ? 20 : 0,
+              opacity: 0,
+            }}
+          >
+            <div style={{ position: 'relative', height: 'clamp(220px, 55vw, 320px)' }}>
+              <Image src={project.image} alt={project.title} fill sizes="100vw" style={{ objectFit: 'cover' }} />
             </div>
-
-            {/* Project info — visible below the card once it has formed */}
-            <div
-              ref={el => { infoRefs.current[i] = el }}
-              style={{
-                position: 'absolute',
-                bottom: 'clamp(20px, 2.5vw, 36px)',
-                left: 48,
-                right: 48,
-                zIndex: 3,
-                opacity: 0,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-              }}
-            >
+            <div style={{
+              background: '#1A1A1A',
+              padding: '16px 20px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
               <div>
-                <div style={{
-                  fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
-                  fontWeight: 500,
-                  color: '#FFFFFF',
-                  lineHeight: 1.1,
-                }}>
+                <div style={{ fontFamily: 'var(--font-tight)', fontSize: '1.25rem', fontWeight: 500, color: '#FFFFFF', lineHeight: 1.2 }}>
                   {project.title}
                 </div>
-                <div style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.95rem',
-                  fontWeight: 500,
-                  color: 'rgba(255,255,255,0.5)',
-                  marginTop: 5,
-                }}>
+                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.45)', marginTop: 3 }}>
                   {project.category}
                 </div>
               </div>
-
-              <span style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
-                letterSpacing: '0.1em',
-                color: 'rgba(255,255,255,0.3)',
-              }}>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.08em' }}>
                 0{i + 1}&nbsp;/&nbsp;0{N}
               </span>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
-      {/* Bottom padding */}
+      {/* Desktop: 200vh sticky per card */}
+      <div className="fw-desktop-cards">
+        {PROJECTS.map((project, i) => (
+          <div
+            key={project.id}
+            ref={el => { outerRefs.current[i] = el }}
+            style={{ height: '200vh', background: '#111111' }}
+          >
+            <div style={{
+              position: 'sticky',
+              top: 0,
+              height: '100vh',
+              background: '#111111',
+              overflow: 'hidden',
+            }}>
+              <div
+                ref={el => { imgWrapRefs.current[i] = el }}
+                style={{
+                  position: 'absolute',
+                  top: 0, left: 0, right: 0, bottom: 0,
+                  overflow: 'hidden',
+                  zIndex: 2,
+                }}
+              >
+                <Image src={project.image} alt={project.title} fill sizes="100vw" style={{ objectFit: 'cover' }} />
+              </div>
+
+              <div
+                ref={el => { infoRefs.current[i] = el }}
+                style={{
+                  position: 'absolute',
+                  bottom: 'clamp(20px, 2.5vw, 36px)',
+                  left: 48, right: 48,
+                  zIndex: 3,
+                  opacity: 0,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <div>
+                  <div style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 500, color: '#FFFFFF', lineHeight: 1.1 }}>
+                    {project.title}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '0.95rem', fontWeight: 500, color: 'rgba(255,255,255,0.5)', marginTop: 5 }}>
+                    {project.category}
+                  </div>
+                </div>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.75rem', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.3)' }}>
+                  0{i + 1}&nbsp;/&nbsp;0{N}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div style={{ height: 'clamp(48px, 6vw, 80px)', background: '#111111' }} />
     </div>
   )

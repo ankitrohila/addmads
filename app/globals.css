@@ -37,16 +37,18 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
-  overflow-x: clip;
+  overflow-x: hidden;
   scroll-behavior: auto;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-fg);
-  overflow-x: clip;
+  overflow-x: hidden;
   min-height: 100svh;
   position: relative;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 
 /* Hide native cursor only for fine-pointer (mouse) devices — custom cursor takes over */
@@ -272,6 +274,10 @@ html.lenis, html.lenis body { height: auto; }
     font-size: clamp(1.5rem, 6.5vw, 2.1rem) !important;
     white-space: nowrap !important;
   }
+
+  /* ── FeaturedWork: show mobile cards, hide desktop sticky ── */
+  .fw-mobile-cards { display: block !important; }
+  .fw-desktop-cards { display: none !important; }
   /* ── Services cards grid ── */
   .services-section {
     align-items: flex-start !important;
