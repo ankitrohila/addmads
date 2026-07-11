@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FOOTER_SERVICES } from '@/constants'
+import { FOOTER_SERVICES, CONTACT_PHONE } from '@/constants'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -197,12 +197,12 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="tel:+919876543210" style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: 'rgba(223,223,223,0.85)', textDecoration: 'none', display: 'flex', alignItems: 'flex-start', gap: 10, transition: 'color 0.3s' }}
+                <a href={`tel:${CONTACT_PHONE.replace(/-/g,'')}`} style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: 'rgba(223,223,223,0.85)', textDecoration: 'none', display: 'flex', alignItems: 'flex-start', gap: 10, transition: 'color 0.3s' }}
                   onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
                   onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(223,223,223,0.85)'}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.18 6.18l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  +91 98765 43210
+                  {CONTACT_PHONE}
                 </a>
               </li>
               <li>

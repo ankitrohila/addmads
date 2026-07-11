@@ -126,7 +126,7 @@ export default function ContactForm() {
               </div>
               <div>
                 <label style={labelStyle}>Phone Number *</label>
-                <input name="phone" type="tel" required placeholder="+91 98765 43210" style={inputStyle}
+                <input name="phone" type="tel" required placeholder="+91-9220872212" style={inputStyle}
                   onFocus={e => e.currentTarget.style.borderBottomColor = '#E60000'}
                   onBlur={e => e.currentTarget.style.borderBottomColor = 'rgba(17,17,17,0.12)'}
                 />
