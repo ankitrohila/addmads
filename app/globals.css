@@ -436,6 +436,17 @@ html.lenis, html.lenis body { height: auto; }
     padding: clamp(48px,10vw,80px) var(--container-px) !important;
   }
 
+  /* ── Services home card grid: 1 col on mobile ── */
+  .services-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── ServiceShowcase: stack on mobile ── */
+  .showcase-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
   /* ── Services page hero: fix stats-bar overlap ── */
   .services-page-hero {
     min-height: auto !important;
@@ -491,6 +502,9 @@ html.lenis, html.lenis body { height: auto; }
 
 /* ─── Tablet (768–1023px) ─────────────────────── */
 @media (min-width: 768px) and (max-width: 1023px) {
+  .services-card-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
   :root {
     --container-px: clamp(24px, 4vw, 40px);
   }

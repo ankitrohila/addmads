@@ -38,9 +38,9 @@ export default function Services() {
       }}
     >
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div style={{
+        <div className="services-card-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: 24,
         }}>
           {SERVICES.map((svc, i) => (

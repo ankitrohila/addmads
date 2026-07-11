@@ -13,6 +13,7 @@ const Loader = dynamic(() => import('@/components/Loader'), { ssr: false })
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
+import ServiceShowcase from '@/components/ServiceShowcase'
 import Services from '@/components/Services'
 import FeaturedWork from '@/components/FeaturedWork'
 import Metrics from '@/components/Metrics'
@@ -63,20 +64,20 @@ export default function Home() {
           {/* 1 — Hero */}
           <Hero />
 
-          {/* 2 — About (stacked text + services + gallery) */}
+          {/* 2 — About (scroll-triggered red sweep animation) */}
           <About />
 
-          {/* 3 — Services (red bg, stacking cards) */}
+          {/* 3 — Service Showcase (red bg, methodology + tab card) */}
+          <ServiceShowcase />
+
+          {/* 4 — Services (white bg, 3-col card grid) */}
           <Services />
 
-          {/* 4 — Work (dark, Discover. + projects) */}
+          {/* 5 — Work (dark, Discover. + projects) */}
           <FeaturedWork />
 
-          {/* 5 — Why us (dark, stats) */}
+          {/* 6 — Why us (dark, stats) */}
           <Metrics />
-
-          {/* 6 — Testimonials */}
-          <Testimonials />
 
           {/* 7 — Contact Form */}
           <UnifiedForm
@@ -84,7 +85,10 @@ export default function Home() {
             subheading="Share your vision and we'll create something extraordinary. Fill in the details and we'll get back to you within 24 hours."
           />
 
-          {/* 8 — FAQs */}
+          {/* 8 — Testimonials */}
+          <Testimonials />
+
+          {/* 9 — FAQs */}
           <FAQs />
         </main>
 

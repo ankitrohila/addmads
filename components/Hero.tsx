@@ -173,7 +173,7 @@ export default function Hero() {
     return () => ctx.revert()
   }, [isMobile])
 
-  // ── Mobile Hero — full screen, content pinned to bottom ───────────────────
+  // ── Mobile Hero — full screen, centered content ────────────────────────────
   if (isMobile) {
     return (
       <section style={{
@@ -181,37 +181,37 @@ export default function Hero() {
         height: '100svh',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
         paddingTop: 'var(--nav-h)',
         paddingLeft: 'var(--container-px)',
         paddingRight: 'var(--container-px)',
-        paddingBottom: 'clamp(40px,8vw,60px)',
+        paddingBottom: 'clamp(32px,6vw,48px)',
         overflow: 'hidden',
       }}>
-        {/* Spacer pushes content to bottom */}
-        <div style={{ flex: 1 }} />
-
-        {/* Titles */}
+        {/* Titles — bigger font fills the screen */}
         <h1 style={{
           fontFamily: 'var(--font-tight)',
-          fontSize: 'clamp(3.2rem, 16vw, 5rem)',
-          fontWeight: 500,
-          lineHeight: 1.1,
+          fontSize: 'clamp(4.5rem, 22vw, 7rem)',
+          fontWeight: 700,
+          lineHeight: 1.0,
           color: '#111111',
           margin: 0,
           opacity: 0,
+          letterSpacing: '-0.02em',
         }} data-mh="1">Results</h1>
         <h1 style={{
           fontFamily: 'var(--font-tight)',
-          fontSize: 'clamp(3.2rem, 16vw, 5rem)',
-          fontWeight: 500,
-          lineHeight: 1.1,
+          fontSize: 'clamp(4.5rem, 22vw, 7rem)',
+          fontWeight: 700,
+          lineHeight: 1.0,
           color: '#D1D1D1',
-          margin: '0 0 32px 0',
+          margin: '0 0 clamp(28px,6vw,40px) 0',
           opacity: 0,
+          letterSpacing: '-0.02em',
         }} data-mh="2">that scale</h1>
 
         {/* CTA row: button + asterisk */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 32, flexWrap: 'wrap', opacity: 0 }} data-mh="3">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 'clamp(20px,5vw,32px)', flexWrap: 'wrap', opacity: 0 }} data-mh="3">
           <a href="/contact" style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -219,21 +219,21 @@ export default function Hero() {
             background: '#C82A2A',
             color: '#FFFFFF',
             borderRadius: '1000px',
-            padding: '15px 30px',
+            padding: '14px 28px',
             fontFamily: 'var(--font-tight)',
-            fontWeight: 500,
+            fontWeight: 600,
             fontSize: '1rem',
             whiteSpace: 'nowrap',
             textDecoration: 'none',
           }}>Work with us</a>
 
           {/* Rotating asterisk */}
-          <div ref={mobileAsteriskRef} style={{ position: 'relative', width: 56, height: 56, flexShrink: 0 }}>
+          <div ref={mobileAsteriskRef} style={{ position: 'relative', width: 52, height: 52, flexShrink: 0 }}>
             {[0, 90, 45, -45].map((angle, i) => (
               <div key={i} style={{
                 position: 'absolute',
                 top: '50%', left: '50%',
-                width: 48, height: 10,
+                width: 44, height: 9,
                 background: '#111111',
                 borderRadius: 3,
                 transform: `translate(-50%, -50%) rotate(${angle}deg)`,
@@ -245,7 +245,7 @@ export default function Hero() {
         {/* Subtitle */}
         <p style={{
           fontFamily: 'var(--font-sans)',
-          fontSize: 'clamp(0.875rem, 4vw, 1rem)',
+          fontSize: 'clamp(0.9rem, 4vw, 1.0625rem)',
           color: '#555555',
           lineHeight: 1.65,
           margin: 0,
