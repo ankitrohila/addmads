@@ -30,10 +30,12 @@ export default function Home() {
 
   useEffect(() => {
     const seen = sessionStorage.getItem('addmads_loaded')
-    if (seen) {
-      // Already seen this session — skip loader entirely
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+
+    if (seen || isMobile) {
+      // Skip loader: already seen this session OR mobile device
+      // Mobile skip prevents body.overflow:hidden from locking scroll if GSAP stalls
       setLoaded(true)
-      // Refresh ScrollTrigger since we skip the loader's onComplete callback
       setTimeout(() => ScrollTrigger.refresh(), 300)
       setTimeout(() => ScrollTrigger.refresh(), 800)
     } else {
