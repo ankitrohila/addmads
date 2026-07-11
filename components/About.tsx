@@ -44,8 +44,22 @@ export default function About() {
 
       const imgEls = [img1Ref.current, img2Ref.current, img3Ref.current].filter(Boolean) as HTMLElement[]
 
+      // Dual mobile check: pointer:coarse covers real phones; width<=768 catches
+      // browsers that report pointer:fine even on touch (e.g. some Samsung/Chrome modes)
+      const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
+
       // ── Initial states ──────────────────────────────────────
       gsap.set(imgEls, { y: 80, opacity: 0 })
+
+      if (isMobile) {
+        // Force-hide overlay on mobile — belt + suspenders alongside CSS rule
+        red.style.display = 'none'
+        // Animate images in immediately on mobile (no scroll offset needed)
+        gsap.to(imgEls, { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.08, delay: 0.3 })
+        return
+      }
+
+      // Desktop: overlay starts at scaleY 0, animated via scroll
       gsap.set(red, { scaleY: 0 })
 
       // ── Images animate in as section enters viewport (before pin) ──
@@ -65,8 +79,6 @@ export default function About() {
       })
 
       // ── Pin section + scroll-driven phases ─────────────────
-      // Mobile: skip the pin — let the section scroll naturally
-      if (window.matchMedia('(pointer: coarse)').matches) return
 
       // Phase 1 (0 → 0.58): red sweeps from bottom, text turns white bottom→top
       // Phase 2 (0.58 → 0.85): images + arrow + button fade AND collapse

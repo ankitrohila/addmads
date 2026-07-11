@@ -31,7 +31,7 @@ export default function ServiceShowcase() {
   const [activeIdx, setActiveIdx] = useState(0)
 
   useEffect(() => {
-    const isMobile = window.matchMedia('(pointer: coarse)').matches
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
 
     const ctx = gsap.context(() => {
       const section = sectionRef.current

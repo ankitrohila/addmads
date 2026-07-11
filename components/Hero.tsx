@@ -35,7 +35,7 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const isMobile = window.matchMedia('(pointer: coarse)').matches
+      const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
       const DELAY = isMobile ? 0 : 3.1  // no loader on touch devices
 
       // Asterisk spins on all devices
