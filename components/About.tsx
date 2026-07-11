@@ -200,9 +200,10 @@ export default function About() {
         overflow: 'hidden',
       }}
     >
-      {/* Red overlay — rises from bottom */}
+      {/* Red overlay — rises from bottom (hidden by default; GSAP animates it on desktop only) */}
       <div
         ref={redOverlay}
+        className="about-red-overlay"
         style={{
           position: 'absolute',
           bottom: 0, left: 0, right: 0,
@@ -211,6 +212,7 @@ export default function About() {
           transformOrigin: 'bottom center',
           zIndex: 1,
           pointerEvents: 'none',
+          transform: 'scaleY(0)',
         }}
       />
 

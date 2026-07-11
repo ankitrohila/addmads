@@ -81,12 +81,14 @@ export default function Hero() {
       }
       syncShadePositions()
 
+      // Mobile: skip scroll-driven pin — static hero, one viewport height, no scroll trap
+      if (isMobile) return
+
       const st = ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top top',
         end: () => `+=${Math.abs(getEnd()) * 1.4}`,
         pin: true,
-        anticipatePin: 1,
         invalidateOnRefresh: true,
         scrub: false,
         onRefresh: syncShadePositions,
@@ -125,15 +127,17 @@ export default function Hero() {
         },
       })
 
-      gsap.to('.hero-cta-group', {
-        opacity: 0, ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: () => `+=${Math.abs(getEnd()) * 0.9}`,
-          scrub: 1,
-        },
-      })
+      if (!isMobile) {
+        gsap.to('.hero-cta-group', {
+          opacity: 0, ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: () => `+=${Math.abs(getEnd()) * 0.9}`,
+            scrub: 1,
+          },
+        })
+      }
 
       return () => st.kill()
     }, sectionRef)

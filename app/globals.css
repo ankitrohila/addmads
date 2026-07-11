@@ -277,7 +277,10 @@ html.lenis, html.lenis body { height: auto; }
     touch-action: pan-y !important;
     -webkit-overflow-scrolling: touch;
   }
-
+  /* About red overlay: desktop-only animation — hide completely on touch devices */
+  .about-red-overlay {
+    display: none !important;
+  }
 }
 
 /* ─── Mobile ──────────────────────────────────── */

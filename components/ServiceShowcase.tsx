@@ -31,6 +31,8 @@ export default function ServiceShowcase() {
   const [activeIdx, setActiveIdx] = useState(0)
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+
     const ctx = gsap.context(() => {
       const section = sectionRef.current
       if (!section) return
@@ -39,8 +41,7 @@ export default function ServiceShowcase() {
         if (card) gsap.set(card, { y: POS[i].y, x: POS[i].x, scale: POS[i].scale, zIndex: POS[i].zIndex })
       })
 
-      // Mobile: keep static stacked cards, skip pin so page scrolls freely
-      if (window.matchMedia('(pointer: coarse)').matches) return
+      if (isMobile) return  // interval handled outside context
 
       ScrollTrigger.create({
         trigger: section,
@@ -85,7 +86,32 @@ export default function ServiceShowcase() {
       })
     }, sectionRef)
 
-    return () => ctx.revert()
+    // Mobile: auto-cycle cards every 2.5s
+    let intervalId: ReturnType<typeof setInterval> | null = null
+    if (isMobile) {
+      let cur = 0
+      intervalId = setInterval(() => {
+        cur = (cur + 1) % N
+        setActiveIdx(cur)
+        cardRefs.current.forEach((card, cardI) => {
+          if (!card) return
+          const slot = (cardI - cur + N) % N
+          gsap.to(card, {
+            y: POS[slot].y,
+            x: POS[slot].x,
+            scale: POS[slot].scale,
+            zIndex: POS[slot].zIndex,
+            duration: 0.65,
+            ease: 'power3.out',
+          })
+        })
+      }, 2500)
+    }
+
+    return () => {
+      ctx.revert()
+      if (intervalId) clearInterval(intervalId)
+    }
   }, [])
 
   return (
