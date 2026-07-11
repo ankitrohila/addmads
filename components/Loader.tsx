@@ -16,6 +16,8 @@ export default function Loader({ onComplete }: LoaderProps) {
   const taglineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.style.overflow = ''
@@ -46,12 +48,12 @@ export default function Loader({ onComplete }: LoaderProps) {
     // 4. Brief hold at 100
     tl.to({}, { duration: 0.25 })
 
-    // 5. Wipe up — entire loader exits
-    tl.to(wrapperRef.current, {
-      clipPath: 'inset(0 0 100% 0)',
-      duration: 0.9,
-      ease: 'power4.inOut',
-    })
+    // 5. Exit — translateY on mobile (clipPath on fixed elements causes iOS GPU flicker)
+    if (isMobile) {
+      tl.to(wrapperRef.current, { y: '-100%', duration: 0.75, ease: 'power4.inOut' })
+    } else {
+      tl.to(wrapperRef.current, { clipPath: 'inset(0 0 100% 0)', duration: 0.9, ease: 'power4.inOut' })
+    }
 
     return () => { tl.kill() }
   }, [onComplete])

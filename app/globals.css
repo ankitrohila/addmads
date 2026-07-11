@@ -257,6 +257,19 @@ html.lenis, html.lenis body { height: auto; }
   overflow: hidden;
 }
 
+/* ─── Mobile performance: clear non-essential GPU layers ─── */
+@media (pointer: coarse) {
+  /* Free iPhone GPU memory — GSAP manages will-change itself for active animations */
+  .line-inner, .project-card-img, .h-scroll-track {
+    will-change: auto !important;
+  }
+  /* Ensure touch scroll is never accidentally blocked */
+  html, body {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* ─── Mobile ──────────────────────────────────── */
 @media (max-width: 767px) {
   body { cursor: auto; }

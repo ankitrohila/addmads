@@ -33,6 +33,9 @@ export default function Home() {
     if (seen) {
       // Already seen this session — skip loader entirely
       setLoaded(true)
+      // Refresh ScrollTrigger since we skip the loader's onComplete callback
+      setTimeout(() => ScrollTrigger.refresh(), 300)
+      setTimeout(() => ScrollTrigger.refresh(), 800)
     } else {
       setShowLoader(true)
       document.body.style.overflow = 'hidden'
@@ -46,6 +49,7 @@ export default function Home() {
     setLoaded(true)
     document.body.style.overflow = ''
     setTimeout(() => ScrollTrigger.refresh(), 120)
+    setTimeout(() => ScrollTrigger.refresh(), 600)
   }
 
   return (

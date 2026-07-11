@@ -7,12 +7,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function isSafariLike() {
-  if (typeof navigator === 'undefined') return false
+function skipLenis() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false
+  // All touch/mobile devices (iOS, Android, tablets) — native momentum scroll is better
+  if (window.matchMedia('(pointer: coarse)').matches) return true
+  // Desktop Safari — Lenis + GSAP pins causes tearing on WebKit
   const ua = navigator.userAgent
-  // iOS devices
-  if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return true
-  // Desktop Safari — has 'Safari' but not 'Chrome' or 'Chromium' or 'Android'
   return /^((?!chrome|android|chromium).)*safari/i.test(ua)
 }
 
@@ -20,13 +20,23 @@ export function useLenis() {
   const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
-    // iOS + Safari desktop: skip Lenis entirely — native momentum scroll is smooth,
-    // and Lenis + GSAP fixed-position pins causes tearing and scroll jank on Safari.
-    if (isSafariLike()) {
+    // Mobile (all) + Desktop Safari: skip Lenis, use native scroll.
+    // RAF loop keeps ScrollTrigger in sync on every frame — prevents flickering
+    // during iOS momentum scroll where 'scroll' events fire at reduced frequency.
+    if (skipLenis()) {
       ScrollTrigger.config({ ignoreMobileResize: true })
-      const onScroll = () => ScrollTrigger.update()
-      window.addEventListener('scroll', onScroll, { passive: true })
-      return () => window.removeEventListener('scroll', onScroll)
+      let rafId: number
+      const loop = () => {
+        ScrollTrigger.update()
+        rafId = requestAnimationFrame(loop)
+      }
+      rafId = requestAnimationFrame(loop)
+      // Refresh after layout settles
+      const tid = setTimeout(() => ScrollTrigger.refresh(), 400)
+      return () => {
+        cancelAnimationFrame(rafId)
+        clearTimeout(tid)
+      }
     }
 
     const lenis = new Lenis({
