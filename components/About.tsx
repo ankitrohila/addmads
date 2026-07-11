@@ -43,6 +43,14 @@ export default function About() {
       if (!section || !red) return
 
       const imgEls = [img1Ref.current, img2Ref.current, img3Ref.current].filter(Boolean) as HTMLElement[]
+      const isMobile = window.innerWidth < 768
+
+      // ── Mobile: simple entrance only, no pin ──────────────
+      if (isMobile) {
+        gsap.fromTo(imgEls, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+          scrollTrigger: { trigger: section, start: 'top 80%', once: true } })
+        return
+      }
 
       // ── Initial states ──────────────────────────────────────
       gsap.set(imgEls, { y: 80, opacity: 0 })
@@ -183,6 +191,7 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
+      className="about-section"
       style={{
         position: 'relative',
         height: '100vh',
@@ -211,8 +220,8 @@ export default function About() {
       />
 
       {/* Row 1: We | [images] | are a performance */}
-      <div ref={row1Ref} style={{ ...rowStyle, width: '100%' }}>
-        <span className="ab-text" style={textStyle}>We</span>
+      <div ref={row1Ref} className="about-row" style={{ ...rowStyle, width: '100%' }}>
+        <span className="ab-text about-word" style={textStyle}>We</span>
 
         {/* Images collapse-wrapper — width animates to 0 on fade */}
         <div ref={imgGroupRef} style={{ flexShrink: 0, overflow: 'visible' }}>
@@ -239,12 +248,12 @@ export default function About() {
           </div>
         </div>
 
-        <span className="ab-text" style={textStyle}>are a performance</span>
+        <span className="ab-text about-word" style={textStyle}>are a performance</span>
       </div>
 
       {/* Row 2: studio | [→] | dedicated */}
-      <div ref={row2Ref} style={{ ...rowStyle, width: '100%' }}>
-        <span className="ab-text" style={textStyle}>marketing</span>
+      <div ref={row2Ref} className="about-row" style={{ ...rowStyle, width: '100%' }}>
+        <span className="ab-text about-word" style={textStyle}>marketing</span>
 
         {/* Arrow collapse-wrapper */}
         <div ref={arrowWrapRef} style={{ flexShrink: 0, overflow: 'visible' }}>
@@ -262,12 +271,12 @@ export default function About() {
           </svg>
         </div>
 
-        <span className="ab-text" style={textStyle}>agency built</span>
+        <span className="ab-text about-word" style={textStyle}>agency built</span>
       </div>
 
       {/* Row 3: to craft a | [Work with us] | solution */}
-      <div ref={row3Ref} style={{ ...rowStyle, width: '100%' }}>
-        <span className="ab-text" style={textStyle}>to</span>
+      <div ref={row3Ref} className="about-row" style={{ ...rowStyle, width: '100%' }}>
+        <span className="ab-text about-word" style={textStyle}>to</span>
 
         {/* Button collapse-wrapper */}
         <div ref={btnWrapRef} style={{ flexShrink: 0, overflow: 'visible' }}>
@@ -306,7 +315,7 @@ export default function About() {
           </a>
         </div>
 
-        <span className="ab-text" style={textStyle}>scale</span>
+        <span className="ab-text about-word" style={textStyle}>scale</span>
       </div>
     </section>
   )

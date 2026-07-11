@@ -24,6 +24,21 @@ const COL_LEGAL = [
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null)
+  const mobileServicesRef = useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    // Mouse wheel → horizontal scroll on the services pill list
+    const el = mobileServicesRef.current
+    if (el) {
+      const onWheel = (e: WheelEvent) => {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return  // already horizontal
+        e.preventDefault()
+        el.scrollLeft += e.deltaY * 1.2
+      }
+      el.addEventListener('wheel', onWheel, { passive: false })
+      return () => el.removeEventListener('wheel', onWheel)
+    }
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -141,7 +156,7 @@ export default function Footer() {
               ))}
             </ul>
             {/* Mobile: horizontal slide scroll */}
-            <ul className="footer-services-mobile" style={{ listStyle: 'none', display: 'none' }}>
+            <ul ref={mobileServicesRef} className="footer-services-mobile" style={{ listStyle: 'none', display: 'none' }}>
               {FOOTER_SERVICES.map(l => (
                 <li key={l.label} style={{ flexShrink: 0 }}>
                   <Link href={l.href} style={{

@@ -57,6 +57,20 @@ export default function Testimonials() {
       if (!section) return
 
       const comps = compRefs.current.filter(Boolean) as HTMLDivElement[]
+      const isMobile = window.innerWidth < 768
+
+      // Mobile: simple fade-in for each comp, no pin, no 3D
+      if (isMobile) {
+        gsap.set(comps, { opacity: 0, y: 40 })
+        comps.forEach((comp) => {
+          gsap.fromTo(comp,
+            { opacity: 0, y: 40 },
+            { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+              scrollTrigger: { trigger: comp, start: 'top 88%', toggleActions: 'play none none none' } }
+          )
+        })
+        return
+      }
 
       // All compositions start hidden
       gsap.set(comps, { opacity: 0, y: 80, rotateY: 0, rotateX: 0 })
@@ -117,7 +131,7 @@ export default function Testimonials() {
   return (
     <>
       {/* ── Title section — full viewport, normal scroll ── */}
-      <div style={{
+      <div className="testimonials-title-wrap" style={{
         height: '100vh',
         background: '#F5F5F5',
         display: 'flex',
@@ -138,9 +152,10 @@ export default function Testimonials() {
         </h2>
       </div>
 
-      {/* ── Card compositions — GSAP pinned ── */}
+      {/* ── Card compositions — GSAP pinned on desktop, stacked on mobile ── */}
       <section
         ref={sectionRef}
+        className="testimonials-section"
         style={{
           position: 'relative',
           height: '100vh',
@@ -165,8 +180,8 @@ export default function Testimonials() {
                 position: 'absolute',
                 inset: 0,
                 margin: 'auto',
-                width: 'clamp(500px, 70vw, 680px)',
-                height: 'clamp(440px, 58vh, 540px)',
+                width: 'clamp(300px, 88vw, 680px)',
+                height: 'clamp(340px, 58vh, 540px)',
                 transformStyle: 'preserve-3d',
               }}
             >

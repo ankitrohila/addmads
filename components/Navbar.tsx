@@ -195,9 +195,12 @@ export default function Navbar() {
           zIndex: 40,
           background: '#111111',
           clipPath: 'inset(0 0 100% 0)',
-          padding: 'var(--container-px)',
+          paddingTop: 'calc(var(--nav-h) + 24px)',
+          paddingLeft: 'var(--container-px)',
+          paddingRight: 'var(--container-px)',
+          paddingBottom: '32px',
           flexDirection: 'column',
-          justifyContent: 'flex-end',
+          justifyContent: 'flex-start',
           overflowY: 'auto',
         }}
       >
@@ -354,7 +357,7 @@ export default function Navbar() {
             href="/contact"
             onClick={() => setMenuOpen(false)}
             className="btn-red"
-            style={{ padding: '10px 20px', fontSize: '0.875rem' }}
+            style={{ padding: '10px 20px', fontSize: '0.875rem', whiteSpace: 'nowrap', flexShrink: 0 }}
           >
             Get Started
           </Link>
