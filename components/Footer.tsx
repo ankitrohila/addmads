@@ -135,7 +135,7 @@ export default function Footer() {
               Services
             </h4>
             {/* Desktop: vertical scroll list */}
-            <ul className="footer-services-desktop" style={{
+            <ul className="footer-services-desktop" data-lenis-prevent style={{
               listStyle: 'none',
               display: 'flex',
               flexDirection: 'column',

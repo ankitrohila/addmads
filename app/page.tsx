@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger)
 const Loader = dynamic(() => import('@/components/Loader'), { ssr: false })
 
 import Navbar from '@/components/Navbar'
+import Cursor from '@/components/Cursor'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import ServiceShowcase from '@/components/ServiceShowcase'
@@ -50,6 +51,7 @@ export default function Home() {
   return (
     <>
       {showLoader && <Loader onComplete={handleLoaderDone} />}
+      <Cursor />
 
       <div
         style={{
