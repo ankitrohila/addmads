@@ -127,6 +127,15 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+            {/* Legal links under company nav */}
+            <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {COL_LEGAL.map(l => (
+                <Link key={l.label} href={l.href} style={{ fontFamily: 'var(--font-sans)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.28)', textDecoration: 'none', transition: 'color 0.3s' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.28)'}
+                >{l.label}</Link>
+              ))}
+            </div>
           </div>
 
           {/* Services */}
@@ -204,15 +213,6 @@ export default function Footer() {
               </li>
             </ul>
 
-            {/* Legal links below contact */}
-            <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {COL_LEGAL.map(l => (
-                <Link key={l.label} href={l.href} style={{ fontFamily: 'var(--font-sans)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.28)', textDecoration: 'none', transition: 'color 0.3s' }}
-                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)'}
-                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.28)'}
-                >{l.label}</Link>
-              ))}
-            </div>
           </div>
 
         </div>
