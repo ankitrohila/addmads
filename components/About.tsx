@@ -65,6 +65,9 @@ export default function About() {
       })
 
       // ── Pin section + scroll-driven phases ─────────────────
+      // Mobile: skip the pin — let the section scroll naturally
+      if (window.matchMedia('(pointer: coarse)').matches) return
+
       // Phase 1 (0 → 0.58): red sweeps from bottom, text turns white bottom→top
       // Phase 2 (0.58 → 0.85): images + arrow + button fade AND collapse
       // Phase 3 (0.85 → 1.0): hold full red, then release
@@ -216,7 +219,7 @@ export default function About() {
         <span className="ab-text about-word" style={textStyle}>We</span>
 
         {/* Images collapse-wrapper — width animates to 0 on fade */}
-        <div ref={imgGroupRef} style={{ flexShrink: 0, overflow: 'visible' }}>
+        <div ref={imgGroupRef} className="about-img-group" style={{ flexShrink: 0, overflow: 'visible' }}>
           <div style={{ display: 'flex', gap: 8 }}>
             {([img1Ref, img2Ref, img3Ref] as React.RefObject<HTMLDivElement>[]).map((ref, i) => (
               <div
@@ -249,7 +252,7 @@ export default function About() {
         <span className="ab-text about-word" style={textStyle}>marketing</span>
 
         {/* Arrow collapse-wrapper */}
-        <div ref={arrowWrapRef} style={{ flexShrink: 0, overflow: 'visible' }}>
+        <div ref={arrowWrapRef} className="about-arrow-wrap" style={{ flexShrink: 0, overflow: 'visible' }}>
           <svg
             ref={arrowRef}
             viewBox="0 0 64 28"
@@ -272,7 +275,7 @@ export default function About() {
         <span className="ab-text about-word" style={textStyle}>to</span>
 
         {/* Button collapse-wrapper */}
-        <div ref={btnWrapRef} style={{ flexShrink: 0, overflow: 'visible' }}>
+        <div ref={btnWrapRef} className="about-btn-wrap" style={{ flexShrink: 0, overflow: 'visible' }}>
           <a
             ref={btnRef}
             href="/contact"

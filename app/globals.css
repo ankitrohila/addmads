@@ -292,45 +292,105 @@ html.lenis, html.lenis body { height: auto; }
   section { overflow-x: hidden; }
   img { max-width: 100%; height: auto; }
 
-  /* ── About: reduce font size so rows fit mobile screen ── */
+  /* ── About: full mobile layout overhaul ── */
+  /* No pin on mobile — section scrolls naturally */
+  .about-section {
+    height: auto !important;
+    min-height: 100svh !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    align-content: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 0 0.25em !important;
+    padding: clamp(90px,18vw,140px) var(--container-px) clamp(60px,10vw,80px) !important;
+  }
+  /* Rows become transparent — their children flow directly into section */
+  .about-row {
+    display: contents !important;
+  }
+  /* Images: first row, full width */
+  .about-img-group {
+    order: -1 !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    margin-bottom: clamp(20px, 6vw, 36px) !important;
+    overflow: visible !important;
+    width: auto !important;
+  }
+  .about-img-group > div { gap: 10px !important; }
+  .about-section-img {
+    width: clamp(76px, 23vw, 108px) !important;
+    height: clamp(76px, 23vw, 108px) !important;
+  }
+  /* Text: big, flowing inline */
   .ab-text {
-    font-size: clamp(1.5rem, 6.5vw, 2.1rem) !important;
-    white-space: nowrap !important;
+    font-size: clamp(2.6rem, 12.5vw, 4.5rem) !important;
+    white-space: normal !important;
+    flex-shrink: 1 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.01em !important;
+  }
+  /* Arrow: inline, matches text visual weight */
+  .about-arrow-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+  }
+  .about-arrow-wrap svg {
+    width: clamp(28px, 9vw, 52px) !important;
+    height: auto !important;
+  }
+  /* Button: last, full-width row, red pill */
+  .about-btn-wrap {
+    order: 100 !important;
+    flex: 0 0 100% !important;
+    margin-top: clamp(28px, 7vw, 48px) !important;
+  }
+  .about-btn-wrap a {
+    background: #C82A2A !important;
+    border-color: transparent !important;
+    color: #FFFFFF !important;
+    font-size: 1rem !important;
+    padding: 16px 32px !important;
   }
 
   /* ── FeaturedWork: show mobile cards, hide desktop sticky ── */
   .fw-mobile-cards { display: block !important; }
   .fw-desktop-cards { display: none !important; }
-  /* ── Services cards grid ── */
+
+  /* ── ServiceShowcase: stack heading + card on mobile ── */
   .services-section {
+    height: auto !important;
+    min-height: 100svh !important;
     align-items: flex-start !important;
-    padding-top: calc(var(--nav-h) + 16px) !important;
-    padding-bottom: 16px !important;
+    padding: clamp(80px,14vw,120px) var(--container-px) clamp(60px,10vw,80px) !important;
+    overflow: visible !important;
   }
   .services-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    gap: 40px !important;
     align-items: start !important;
   }
-  .services-heading { font-size: 1.4rem !important; }
+  .services-heading { font-size: clamp(1.7rem, 8vw, 2.6rem) !important; }
   .services-stack-col {
     display: block !important;
-    height: clamp(280px, 38vh, 360px) !important;
-    padding-top: 0 !important;
+    height: clamp(320px, 65vw, 480px) !important;
+    padding-top: 160px !important;
     overflow: visible !important;
-    clip-path: inset(0 0 0 0 round 20px);
+    position: relative !important;
   }
-  .services-card-item { top: 0 !important; bottom: 0 !important; }
+  .services-card-item { top: 160px !important; bottom: 0 !important; }
   .services-card-header {
     flex-direction: column !important;
-    gap: 2px !important;
+    gap: 4px !important;
     align-items: flex-start !important;
-    justify-content: flex-start !important;
-    padding: 14px 16px 10px !important;
+    padding: 16px 18px 12px !important;
   }
-  .services-card-title { font-size: 1.35rem !important; }
-  .services-card-image { height: clamp(140px, 20vh, 200px) !important; }
-  .services-card-desc { padding: 10px 16px 14px !important; }
+  .services-card-title { font-size: 1.5rem !important; }
+  .services-card-image { height: clamp(150px, 28vw, 220px) !important; }
+  .services-card-desc { padding: 12px 18px 16px !important; }
 
   /* ── Metrics (Why choose us) ── */
   .metrics-grid {

@@ -39,6 +39,9 @@ export default function ServiceShowcase() {
         if (card) gsap.set(card, { y: POS[i].y, x: POS[i].x, scale: POS[i].scale, zIndex: POS[i].zIndex })
       })
 
+      // Mobile: keep static stacked cards, skip pin so page scrolls freely
+      if (window.matchMedia('(pointer: coarse)').matches) return
+
       ScrollTrigger.create({
         trigger: section,
         start: 'top top',
