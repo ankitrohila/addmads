@@ -295,41 +295,6 @@ html.lenis, html.lenis body { height: auto; }
     margin-top: 20px !important;
     padding: 0 var(--container-px) clamp(40px,8vw,60px) !important;
   }
-  /* Hero outer div: let content flow, remove full height lock */
-  #hero > div {
-    height: auto !important;
-    min-height: 100svh !important;
-    padding-top: calc(var(--nav-h) + 40px) !important;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    flex-direction: column !important;
-  }
-
-  /* ── About section (mobile: scroll-triggered red sweep animation) ── */
-  .about-section {
-    height: auto !important;
-    min-height: auto !important;
-    padding: clamp(60px,10vw,100px) var(--container-px) !important;
-    overflow: hidden !important;
-  }
-  /* Each row wraps on mobile, images + arrow + button stay visible */
-  .about-row {
-    flex-wrap: wrap !important;
-    justify-content: flex-start !important;
-    gap: 10px 14px !important;
-    width: 100% !important;
-  }
-  /* Text size — color is animated by GSAP (dark → white as red rises) */
-  .about-word {
-    font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
-    white-space: nowrap !important;
-  }
-  /* Scale images down for mobile so they fit inline with text */
-  .about-section-img {
-    width: clamp(44px, 10vw, 60px) !important;
-    height: clamp(44px, 10vw, 60px) !important;
-  }
-
   /* ── Services cards grid ── */
   .services-section {
     align-items: flex-start !important;

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -22,46 +22,18 @@ export default function Hero() {
   const outerRef       = useRef<HTMLDivElement>(null)
   const movingRef      = useRef<HTMLDivElement>(null)
   const asteriskRef    = useRef<HTMLDivElement>(null)
-  const mobileAsteriskRef = useRef<HTMLDivElement>(null)
   const descRef        = useRef<HTMLDivElement>(null)
   const btnRef         = useRef<HTMLAnchorElement>(null)
   const btnTextRef     = useRef<HTMLSpanElement>(null)
   const thatRef        = useRef<HTMLHeadingElement>(null)
   const matterRef      = useRef<HTMLHeadingElement>(null)
 
-  // Shade layer refs — black duplicate of that + matter
+  // Shade layer refs — black duplicate of that + scale
   const shadeRef       = useRef<HTMLDivElement>(null)
   const shadeThatRef   = useRef<HTMLHeadingElement>(null)
   const shadeMatterRef = useRef<HTMLHeadingElement>(null)
 
-  const [isMobile, setIsMobile] = useState(false)
-
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768)
-    const onResize = () => setIsMobile(window.innerWidth < 768)
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
-
-  // Mobile animations: entrance + asterisk spin
-  useEffect(() => {
-    if (!isMobile) return
-    const DELAY = 3.1
-    const ctx = gsap.context(() => {
-      // Fade + rise for each content element in sequence
-      gsap.fromTo('[data-mh="1"]', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out', delay: DELAY })
-      gsap.fromTo('[data-mh="2"]', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out', delay: DELAY + 0.1 })
-      gsap.fromTo('[data-mh="3"]', { opacity: 0 },         { opacity: 1,       duration: 0.9, ease: 'power3.out', delay: DELAY + 0.3 })
-      gsap.fromTo('[data-mh="4"]', { opacity: 0 },         { opacity: 1,       duration: 0.9, ease: 'power3.out', delay: DELAY + 0.45 })
-      if (mobileAsteriskRef.current) {
-        gsap.to(mobileAsteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
-      }
-    })
-    return () => ctx.revert()
-  }, [isMobile])
-
-  useEffect(() => {
-    if (isMobile) return
     const ctx = gsap.context(() => {
       const DELAY = 3.1
 
@@ -91,8 +63,6 @@ export default function Hero() {
 
       const getEnd = () => -(moving.scrollWidth - outer.offsetWidth + 32)
 
-      // Sync shade text positions to their grey counterparts.
-      // Re-run on every update so CTA width changes don't drift alignment.
       const syncShadePositions = () => {
         if (shadeThatRef.current && thatRef.current) {
           shadeThatRef.current.style.left = thatRef.current.offsetLeft + 'px'
@@ -115,10 +85,8 @@ export default function Hero() {
         onUpdate: (self) => {
           if (!moving) return
 
-          // Move the row left
           gsap.set(moving, { x: getEnd() * self.progress })
 
-          // Button morphs to circle in first 40 %
           const bp = Math.min(self.progress / 0.4, 1)
           captureBtnWidth()
           if (btn && initBtnW > 0) {
@@ -131,11 +99,8 @@ export default function Hero() {
           }
           if (btnTxt) gsap.set(btnTxt, { opacity: Math.max(0, 1 - bp * 2) })
 
-          // Keep shade text aligned (CTA width shrinks during first 40 %)
           syncShadePositions()
 
-          // Grow shade width — right boundary sweeps rightward across the row,
-          // turning "that" then "matter" from grey to black.
           const matter = matterRef.current
           const shade  = shadeRef.current
           if (matter && shade) {
@@ -144,7 +109,6 @@ export default function Hero() {
             gsap.set(shade, { width: shadeWidth })
           }
 
-          // Asterisk bars turn white once button is collapsed (past 50 %)
           const asteriskBars = asteriskRef.current?.querySelectorAll<HTMLElement>('div')
           if (asteriskBars && self.progress > 0.5) {
             const ap = Math.min((self.progress - 0.5) / 0.3, 1)
@@ -156,7 +120,6 @@ export default function Hero() {
         },
       })
 
-      // Fade CTA group toward end
       gsap.to('.hero-cta-group', {
         opacity: 0, ease: 'none',
         scrollTrigger: {
@@ -171,92 +134,7 @@ export default function Hero() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [isMobile])
-
-  // ── Mobile Hero — full screen, centered content ────────────────────────────
-  if (isMobile) {
-    return (
-      <section style={{
-        background: '#FFFFFF',
-        height: '100svh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        paddingTop: 'var(--nav-h)',
-        paddingLeft: 'var(--container-px)',
-        paddingRight: 'var(--container-px)',
-        paddingBottom: 'clamp(32px,6vw,48px)',
-        overflow: 'hidden',
-      }}>
-        {/* Titles — bigger font fills the screen */}
-        <h1 style={{
-          fontFamily: 'var(--font-tight)',
-          fontSize: 'clamp(4.5rem, 22vw, 7rem)',
-          fontWeight: 700,
-          lineHeight: 1.0,
-          color: '#111111',
-          margin: 0,
-          opacity: 0,
-          letterSpacing: '-0.02em',
-        }} data-mh="1">Results</h1>
-        <h1 style={{
-          fontFamily: 'var(--font-tight)',
-          fontSize: 'clamp(4.5rem, 22vw, 7rem)',
-          fontWeight: 700,
-          lineHeight: 1.0,
-          color: '#D1D1D1',
-          margin: '0 0 clamp(28px,6vw,40px) 0',
-          opacity: 0,
-          letterSpacing: '-0.02em',
-        }} data-mh="2">that scale</h1>
-
-        {/* CTA row: button + asterisk */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 'clamp(20px,5vw,32px)', flexWrap: 'wrap', opacity: 0 }} data-mh="3">
-          <a href="/contact" style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: '#C82A2A',
-            color: '#FFFFFF',
-            borderRadius: '1000px',
-            padding: '14px 28px',
-            fontFamily: 'var(--font-tight)',
-            fontWeight: 600,
-            fontSize: '1rem',
-            whiteSpace: 'nowrap',
-            textDecoration: 'none',
-          }}>Work with us</a>
-
-          {/* Rotating asterisk */}
-          <div ref={mobileAsteriskRef} style={{ position: 'relative', width: 52, height: 52, flexShrink: 0 }}>
-            {[0, 90, 45, -45].map((angle, i) => (
-              <div key={i} style={{
-                position: 'absolute',
-                top: '50%', left: '50%',
-                width: 44, height: 9,
-                background: '#111111',
-                borderRadius: 3,
-                transform: `translate(-50%, -50%) rotate(${angle}deg)`,
-              }} />
-            ))}
-          </div>
-        </div>
-
-        {/* Subtitle */}
-        <p style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: 'clamp(0.9rem, 4vw, 1.0625rem)',
-          color: '#555555',
-          lineHeight: 1.65,
-          margin: 0,
-          maxWidth: 340,
-          opacity: 0,
-        }} data-mh="4">
-          Performance marketing &amp; digital growth. We turn ad spend into measurable results.
-        </p>
-      </section>
-    )
-  }
+  }, [])
 
   return (
     <section ref={sectionRef} id="hero" style={{ background: '#FFFFFF' }}>
@@ -274,7 +152,6 @@ export default function Hero() {
         {/* Scrolling title row */}
         <div
           ref={movingRef}
-          data-hero-row
           style={{
             position: 'relative',
             display: 'flex',
@@ -357,15 +234,9 @@ export default function Hero() {
           {/* Grey "scale" */}
           <h1 ref={matterRef} style={{ ...H1, color: '#D1D1D1' }}>scale</h1>
 
-          {/* ── Black shade overlay ─────────────────────────────────────────────
-              Grows its width from left → right, revealing black text beneath.
-              Both this and movingRef translate together (shade is inside movingRef),
-              so the visible black boundary moves rightward in viewport space
-              while the text row moves leftward — matching the reference dual-movement.
-          ─────────────────────────────────────────────────────────────────────── */}
+          {/* Black shade overlay — grows width left→right to reveal black text */}
           <div
             ref={shadeRef}
-            data-hero-shade
             style={{
               position: 'absolute',
               left: 0,
@@ -409,7 +280,6 @@ export default function Hero() {
         {/* Subtitle — absolute bottom right */}
         <div
           ref={descRef}
-          data-hero-desc
           style={{
             position: 'absolute',
             bottom: 'clamp(40px, 5vw, 72px)',

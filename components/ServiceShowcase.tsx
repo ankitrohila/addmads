@@ -1,247 +1,247 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const ITEMS = [
-  {
-    num: '01',
-    label: 'Advertising',
-    desc: 'Strategic campaigns that capture attention and drive results.',
-    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-    href: '/services/performance-marketing',
-  },
-  {
-    num: '02',
-    label: 'Graphic',
-    desc: 'Creative visuals that communicate your brand identity effectively.',
-    img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80',
-    href: '/services/graphics-design',
-  },
-  {
-    num: '03',
-    label: 'Branding',
-    desc: 'Building brand identities that people remember and trust.',
-    img: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80',
-    href: '/services/branding',
-  },
-  {
-    num: '04',
-    label: 'Website',
-    desc: 'Modern websites and web apps that convert visitors into customers.',
-    img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80',
-    href: '/services/it-services',
-  },
+gsap.registerPlugin(ScrollTrigger)
+
+const SERVICES = [
+  { num: '01', name: 'Advertising', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb1dc9797d92e7aae3f_img6.webp',  desc: 'Strategic campaigns that capture attention and drive measurable results.' },
+  { num: '02', name: 'Graphic',     img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68aea452324447dec982d6b3_img9.webp',   desc: 'Visual communication that tells your brand story with impact.' },
+  { num: '03', name: 'Branding',    img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e424_img17.webp',  desc: 'Identity systems built to last across every touchpoint.' },
+  { num: '04', name: 'Website',     img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e41b_img16.webp',  desc: 'Digital experiences that convert visitors into loyal clients.' },
 ]
 
+const N = SERVICES.length
+
+const POS = [
+  { y: 0,    x: 0,  scale: 1,    zIndex: 10 },
+  { y: -68,  x: 20, scale: 0.97, zIndex: 9  },
+  { y: -136, x: 40, scale: 0.94, zIndex: 8  },
+  { y: -204, x: 60, scale: 0.91, zIndex: 7  },
+]
+
+function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
+
 export default function ServiceShowcase() {
-  const [active, setActive] = useState(0)
+  const sectionRef = useRef<HTMLElement>(null)
+  const cardRefs   = useRef<(HTMLDivElement | null)[]>([])
+  const [activeIdx, setActiveIdx] = useState(0)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const section = sectionRef.current
+      if (!section) return
+
+      cardRefs.current.forEach((card, i) => {
+        if (card) gsap.set(card, { y: POS[i].y, x: POS[i].x, scale: POS[i].scale, zIndex: POS[i].zIndex })
+      })
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${window.innerHeight * N}`,
+        pin: true,
+        anticipatePin: 1,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const phase = self.progress * N
+          const cur   = Math.min(Math.floor(phase), N - 1)
+          const frac  = phase - cur
+
+          setActiveIdx(cur)
+
+          cardRefs.current.forEach((card, cardI) => {
+            if (!card) return
+
+            const slot = (cardI - cur + N) % N
+
+            let y: number, x: number, scale: number, zIndex: number
+
+            if (slot === 0) {
+              const from = POS[0], to = POS[N - 1]
+              y      = lerp(from.y, to.y, frac)
+              x      = lerp(from.x, to.x, frac)
+              scale  = lerp(from.scale, to.scale, frac)
+              zIndex = frac > 0.45 ? POS[N - 1].zIndex - 1 : POS[0].zIndex
+            } else {
+              const from = POS[slot]
+              const to   = POS[Math.max(slot - 1, 0)]
+              y      = lerp(from.y, to.y, frac)
+              x      = lerp(from.x, to.x, frac)
+              scale  = lerp(from.scale, to.scale, frac)
+              zIndex = frac > 0.5 ? to.zIndex : from.zIndex
+            }
+
+            gsap.set(card, { y, x, scale, zIndex })
+          })
+        },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section style={{
-      background: '#C82A2A',
-      padding: 'clamp(72px,10vw,120px) var(--container-px)',
-      overflow: 'hidden',
-    }}>
-      <div className="showcase-grid" style={{
+    <section
+      ref={sectionRef}
+      className="services-section"
+      style={{
+        background: '#C82A2A',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        padding: 'clamp(80px, 10vw, 140px) var(--container-px)',
+        overflow: 'hidden',
+      }}
+    >
+      <div className="services-grid" style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
-        gap: 'clamp(40px,6vw,80px)',
+        gap: 'clamp(48px, 6vw, 96px)',
         alignItems: 'center',
-        maxWidth: 1200,
-        margin: '0 auto',
+        width: '100%',
       }}>
 
-        {/* ── Left column: heading + numbered list ── */}
+        {/* ── Left text ── */}
         <div>
-          <p style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '0.75rem',
-            fontWeight: 600,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.5)',
-            marginBottom: 24,
-          }}>
-            What We Do
-          </p>
-          <h2 style={{
+          <div className="services-heading" style={{
             fontFamily: 'var(--font-tight)',
-            fontSize: 'clamp(1.75rem,4vw,3rem)',
-            fontWeight: 700,
-            lineHeight: 1.15,
+            fontSize: 'clamp(2rem, 4.5vw, 4rem)',
+            fontWeight: 500,
             color: '#FFFFFF',
-            marginBottom: 20,
+            lineHeight: 1.2,
+            marginBottom: 'clamp(20px, 2.5vw, 36px)',
           }}>
             We introduce methodologies, processes, and learnings to drive digital innovation projects.
-          </h2>
+          </div>
+
           <p style={{
             fontFamily: 'var(--font-sans)',
-            fontSize: 'clamp(0.875rem,1.2vw,1rem)',
-            color: 'rgba(255,255,255,0.55)',
-            lineHeight: 1.7,
-            marginBottom: 40,
-            maxWidth: 400,
+            fontSize: 'clamp(0.875rem, 1.3vw, 1.1rem)',
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.58)',
+            lineHeight: 1.75,
+            maxWidth: 380,
+            margin: 0,
           }}>
             Ensuring impactful experiences that drive growth and success.
           </p>
 
-          {/* Numbered service list */}
-          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {ITEMS.map((item, i) => (
-              <li key={item.num}>
-                <button
-                  onClick={() => setActive(i)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 16,
-                    width: '100%',
-                    background: 'none',
-                    border: 'none',
-                    padding: '12px 0',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    borderBottom: '1px solid rgba(255,255,255,0.1)',
-                  }}
-                >
-                  <span style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                    color: active === i ? '#FFFFFF' : 'rgba(255,255,255,0.35)',
-                    transition: 'color 0.3s',
-                    minWidth: 24,
-                  }}>
-                    {item.num}
-                  </span>
-                  <span style={{
-                    fontFamily: 'var(--font-tight)',
-                    fontSize: 'clamp(1.1rem,2vw,1.5rem)',
-                    fontWeight: active === i ? 700 : 400,
-                    color: active === i ? '#FFFFFF' : 'rgba(255,255,255,0.45)',
-                    transition: 'all 0.3s',
-                  }}>
-                    {item.label}
-                  </span>
-                  {active === i && (
-                    <span style={{
-                      marginLeft: 'auto',
-                      width: 8, height: 8,
-                      borderRadius: '50%',
-                      background: '#FFFFFF',
-                      flexShrink: 0,
-                    }} />
-                  )}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* ── Right column: service preview card ── */}
-        <div style={{
-          background: '#FFFFFF',
-          borderRadius: 20,
-          overflow: 'hidden',
-          boxShadow: '0 32px 80px rgba(0,0,0,0.25)',
-        }}>
-          {/* Tab strip */}
-          <div style={{
-            display: 'flex',
-            borderBottom: '1px solid rgba(17,17,17,0.07)',
-          }}>
-            {ITEMS.map((item, i) => (
-              <button
-                key={item.num}
-                onClick={() => setActive(i)}
+          <div style={{ marginTop: 'clamp(28px, 3.5vw, 48px)', display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {SERVICES.map((s, i) => (
+              <div
+                key={s.num}
                 style={{
-                  flex: 1,
-                  padding: '12px 8px',
-                  background: 'none',
-                  border: 'none',
-                  borderBottom: active === i ? '2px solid #111111' : '2px solid transparent',
-                  cursor: 'pointer',
                   display: 'flex',
-                  flexDirection: 'column',
                   alignItems: 'center',
-                  gap: 4,
-                  transition: 'border-color 0.25s',
+                  gap: 14,
+                  opacity: activeIdx === i ? 1 : 0.38,
+                  transition: 'opacity 0.4s ease',
                 }}
               >
                 <span style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.625rem',
-                  fontWeight: 600,
-                  color: active === i ? '#111111' : 'rgba(17,17,17,0.3)',
-                  letterSpacing: '0.08em',
-                  transition: 'color 0.25s',
-                }}>{item.num}.</span>
+                  fontSize: '0.7rem',
+                  fontWeight: 500,
+                  color: 'rgba(255,255,255,0.55)',
+                  letterSpacing: '0.1em',
+                  minWidth: 24,
+                }}>
+                  {s.num}
+                </span>
                 <span style={{
                   fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(0.75rem,1.1vw,0.9375rem)',
-                  fontWeight: 600,
-                  color: active === i ? '#111111' : 'rgba(17,17,17,0.35)',
-                  transition: 'color 0.25s',
-                }}>{item.label}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Image */}
-          <div style={{ position: 'relative', height: 'clamp(200px,28vw,380px)' }}>
-            {ITEMS.map((item, i) => (
-              <div
-                key={item.num}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  opacity: active === i ? 1 : 0,
-                  transition: 'opacity 0.5s ease',
-                }}
-              >
-                <Image
-                  src={item.img}
-                  alt={item.label}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  style={{ objectFit: 'cover' }}
-                />
+                  fontSize: 'clamp(1rem, 1.8vw, 1.55rem)',
+                  fontWeight: 500,
+                  color: '#FFFFFF',
+                  lineHeight: 1,
+                }}>
+                  {s.name}
+                </span>
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Description + CTA */}
-          <div style={{ padding: 'clamp(16px,2vw,28px)' }}>
-            <p style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: 'clamp(0.875rem,1.2vw,1rem)',
-              color: 'rgba(17,17,17,0.6)',
-              lineHeight: 1.65,
-              margin: '0 0 16px 0',
-              minHeight: '3em',
-              transition: 'opacity 0.3s',
-            }}>
-              {ITEMS[active].desc}
-            </p>
-            <Link
-              href={ITEMS[active].href}
+        {/* ── Right: stacking cards ── */}
+        <div className="services-stack-col" style={{
+          position: 'relative',
+          height: 'clamp(360px, 50vh, 540px)',
+          paddingTop: 220,
+          boxSizing: 'content-box',
+        }}>
+          {SERVICES.map((svc, i) => (
+            <div
+              key={svc.num}
+              ref={el => { cardRefs.current[i] = el }}
+              className="services-card-item"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.875rem',
-                fontWeight: 600,
-                color: '#C82A2A',
-                textDecoration: 'none',
+                position: 'absolute',
+                left: 0, right: 0,
+                top: 220,
+                bottom: 0,
+                background: '#FFFFFF',
+                borderRadius: 20,
+                overflow: 'hidden',
+                willChange: 'transform',
+                transformOrigin: 'top center',
               }}
             >
-              Learn More →
-            </Link>
-          </div>
+              <div className="services-card-header" style={{
+                padding: 'clamp(16px, 2vw, 26px) clamp(18px, 2.2vw, 28px)',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+              }}>
+                <span style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.75rem',
+                  fontWeight: 500,
+                  color: 'rgba(17,17,17,0.35)',
+                  letterSpacing: '0.1em',
+                }}>
+                  {svc.num}.
+                </span>
+                <span className="services-card-title" style={{
+                  fontFamily: 'var(--font-tight)',
+                  fontSize: 'clamp(1.6rem, 2.8vw, 2.6rem)',
+                  fontWeight: 500,
+                  color: '#111111',
+                  lineHeight: 1,
+                }}>
+                  {svc.name}
+                </span>
+              </div>
+
+              <div className="services-card-image" style={{ height: 'clamp(140px, 22vh, 260px)', overflow: 'hidden', position: 'relative' }}>
+                <Image
+                  src={svc.img}
+                  alt={svc.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+
+              <div className="services-card-desc" style={{ padding: 'clamp(12px, 1.6vw, 20px) clamp(18px, 2.2vw, 28px)' }}>
+                <p style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.875rem',
+                  color: 'rgba(17,17,17,0.5)',
+                  lineHeight: 1.6,
+                  margin: 0,
+                }}>
+                  {svc.desc}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
+
       </div>
     </section>
   )

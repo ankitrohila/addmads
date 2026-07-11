@@ -43,34 +43,6 @@ export default function About() {
       if (!section || !red) return
 
       const imgEls = [img1Ref.current, img2Ref.current, img3Ref.current].filter(Boolean) as HTMLElement[]
-      const isMobile = window.innerWidth < 768
-
-      // ── Mobile: scroll-triggered red sweep + images entrance ──
-      if (isMobile) {
-        // Overlay starts hidden, text starts dark
-        gsap.set(red, { scaleY: 0 })
-        gsap.set(imgEls, { opacity: 0, y: 20 })
-
-        // Images slide in as section approaches
-        gsap.to(imgEls, {
-          opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: section, start: 'top 75%', once: true },
-        })
-
-        // Red sweep + text turns white when section is well in view
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top 50%',
-          once: true,
-          onEnter: () => {
-            gsap.to(red, { scaleY: 1, duration: 1.4, ease: 'power3.inOut' })
-            section.querySelectorAll<HTMLElement>('.ab-text').forEach((el, i) => {
-              gsap.to(el, { color: '#FFFFFF', duration: 0.4, delay: 0.7 + i * 0.1, ease: 'none' })
-            })
-          },
-        })
-        return
-      }
 
       // ── Initial states ──────────────────────────────────────
       gsap.set(imgEls, { y: 80, opacity: 0 })
