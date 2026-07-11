@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -22,6 +22,7 @@ export default function Hero() {
   const outerRef       = useRef<HTMLDivElement>(null)
   const movingRef      = useRef<HTMLDivElement>(null)
   const asteriskRef    = useRef<HTMLDivElement>(null)
+  const mobileAsteriskRef = useRef<HTMLDivElement>(null)
   const descRef        = useRef<HTMLDivElement>(null)
   const btnRef         = useRef<HTMLAnchorElement>(null)
   const btnTextRef     = useRef<HTMLSpanElement>(null)
@@ -33,10 +34,28 @@ export default function Hero() {
   const shadeThatRef   = useRef<HTMLHeadingElement>(null)
   const shadeMatterRef = useRef<HTMLHeadingElement>(null)
 
+  const [isMobile, setIsMobile] = useState(false)
+
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  // Mobile asterisk spin
+  useEffect(() => {
+    if (!isMobile || !mobileAsteriskRef.current) return
+    const ctx = gsap.context(() => {
+      gsap.to(mobileAsteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
+    })
+    return () => ctx.revert()
+  }, [isMobile])
+
+  useEffect(() => {
+    if (isMobile) return
     const ctx = gsap.context(() => {
       const DELAY = 3.1
-      const isMobile = window.innerWidth < 768
 
       // Entrance animations
       gsap.fromTo(movingRef.current,
@@ -50,9 +69,6 @@ export default function Hero() {
 
       // Asterisk spins continuously
       gsap.to(asteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
-
-      // Skip horizontal pin scroll on mobile — just show the text statically
-      if (isMobile) return
 
       const moving = movingRef.current
       const outer  = outerRef.current
@@ -148,6 +164,82 @@ export default function Hero() {
 
     return () => ctx.revert()
   }, [])
+
+  // ── Mobile Hero — clean static layout ──────────────────────────────────────
+  if (isMobile) {
+    return (
+      <section style={{
+        background: '#FFFFFF',
+        minHeight: '100svh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        padding: `calc(var(--nav-h) + 48px) var(--container-px) clamp(48px,10vw,72px)`,
+      }}>
+        {/* Titles */}
+        <h1 style={{
+          fontFamily: 'var(--font-tight)',
+          fontSize: 'clamp(3.2rem, 16vw, 5rem)',
+          fontWeight: 500,
+          lineHeight: 1.1,
+          color: '#111111',
+          margin: 0,
+        }}>Results</h1>
+        <h1 style={{
+          fontFamily: 'var(--font-tight)',
+          fontSize: 'clamp(3.2rem, 16vw, 5rem)',
+          fontWeight: 500,
+          lineHeight: 1.1,
+          color: '#D1D1D1',
+          margin: '0 0 32px 0',
+        }}>that scale</h1>
+
+        {/* CTA row: button + asterisk */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 32, flexWrap: 'wrap' }}>
+          <a href="/contact" style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#C82A2A',
+            color: '#FFFFFF',
+            borderRadius: '1000px',
+            padding: '15px 30px',
+            fontFamily: 'var(--font-tight)',
+            fontWeight: 500,
+            fontSize: '1rem',
+            whiteSpace: 'nowrap',
+            textDecoration: 'none',
+          }}>Work with us</a>
+
+          {/* Rotating asterisk */}
+          <div ref={mobileAsteriskRef} style={{ position: 'relative', width: 56, height: 56, flexShrink: 0 }}>
+            {[0, 90, 45, -45].map((angle, i) => (
+              <div key={i} style={{
+                position: 'absolute',
+                top: '50%', left: '50%',
+                width: 48, height: 10,
+                background: '#111111',
+                borderRadius: 3,
+                transform: `translate(-50%, -50%) rotate(${angle}deg)`,
+              }} />
+            ))}
+          </div>
+        </div>
+
+        {/* Subtitle */}
+        <p style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 'clamp(0.875rem, 4vw, 1rem)',
+          color: '#555555',
+          lineHeight: 1.65,
+          margin: 0,
+          maxWidth: 340,
+        }}>
+          Performance marketing &amp; digital growth. We turn ad spend into measurable results.
+        </p>
+      </section>
+    )
+  }
 
   return (
     <section ref={sectionRef} id="hero" style={{ background: '#FFFFFF' }}>

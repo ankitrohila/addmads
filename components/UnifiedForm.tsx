@@ -386,6 +386,7 @@ export default function UnifiedForm({
       >
         <div
           ref={formRef}
+          className="unified-form-grid"
           style={{
             opacity: 0,
             maxWidth: 1200,
@@ -457,7 +458,7 @@ export default function UnifiedForm({
             ) : (
               <form onSubmit={handleSubmit} noValidate>
                 {/* Name + Email */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', marginBottom: 16 }}>
+                <div className="form-row-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', marginBottom: 16 }}>
                   <div>
                     <label style={labelBase}>Full Name *</label>
                     <input
@@ -481,7 +482,7 @@ export default function UnifiedForm({
                 </div>
 
                 {/* Phone + Service */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', marginBottom: 16 }}>
+                <div className="form-row-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', marginBottom: 16 }}>
                   <div>
                     <label style={labelBase}>Phone Number *</label>
                     <input

@@ -301,15 +301,18 @@ html.lenis, html.lenis body { height: auto; }
     flex-direction: column !important;
   }
 
-  /* ── About section (desktop: pinned scroll animation → mobile: static) ── */
+  /* ── About section (desktop: pinned scroll animation → mobile: red static) ── */
   .about-section {
     height: auto !important;
     min-height: auto !important;
     padding: clamp(60px,10vw,100px) var(--container-px) !important;
     overflow: visible !important;
+    background: #C82A2A !important;
   }
-  /* Red overlay hidden on mobile (no pin animation) */
-  .about-section > div:first-child { display: none !important; }
+  /* Red overlay: show as fully covering the section */
+  .about-section > div:first-child {
+    transform: scaleY(1) !important;
+  }
   /* Each row wraps on mobile */
   .about-row {
     flex-wrap: wrap !important;
@@ -317,10 +320,11 @@ html.lenis, html.lenis body { height: auto; }
     gap: 10px 14px !important;
     width: 100% !important;
   }
-  /* Smaller text on mobile */
+  /* White text on red background */
   .about-word {
     font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
     white-space: nowrap !important;
+    color: #FFFFFF !important;
   }
   /* Hide the img group and arrow on mobile (simplified view) */
   .about-section .about-row > div:not(:first-child):not(:last-child) {
@@ -400,22 +404,18 @@ html.lenis, html.lenis body { height: auto; }
     padding: clamp(48px,10vw,80px) var(--container-px) !important;
   }
 
-  /* ── Footer services: hide vertical list, show horizontal scroll ── */
-  .footer-services-desktop { display: none !important; }
-  .footer-services-mobile {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 8px !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    scroll-snap-type: x mandatory !important;
-    padding-bottom: 8px !important;
-    scrollbar-width: none !important;
-    cursor: grab !important;
+  /* ── Contact / UnifiedForm ── */
+  .unified-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: clamp(32px,6vw,48px) !important;
   }
-  .footer-services-mobile:active { cursor: grabbing !important; }
-  .footer-services-mobile::-webkit-scrollbar { display: none; }
-  .footer-services-mobile li { scroll-snap-align: start; flex-shrink: 0; }
+  .form-row-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Footer services: always show plain vertical list ── */
+  .footer-services-desktop { display: flex !important; }
+  .footer-services-mobile { display: none !important; }
 
   /* ── Footer grid ── */
   footer [data-f]:first-child {
