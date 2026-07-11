@@ -65,10 +65,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${interTight.variable}`}>
       <head>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23111111'/><text x='4' y='23' font-family='system-ui' font-weight='900' font-size='14' fill='%23D4FF00'>AM</text></svg>"
-        />
+        {/* Standard .ico — IE, legacy browsers */}
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        {/* SVG — Chrome, Firefox, Edge (scalable, best quality) */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Apple Touch Icon — iOS Safari tab + Add to Home Screen */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        {/* Android / Chrome PWA icons */}
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+
         <meta name="theme-color" content="#111111" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
