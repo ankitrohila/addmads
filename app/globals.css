@@ -44,10 +44,14 @@ html {
 body {
   background-color: var(--color-bg);
   color: var(--color-fg);
-  cursor: none;
   overflow-x: clip;
   min-height: 100svh;
   position: relative;
+}
+
+/* Hide native cursor only for fine-pointer (mouse) devices — custom cursor takes over */
+@media (pointer: fine) {
+  body { cursor: none; }
 }
 
 /* ─── Scrollbar ───────────────────────────────── */
