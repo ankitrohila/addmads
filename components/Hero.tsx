@@ -34,10 +34,23 @@ export default function Hero() {
   const shadeMatterRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+
     const ctx = gsap.context(() => {
+      // Asterisk spins on all devices
+      gsap.to(asteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
+
+      if (isMobile) {
+        // Touch devices: no pin, no horizontal scroll — instant reveal
+        // (Loader is skipped on mobile, so no delay needed)
+        gsap.set(movingRef.current, { opacity: 1, x: 0, y: 0 })
+        gsap.set(descRef.current, { opacity: 1 })
+        return
+      }
+
+      // ── Desktop-only: loader entrance + horizontal scroll pin ──
       const DELAY = 3.1
 
-      // Entrance animations
       gsap.fromTo(movingRef.current,
         { opacity: 0, y: 32 },
         { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', delay: DELAY }
@@ -47,14 +60,18 @@ export default function Hero() {
         { opacity: 1, duration: 0.9, ease: 'power3.out', delay: DELAY + 0.4 }
       )
 
-      // Asterisk spins continuously
-      gsap.to(asteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
-
       const moving = movingRef.current
       const outer  = outerRef.current
       const btn    = btnRef.current
       const btnTxt = btnTextRef.current
       if (!moving || !outer) return
+
+      // Use quickSetter for high-frequency scroll updates (lighter than gsap.set)
+      const setX    = gsap.quickSetter(moving, 'x', 'px')
+      const setW    = gsap.quickSetter(btn as Element, 'width', 'px')
+      const setPL   = gsap.quickSetter(btn as Element, 'paddingLeft', 'px')
+      const setPR   = gsap.quickSetter(btn as Element, 'paddingRight', 'px')
+      const setTxtO = gsap.quickSetter(btnTxt as Element, 'opacity')
 
       let initBtnW = 0
       const captureBtnWidth = () => {
@@ -78,26 +95,23 @@ export default function Hero() {
         start: 'top top',
         end: () => `+=${Math.abs(getEnd()) * 1.4}`,
         pin: true,
-        anticipatePin: 1,
         invalidateOnRefresh: true,
         scrub: false,
         onRefresh: syncShadePositions,
         onUpdate: (self) => {
           if (!moving) return
 
-          gsap.set(moving, { x: getEnd() * self.progress })
+          setX(getEnd() * self.progress)
 
           const bp = Math.min(self.progress / 0.4, 1)
           captureBtnWidth()
           if (btn && initBtnW > 0) {
             const btnH = btn.offsetHeight
-            gsap.set(btn, {
-              width:        initBtnW - (initBtnW - btnH) * bp,
-              paddingLeft:  Math.round((1 - bp) * 40),
-              paddingRight: Math.round((1 - bp) * 40),
-            })
+            setW(initBtnW - (initBtnW - btnH) * bp)
+            setPL(Math.round((1 - bp) * 40))
+            setPR(Math.round((1 - bp) * 40))
           }
-          if (btnTxt) gsap.set(btnTxt, { opacity: Math.max(0, 1 - bp * 2) })
+          if (btnTxt) setTxtO(Math.max(0, 1 - bp * 2))
 
           syncShadePositions()
 
@@ -105,8 +119,7 @@ export default function Hero() {
           const shade  = shadeRef.current
           if (matter && shade) {
             const targetWidth = matter.offsetLeft + matter.offsetWidth
-            const shadeWidth  = Math.min(self.progress * targetWidth * 1.6, targetWidth)
-            gsap.set(shade, { width: shadeWidth })
+            shade.style.width = Math.min(self.progress * targetWidth * 1.6, targetWidth) + 'px'
           }
 
           const asteriskBars = asteriskRef.current?.querySelectorAll<HTMLElement>('div')
@@ -140,6 +153,7 @@ export default function Hero() {
     <section ref={sectionRef} id="hero" style={{ background: '#FFFFFF' }}>
       <div
         ref={outerRef}
+        className="hero-outer"
         style={{
           height: '100svh',
           overflow: 'hidden',
@@ -152,6 +166,7 @@ export default function Hero() {
         {/* Scrolling title row */}
         <div
           ref={movingRef}
+          className="hero-row"
           style={{
             position: 'relative',
             display: 'flex',
@@ -164,7 +179,7 @@ export default function Hero() {
           }}
         >
           {/* "Results" — always black */}
-          <h1 style={{ ...H1, color: '#111111' }}>Results</h1>
+          <h1 className="hero-title-results" style={{ ...H1, color: '#111111' }}>Results</h1>
 
           {/* CTA group: button + asterisk */}
           <div
@@ -229,14 +244,15 @@ export default function Hero() {
           </div>
 
           {/* Grey "that" */}
-          <h1 ref={thatRef} style={{ ...H1, color: '#D1D1D1' }}>that</h1>
+          <h1 ref={thatRef} className="hero-title-that" style={{ ...H1, color: '#D1D1D1' }}>that</h1>
 
           {/* Grey "scale" */}
-          <h1 ref={matterRef} style={{ ...H1, color: '#D1D1D1' }}>scale</h1>
+          <h1 ref={matterRef} className="hero-title-scale" style={{ ...H1, color: '#D1D1D1' }}>scale</h1>
 
           {/* Black shade overlay — grows width left→right to reveal black text */}
           <div
             ref={shadeRef}
+            className="hero-shade"
             style={{
               position: 'absolute',
               left: 0,
@@ -280,6 +296,7 @@ export default function Hero() {
         {/* Subtitle — absolute bottom right */}
         <div
           ref={descRef}
+          className="hero-desc"
           style={{
             position: 'absolute',
             bottom: 'clamp(40px, 5vw, 72px)',
