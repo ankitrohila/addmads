@@ -34,30 +34,21 @@ export default function Hero() {
   const shadeMatterRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
-    const isMobile = window.matchMedia('(pointer: coarse)').matches
-
     const ctx = gsap.context(() => {
+      const isMobile = window.matchMedia('(pointer: coarse)').matches
+      const DELAY = isMobile ? 0 : 3.1  // no loader on touch devices
+
       // Asterisk spins on all devices
       gsap.to(asteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
 
-      if (isMobile) {
-        // Touch devices: no pin, no horizontal scroll — instant reveal
-        // (Loader is skipped on mobile, so no delay needed)
-        gsap.set(movingRef.current, { opacity: 1, x: 0, y: 0 })
-        gsap.set(descRef.current, { opacity: 1 })
-        return
-      }
-
-      // ── Desktop-only: loader entrance + horizontal scroll pin ──
-      const DELAY = 3.1
-
+      // Entrance animations (instant on mobile — no loader)
       gsap.fromTo(movingRef.current,
-        { opacity: 0, y: 32 },
-        { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', delay: DELAY }
+        { opacity: 0, y: isMobile ? 0 : 32 },
+        { opacity: 1, y: 0, duration: isMobile ? 0.5 : 1.2, ease: 'power4.out', delay: DELAY }
       )
       gsap.fromTo(descRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.9, ease: 'power3.out', delay: DELAY + 0.4 }
+        { opacity: 1, duration: 0.9, ease: 'power3.out', delay: DELAY + (isMobile ? 0.2 : 0.4) }
       )
 
       const moving = movingRef.current
@@ -66,7 +57,7 @@ export default function Hero() {
       const btnTxt = btnTextRef.current
       if (!moving || !outer) return
 
-      // Use quickSetter for high-frequency scroll updates (lighter than gsap.set)
+      // quickSetter: much lighter than gsap.set() for high-frequency scroll callbacks
       const setX    = gsap.quickSetter(moving, 'x', 'px')
       const setW    = gsap.quickSetter(btn as Element, 'width', 'px')
       const setPL   = gsap.quickSetter(btn as Element, 'paddingLeft', 'px')
@@ -95,6 +86,7 @@ export default function Hero() {
         start: 'top top',
         end: () => `+=${Math.abs(getEnd()) * 1.4}`,
         pin: true,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
         scrub: false,
         onRefresh: syncShadePositions,
@@ -176,6 +168,7 @@ export default function Hero() {
             paddingLeft: 'var(--container-px)',
             paddingRight: 'var(--container-px)',
             opacity: 0,
+            willChange: 'transform',
           }}
         >
           {/* "Results" — always black */}

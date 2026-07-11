@@ -278,59 +278,6 @@ html.lenis, html.lenis body { height: auto; }
     -webkit-overflow-scrolling: touch;
   }
 
-  /* ── Hero: no horizontal pin on mobile — stacked vertical layout ── */
-  #hero .hero-outer {
-    overflow: visible !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-    padding: clamp(100px, 20vw, 160px) 0 clamp(60px, 12vw, 100px) !important;
-    height: 100svh !important;
-  }
-  #hero .hero-row {
-    flex-wrap: wrap !important;
-    align-items: flex-start !important;
-    gap: 0 !important;
-    padding: 0 var(--container-px) !important;
-  }
-  /* "Results" — full width line */
-  #hero .hero-title-results {
-    order: 1 !important;
-    width: 100% !important;
-    white-space: normal !important;
-    font-size: clamp(3.2rem, 17vw, 6rem) !important;
-    line-height: 1.05 !important;
-    margin-bottom: 0 !important;
-  }
-  /* "that" and "scale" — same line after Results */
-  #hero .hero-title-that,
-  #hero .hero-title-scale {
-    order: 2 !important;
-    white-space: normal !important;
-    font-size: clamp(3.2rem, 17vw, 6rem) !important;
-    line-height: 1.05 !important;
-  }
-  #hero .hero-title-that { margin-right: 0.3em !important; }
-  /* CTA group below the title lines */
-  #hero .hero-cta-group {
-    order: 3 !important;
-    width: 100% !important;
-    margin-top: clamp(28px, 6vw, 48px) !important;
-    opacity: 1 !important;
-  }
-  /* Shade overlay: hide on mobile (desktop-only colour-reveal effect) */
-  #hero .hero-shade {
-    display: none !important;
-  }
-  /* Subtitle: relative flow on mobile instead of absolute */
-  #hero .hero-desc {
-    position: relative !important;
-    bottom: auto !important;
-    right: auto !important;
-    text-align: left !important;
-    max-width: 100% !important;
-    padding: clamp(24px, 5vw, 40px) var(--container-px) 0 !important;
-    opacity: 1 !important;
-  }
 }
 
 /* ─── Mobile ──────────────────────────────────── */
