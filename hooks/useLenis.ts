@@ -7,21 +7,22 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function isIOS() {
+function isSafariLike() {
   if (typeof navigator === 'undefined') return false
-  return (
-    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-  )
+  const ua = navigator.userAgent
+  // iOS devices
+  if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return true
+  // Desktop Safari — has 'Safari' but not 'Chrome' or 'Chromium' or 'Android'
+  return /^((?!chrome|android|chromium).)*safari/i.test(ua)
 }
 
 export function useLenis() {
   const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
-    // iOS/Safari: skip Lenis entirely — native momentum scroll is already smooth,
-    // and Lenis + GSAP fixed-position pins causes tearing on Safari.
-    if (isIOS()) {
+    // iOS + Safari desktop: skip Lenis entirely — native momentum scroll is smooth,
+    // and Lenis + GSAP fixed-position pins causes tearing and scroll jank on Safari.
+    if (isSafariLike()) {
       ScrollTrigger.config({ ignoreMobileResize: true })
       const onScroll = () => ScrollTrigger.update()
       window.addEventListener('scroll', onScroll, { passive: true })

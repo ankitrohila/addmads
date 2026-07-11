@@ -472,6 +472,19 @@ html.lenis, html.lenis body { height: auto; }
   }
 }
 
+/* ─── Safari GPU artifact fixes ─────────────── */
+/* Isolate sections so the cursor mix-blend-mode doesn't bleed through GPU layers */
+section, footer, header, nav {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  isolation: isolate;
+}
+/* Prevent GSAP will-change compositing ghosts on Safari */
+.line-inner, .marquee-track, .h-scroll-track {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 /* ─── Reduced Motion ──────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
