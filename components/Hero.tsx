@@ -43,11 +43,19 @@ export default function Hero() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  // Mobile asterisk spin
+  // Mobile animations: entrance + asterisk spin
   useEffect(() => {
-    if (!isMobile || !mobileAsteriskRef.current) return
+    if (!isMobile) return
+    const DELAY = 3.1
     const ctx = gsap.context(() => {
-      gsap.to(mobileAsteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
+      // Fade + rise for each content element in sequence
+      gsap.fromTo('[data-mh="1"]', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out', delay: DELAY })
+      gsap.fromTo('[data-mh="2"]', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out', delay: DELAY + 0.1 })
+      gsap.fromTo('[data-mh="3"]', { opacity: 0 },         { opacity: 1,       duration: 0.9, ease: 'power3.out', delay: DELAY + 0.3 })
+      gsap.fromTo('[data-mh="4"]', { opacity: 0 },         { opacity: 1,       duration: 0.9, ease: 'power3.out', delay: DELAY + 0.45 })
+      if (mobileAsteriskRef.current) {
+        gsap.to(mobileAsteriskRef.current, { rotation: 360, duration: 10, ease: 'none', repeat: -1 })
+      }
     })
     return () => ctx.revert()
   }, [isMobile])
@@ -163,19 +171,25 @@ export default function Hero() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isMobile])
 
-  // ── Mobile Hero — clean static layout ──────────────────────────────────────
+  // ── Mobile Hero — full screen, content pinned to bottom ───────────────────
   if (isMobile) {
     return (
       <section style={{
         background: '#FFFFFF',
-        minHeight: '100svh',
+        height: '100svh',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: `calc(var(--nav-h) + 48px) var(--container-px) clamp(48px,10vw,72px)`,
+        paddingTop: 'var(--nav-h)',
+        paddingLeft: 'var(--container-px)',
+        paddingRight: 'var(--container-px)',
+        paddingBottom: 'clamp(40px,8vw,60px)',
+        overflow: 'hidden',
       }}>
+        {/* Spacer pushes content to bottom */}
+        <div style={{ flex: 1 }} />
+
         {/* Titles */}
         <h1 style={{
           fontFamily: 'var(--font-tight)',
@@ -184,7 +198,8 @@ export default function Hero() {
           lineHeight: 1.1,
           color: '#111111',
           margin: 0,
-        }}>Results</h1>
+          opacity: 0,
+        }} data-mh="1">Results</h1>
         <h1 style={{
           fontFamily: 'var(--font-tight)',
           fontSize: 'clamp(3.2rem, 16vw, 5rem)',
@@ -192,10 +207,11 @@ export default function Hero() {
           lineHeight: 1.1,
           color: '#D1D1D1',
           margin: '0 0 32px 0',
-        }}>that scale</h1>
+          opacity: 0,
+        }} data-mh="2">that scale</h1>
 
         {/* CTA row: button + asterisk */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 32, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 32, flexWrap: 'wrap', opacity: 0 }} data-mh="3">
           <a href="/contact" style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -234,7 +250,8 @@ export default function Hero() {
           lineHeight: 1.65,
           margin: 0,
           maxWidth: 340,
-        }}>
+          opacity: 0,
+        }} data-mh="4">
           Performance marketing &amp; digital growth. We turn ad spend into measurable results.
         </p>
       </section>

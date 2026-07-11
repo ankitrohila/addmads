@@ -305,34 +305,29 @@ html.lenis, html.lenis body { height: auto; }
     flex-direction: column !important;
   }
 
-  /* ── About section (desktop: pinned scroll animation → mobile: red static) ── */
+  /* ── About section (mobile: scroll-triggered red sweep animation) ── */
   .about-section {
     height: auto !important;
     min-height: auto !important;
     padding: clamp(60px,10vw,100px) var(--container-px) !important;
-    overflow: visible !important;
-    background: #C82A2A !important;
+    overflow: hidden !important;
   }
-  /* Red overlay: show as fully covering the section */
-  .about-section > div:first-child {
-    transform: scaleY(1) !important;
-  }
-  /* Each row wraps on mobile */
+  /* Each row wraps on mobile, images + arrow + button stay visible */
   .about-row {
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     gap: 10px 14px !important;
     width: 100% !important;
   }
-  /* White text on red background */
+  /* Text size — color is animated by GSAP (dark → white as red rises) */
   .about-word {
     font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
     white-space: nowrap !important;
-    color: #FFFFFF !important;
   }
-  /* Hide the img group and arrow on mobile (simplified view) */
-  .about-section .about-row > div:not(:first-child):not(:last-child) {
-    display: none !important;
+  /* Scale images down for mobile so they fit inline with text */
+  .about-section-img {
+    width: clamp(44px, 10vw, 60px) !important;
+    height: clamp(44px, 10vw, 60px) !important;
   }
 
   /* ── Services cards grid ── */
@@ -417,8 +412,12 @@ html.lenis, html.lenis body { height: auto; }
     grid-template-columns: 1fr !important;
   }
 
-  /* ── Footer services: always show plain vertical list ── */
-  .footer-services-desktop { display: flex !important; }
+  /* ── Footer services: show full plain list, no scroll needed ── */
+  .footer-services-desktop {
+    display: flex !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
   .footer-services-mobile { display: none !important; }
 
   /* ── Footer grid ── */
