@@ -83,6 +83,30 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
 
+/* ─── HARDCODED mobile fix: force native scroll on all touch devices ─── */
+/* This CSS override beats Lenis even if JS detection fails */
+@media (hover: none) and (pointer: coarse) {
+  html, html.lenis {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+  html.lenis body, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    touch-action: pan-y !important;
+  }
+  /* Lenis virtual scroll classes — disabled on mobile */
+  .lenis.lenis-smooth,
+  .lenis.lenis-stopped {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+}
+
 /* ─── Custom Cursor (mix-blend-mode: difference — auto color invert) ── */
 .cursor-dot {
   position: fixed;

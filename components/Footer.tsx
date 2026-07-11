@@ -128,11 +128,11 @@ export default function Footer() {
               ))}
             </ul>
             {/* Legal links under company nav */}
-            <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: 12 }}>
               {COL_LEGAL.map(l => (
-                <Link key={l.label} href={l.href} style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: 'rgba(223,223,223,0.45)', textDecoration: 'none', transition: 'color 0.3s' }}
-                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)'}
-                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.28)'}
+                <Link key={l.label} href={l.href} style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: 400, color: 'rgba(223,223,223,0.85)', textDecoration: 'none', transition: 'color 0.3s' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(223,223,223,0.85)'}
                 >{l.label}</Link>
               ))}
             </div>
