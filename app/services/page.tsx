@@ -32,7 +32,15 @@ const SERVICE_IMAGES: Record<string, string> = {
 export default function ServicesPage() {
   const heroRef = useRef<HTMLDivElement>(null)
   const [activeHover, setActiveHover] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const imageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -71,6 +79,7 @@ export default function ServicesPage() {
         <section
           ref={heroRef}
           data-dark
+          className="services-page-hero"
           style={{ background: '#111111', color: '#FFFFFF', padding: 'clamp(100px,14vw,180px) var(--container-px) clamp(80px,10vw,140px)', minHeight: '70vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}
         >
           <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 70% 50%, rgba(230,0,0,0.07) 0%, transparent 60%)', pointerEvents: 'none' }} />
@@ -94,7 +103,7 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, borderTop: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexWrap: 'wrap' }}>
+          <div className="services-hero-stats" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, borderTop: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexWrap: 'wrap' }}>
             {STATS.map((s, i) => (
               <div key={i} style={{ flex: 1, minWidth: 120, padding: '20px var(--container-px)', borderRight: i < STATS.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', textAlign: 'center' }}>
                 <div style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.5rem,3vw,2.25rem)', fontWeight: 700, color: '#E60000' }}>{s.value}</div>
@@ -113,35 +122,37 @@ export default function ServicesPage() {
             </h2>
           </div>
 
-          {/* Floating hover image */}
-          <div
-            ref={imageRef}
-            style={{
-              position: 'fixed',
-              top: '50%',
-              right: '8%',
-              width: 320,
-              height: 400,
-              borderRadius: 16,
-              overflow: 'hidden',
-              opacity: 0,
-              scale: 0.95,
-              pointerEvents: 'none',
-              zIndex: 30,
-              transform: 'translateY(-50%)',
-              boxShadow: '0 24px 64px rgba(0,0,0,0.2)',
-            }}
-          >
-            {activeHover !== null && (
-              <Image
-                src={SERVICE_IMAGES[MEGA_MENU_CATEGORIES[activeHover]?.id] || SERVICE_IMAGES.marketing}
-                alt={MEGA_MENU_CATEGORIES[activeHover]?.label || ''}
-                fill
-                sizes="320px"
-                style={{ objectFit: 'cover' }}
-              />
-            )}
-          </div>
+          {/* Floating hover image — desktop only */}
+          {!isMobile && (
+            <div
+              ref={imageRef}
+              style={{
+                position: 'fixed',
+                top: '50%',
+                right: '8%',
+                width: 320,
+                height: 400,
+                borderRadius: 16,
+                overflow: 'hidden',
+                opacity: 0,
+                scale: 0.95,
+                pointerEvents: 'none',
+                zIndex: 30,
+                transform: 'translateY(-50%)',
+                boxShadow: '0 24px 64px rgba(0,0,0,0.2)',
+              }}
+            >
+              {activeHover !== null && (
+                <Image
+                  src={SERVICE_IMAGES[MEGA_MENU_CATEGORIES[activeHover]?.id] || SERVICE_IMAGES.marketing}
+                  alt={MEGA_MENU_CATEGORIES[activeHover]?.label || ''}
+                  fill
+                  sizes="320px"
+                  style={{ objectFit: 'cover' }}
+                />
+              )}
+            </div>
+          )}
 
           <div>
             {MEGA_MENU_CATEGORIES.map((cat, i) => (
@@ -152,26 +163,39 @@ export default function ServicesPage() {
                   opacity: 0,
                   borderTop: '1px solid rgba(17,17,17,0.08)',
                   padding: '32px 0',
-                  cursor: 'pointer',
+                  cursor: isMobile ? 'default' : 'pointer',
                   transition: 'background 0.3s',
                   borderBottom: i === MEGA_MENU_CATEGORIES.length - 1 ? '1px solid rgba(17,17,17,0.08)' : 'none',
                 }}
-                onMouseEnter={() => setActiveHover(i)}
-                onMouseLeave={() => setActiveHover(null)}
+                onMouseEnter={() => { if (!isMobile) setActiveHover(i) }}
+                onMouseLeave={() => { if (!isMobile) setActiveHover(null) }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 24, flex: 1 }}>
-                    <span style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.75rem,4vw,3rem)', fontWeight: 700, lineHeight: 1, color: activeHover === i ? '#E60000' : '#111111', transition: 'color 0.3s' }}>
+                <div className="svc-item-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+                  <div className="svc-item-left" style={{ display: 'flex', alignItems: 'center', gap: 24, flex: 1 }}>
+                    <span className="svc-item-num" style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.75rem,4vw,3rem)', fontWeight: 700, lineHeight: 1, color: activeHover === i ? '#E60000' : '#111111', transition: 'color 0.3s', flexShrink: 0 }}>
                       {String(i + 1).padStart(2, '0')}.
                     </span>
-                    <div>
+                    <div className="svc-item-text">
                       <h3 style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.25rem,2.5vw,2rem)', fontWeight: 600, color: activeHover === i ? '#E60000' : '#111111', transition: 'color 0.3s', margin: 0, lineHeight: 1.2 }}>
                         {cat.label}
                       </h3>
                       <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: 'rgba(17,17,17,0.5)', margin: '6px 0 0 0' }}>{cat.description}</p>
+                      {/* Pills — inline on desktop, shown here on mobile below text */}
+                      <div className="svc-item-pills-mobile" style={{ display: 'none', gap: 6, flexWrap: 'wrap', marginTop: 12 }}>
+                        {cat.services.slice(0, 4).map(svc => (
+                          <Link key={svc.href} href={svc.href} onClick={e => e.stopPropagation()} style={{
+                            fontFamily: 'var(--font-sans)', fontSize: '0.75rem', fontWeight: 500,
+                            color: '#E60000', background: 'rgba(230,0,0,0.06)', padding: '5px 12px',
+                            borderRadius: 20, textDecoration: 'none',
+                          }}>
+                            {svc.label}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', maxWidth: 360, justifyContent: 'flex-end' }}>
+                  {/* Pills — desktop right side */}
+                  <div className="svc-item-pills" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', maxWidth: 360, justifyContent: 'flex-end' }}>
                     {cat.services.slice(0, 4).map(svc => (
                       <Link key={svc.href} href={svc.href} onClick={e => e.stopPropagation()} style={{
                         fontFamily: 'var(--font-sans)', fontSize: '0.75rem', fontWeight: 500,
@@ -184,7 +208,7 @@ export default function ServicesPage() {
                       </Link>
                     ))}
                   </div>
-                  <Link href={cat.href} style={{
+                  <Link href={cat.href} className="svc-item-arrow" style={{
                     flexShrink: 0, width: 48, height: 48, borderRadius: '50%',
                     background: activeHover === i ? '#E60000' : '#111111',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -194,31 +218,33 @@ export default function ServicesPage() {
                   }}>→</Link>
                 </div>
 
-                {/* Sub-services expanded on hover */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                  gap: 12,
-                  maxHeight: activeHover === i ? 200 : 0,
-                  overflow: 'hidden',
-                  transition: 'max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s',
-                  opacity: activeHover === i ? 1 : 0,
-                  marginTop: activeHover === i ? 24 : 0,
-                }}>
-                  {cat.services.map(svc => (
-                    <Link key={svc.href} href={svc.href} style={{
-                      display: 'block',
-                      fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', fontWeight: 400,
-                      color: '#333', textDecoration: 'none', padding: '8px 14px',
-                      borderRadius: 8, background: 'rgba(17,17,17,0.03)',
-                      transition: 'background 0.2s, color 0.2s',
-                    }}
-                      onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(17,17,17,0.07)'; el.style.color = '#111' }}
-                      onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(17,17,17,0.03)'; el.style.color = '#333' }}>
-                      {svc.label}
-                    </Link>
-                  ))}
-                </div>
+                {/* Sub-services expanded on hover — desktop only */}
+                {!isMobile && (
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                    gap: 12,
+                    maxHeight: activeHover === i ? 200 : 0,
+                    overflow: 'hidden',
+                    transition: 'max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s',
+                    opacity: activeHover === i ? 1 : 0,
+                    marginTop: activeHover === i ? 24 : 0,
+                  }}>
+                    {cat.services.map(svc => (
+                      <Link key={svc.href} href={svc.href} style={{
+                        display: 'block',
+                        fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', fontWeight: 400,
+                        color: '#333', textDecoration: 'none', padding: '8px 14px',
+                        borderRadius: 8, background: 'rgba(17,17,17,0.03)',
+                        transition: 'background 0.2s, color 0.2s',
+                      }}
+                        onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(17,17,17,0.07)'; el.style.color = '#111' }}
+                        onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(17,17,17,0.03)'; el.style.color = '#333' }}>
+                        {svc.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
