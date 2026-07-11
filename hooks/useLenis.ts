@@ -34,7 +34,6 @@ export function useLenis() {
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      smoothTouch: false,
     })
 
     lenisRef.current = lenis
