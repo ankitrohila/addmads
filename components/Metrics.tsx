@@ -129,10 +129,11 @@ export default function Metrics() {
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
         gap: 'clamp(40px, 5vw, 80px)',
-        alignItems: 'start',
+        alignItems: 'stretch',
       }}>
 
-        {/* ── Left: sticky title — unsticks naturally when section ends ── */}
+        {/* ── Left: wrapper stretches to full grid height so sticky has room ── */}
+        <div style={{ alignSelf: 'stretch' }}>
         <div className="metrics-sticky" style={{
           position: 'sticky',
           top: 'clamp(80px, 10vw, 130px)',
@@ -172,6 +173,7 @@ export default function Metrics() {
               Our numbers
             </span>
           </div>
+        </div>
         </div>
 
         {/* ── Right: naturally scrolling cards ── */}

@@ -2,11 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import useLenis from '@/hooks/useLenis'
-import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const Loader = dynamic(() => import('@/components/Loader'), { ssr: false })
 
@@ -26,18 +22,13 @@ import Footer from '@/components/Footer'
 export default function Home() {
   const [showLoader, setShowLoader] = useState(false)
   const [loaded, setLoaded] = useState(false)
-  useLenis()
 
   useEffect(() => {
     const seen = sessionStorage.getItem('addmads_loaded')
     const isMobile = window.matchMedia('(pointer: coarse)').matches
 
     if (seen || isMobile) {
-      // Skip loader: already seen this session OR mobile device
-      // Mobile skip prevents body.overflow:hidden from locking scroll if GSAP stalls
       setLoaded(true)
-      setTimeout(() => ScrollTrigger.refresh(), 300)
-      setTimeout(() => ScrollTrigger.refresh(), 800)
     } else {
       setShowLoader(true)
       document.body.style.overflow = 'hidden'

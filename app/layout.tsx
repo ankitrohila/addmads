@@ -3,7 +3,7 @@ export const runtime = 'edge'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Inter_Tight } from 'next/font/google'
 import CursorProvider from '@/components/CursorProvider'
-import ScrollInit from '@/components/ScrollInit'
+import LenisInit from '@/components/LenisInit'
 import './globals.css'
 
 const inter = Inter({
@@ -83,7 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning>
         <CursorProvider />
-        <ScrollInit />
+        <LenisInit />
         {children}
       </body>
     </html>

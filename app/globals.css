@@ -37,14 +37,14 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
-  overflow-x: hidden;
+  overflow-x: clip;
   scroll-behavior: auto;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-fg);
-  overflow-x: hidden;
+  overflow-x: clip;
   min-height: 100svh;
   position: relative;
   -webkit-overflow-scrolling: touch;
@@ -494,17 +494,12 @@ html.lenis, html.lenis body { height: auto; }
   }
 }
 
-/* ─── Safari GPU artifact fixes ─────────────── */
-/* Isolate sections so the cursor mix-blend-mode doesn't bleed through GPU layers */
+/* ─── Stacking context isolation ────────────── */
+/* Isolate sections so cursor mix-blend-mode: difference stays contained per section.
+   NOTE: do NOT add backface-visibility or transform here — those create composited
+   layers that break position: sticky on child elements. */
 section, footer, header, nav {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
   isolation: isolate;
-}
-/* Prevent GSAP will-change compositing ghosts on Safari */
-.line-inner, .marquee-track, .h-scroll-track {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 /* ─── Reduced Motion ──────────────────────────── */
