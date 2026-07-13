@@ -33,10 +33,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const isHome = pathname === '/'
+    const isMobileNav = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
     gsap.fromTo(
       navRef.current,
       { yPercent: -100, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 1.1, ease: 'power4.out', delay: isHome ? 3.0 : 0 }
+      { yPercent: 0, opacity: 1, duration: isMobileNav ? 0.4 : 1.1, ease: 'power4.out', delay: isMobileNav ? 0.1 : (isHome ? 3.0 : 0) }
     )
 
     const onScroll = () => {
@@ -77,7 +78,7 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        style={{ opacity: 0, paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)', position: 'relative' }}
+        style={{ opacity: 0, paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)' }}
         className={clsx(
           'fixed left-0 right-0 top-0 z-50 flex items-center justify-between',
           'transition-all duration-500',

@@ -30,12 +30,12 @@ export default function FeaturedWork() {
         cardRefs.current.forEach((card) => {
           if (!card) return
           gsap.fromTo(card,
-            { opacity: 0, y: 60 },
+            { opacity: 0, y: 20 },
             {
-              opacity: 1, y: 0, duration: 0.85, ease: 'power3.out',
+              opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
               scrollTrigger: {
                 trigger: card,
-                start: 'top 82%',
+                start: 'top 98%',
                 toggleActions: 'play none none none',
               },
             }

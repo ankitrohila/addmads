@@ -109,7 +109,7 @@ export default function ContactForm() {
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px 40px', marginBottom: 32 }}>
+            <div className="contact-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px 40px', marginBottom: 32 }}>
               <div>
                 <label style={labelStyle}>Your Name *</label>
                 <input name="name" required placeholder="John Doe" style={inputStyle}
@@ -148,7 +148,7 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div style={{ marginBottom: 32, maxWidth: 'calc(50% - 20px)' }}>
+            <div className="contact-budget-wrap" style={{ marginBottom: 32, maxWidth: 'calc(50% - 20px)' }}>
               <label style={labelStyle}>Budget Range *</label>
               <select name="budget" required style={{ ...inputStyle, cursor: 'pointer', appearance: 'none' as const }}
                 onFocus={e => e.currentTarget.style.borderBottomColor = '#E60000'}

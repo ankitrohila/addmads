@@ -25,6 +25,8 @@ export default function Metrics() {
   const closingRef  = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
+
     const ctx = gsap.context(() => {
       const section = sectionRef.current
       if (!section) return
@@ -68,14 +70,14 @@ export default function Metrics() {
       const allAnimCards = [descCardRef.current, ...cardRefs.current, closingRef.current].filter(Boolean) as HTMLElement[]
       allAnimCards.forEach(card => {
         gsap.fromTo(card,
-          { opacity: 0, y: 42 },
+          { opacity: 0, y: isMobile ? 0 : 42 },
           {
             opacity: 1, y: 0,
-            duration: 0.85,
+            duration: isMobile ? 0.5 : 0.85,
             ease: 'power3.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 90%',
+              start: isMobile ? 'top 100%' : 'top 90%',
               toggleActions: 'play none none none',
               invalidateOnRefresh: true,
             },
