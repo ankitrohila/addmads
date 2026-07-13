@@ -13,15 +13,23 @@ export default function Services() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card, i) => {
         if (!card) return
         gsap.fromTo(card,
-          { opacity: 0, y: 60 },
+          { opacity: 0, y: isMobile ? 0 : 60 },
           {
-            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-            delay: i * 0.08,
-            scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' },
+            opacity: 1, y: 0,
+            duration: isMobile ? 0.5 : 0.8,
+            ease: 'power3.out',
+            delay: isMobile ? 0 : i * 0.08,
+            scrollTrigger: {
+              trigger: card,
+              start: isMobile ? 'top 100%' : 'top 88%',
+              toggleActions: 'play none none none',
+              invalidateOnRefresh: true,
+            },
           }
         )
       })

@@ -61,12 +61,11 @@ export default function Testimonials() {
 
       // Mobile: simple fade-in for each comp, no pin, no 3D
       if (isMobile) {
-        gsap.set(comps, { opacity: 0, y: 40 })
         comps.forEach((comp) => {
           gsap.fromTo(comp,
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-              scrollTrigger: { trigger: comp, start: 'top 88%', toggleActions: 'play none none none' } }
+            { opacity: 0 },
+            { opacity: 1, duration: 0.6, ease: 'power3.out',
+              scrollTrigger: { trigger: comp, start: 'top 100%', toggleActions: 'play none none none' } }
           )
         })
         return

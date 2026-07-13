@@ -290,10 +290,45 @@ html.lenis, html.lenis body { height: auto; }
   button { cursor: pointer; }
   a { cursor: pointer; }
 
+  /* ── Navbar: hide desktop CTA "Get Started" on mobile (btn-red overrides Tailwind hidden) ── */
+  nav > div > a.btn-red,
+  nav .btn-red[href="/contact"] { display: none !important; }
+
   /* ── Global overflow guard ── */
   html, body { overflow-x: hidden; max-width: 100vw; }
   section { overflow-x: hidden; }
   img { max-width: 100%; height: auto; }
+
+  /* ── Hero: vertical stacked layout on mobile ── */
+  .hero-outer {
+    justify-content: flex-start !important;
+    padding-top: clamp(80px, 18vw, 120px) !important;
+    overflow: hidden !important;
+  }
+  .hero-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+    padding-top: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+  .hero-title-results,
+  .hero-title-that,
+  .hero-title-scale {
+    font-size: clamp(3.5rem, 19vw, 5.5rem) !important;
+    white-space: normal !important;
+    line-height: 1.0 !important;
+  }
+  .hero-cta-group { display: none !important; }
+  .hero-shade { display: none !important; }
+  .hero-desc {
+    position: static !important;
+    margin-top: clamp(20px, 5vw, 32px) !important;
+    text-align: left !important;
+    max-width: 100% !important;
+    opacity: 1 !important;
+  }
 
   /* ── About red overlay: hide on all narrow screens (belt + suspenders with pointer:coarse rule) */
   .about-red-overlay { display: none !important; }
@@ -417,20 +452,26 @@ html.lenis, html.lenis body { height: auto; }
   .testimonials-section {
     height: auto !important;
     overflow: visible !important;
-    padding: clamp(32px,6vw,60px) var(--container-px) !important;
+    padding: clamp(32px,6vw,60px) var(--container-px) clamp(48px,8vw,80px) !important;
   }
-  /* Remove the absolute+perspective container on mobile */
+  /* Turn perspective container into a normal flex column */
   .testimonials-section > div {
     position: static !important;
     perspective: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
   }
+  /* Each comp: relative so its internal absolute children position correctly */
   .testimonial-comp {
-    position: static !important;
+    position: relative !important;
     inset: auto !important;
-    margin: 0 0 24px 0 !important;
+    margin: 0 !important;
     width: 100% !important;
     height: clamp(320px, 80vw, 440px) !important;
     transform-style: flat !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
   /* Title section above testimonials — reduce height on mobile */
   .testimonials-section ~ div,

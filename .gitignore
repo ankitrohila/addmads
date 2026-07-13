@@ -46,3 +46,6 @@ Thumbs.db
 *.docx
 *.pdf
 *_out.txt
+
+.vercel
+.env*
