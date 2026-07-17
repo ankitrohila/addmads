@@ -212,6 +212,8 @@ export default function ServiceShowcase() {
           height: 'clamp(300px, 45vh, 500px)',
           paddingTop: 160,
           boxSizing: 'content-box',
+          zIndex: 0,       /* creates stacking context — cards' z-index stays inside this column */
+          overflow: 'hidden',
         }}>
           {SERVICES.map((svc, i) => (
             <div

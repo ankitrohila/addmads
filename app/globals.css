@@ -322,9 +322,14 @@ html.lenis, html.lenis body { height: auto; }
   }
   .hero-cta-group { display: none !important; }
   .hero-shade { display: none !important; }
+  /* Keep hero-desc absolute so it doesn't flow into the flex column (caused "PerPerformance" doubling).
+     Move it to bottom-left on mobile and force opacity:1 so GSAP opacity:0 inline style is overridden. */
   .hero-desc {
-    position: static !important;
-    margin-top: clamp(20px, 5vw, 32px) !important;
+    position: absolute !important;
+    bottom: clamp(20px, 5vw, 32px) !important;
+    left: var(--container-px) !important;
+    right: var(--container-px) !important;
+    top: auto !important;
     text-align: left !important;
     max-width: 100% !important;
     opacity: 1 !important;
