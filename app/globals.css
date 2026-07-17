@@ -624,6 +624,19 @@ html.lenis, html.lenis body { height: auto; }
   }
 }
 
+/* ─── Testimonials: mobile carousel vs desktop 3D scroll ── */
+/* Both layouts are always in the DOM — CSS shows the right one.
+   This avoids unmounting the GSAP-pinned section (which causes removeChild errors). */
+.testimonials-mobile { display: block; }
+.testimonials-desktop-title,
+.testimonials-section { display: none !important; }
+
+@media (min-width: 768px) {
+  .testimonials-mobile { display: none !important; }
+  .testimonials-desktop-title { display: flex !important; }
+  .testimonials-section { display: block !important; }
+}
+
 /* ─── Stacking context isolation ────────────── */
 /* Isolate sections so cursor mix-blend-mode: difference stays contained per section.
    NOTE: do NOT add backface-visibility or transform here — those create composited
