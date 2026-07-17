@@ -16,20 +16,12 @@ const SERVICES = [
 
 const N = SERVICES.length
 
-// Desktop POS: stagger with x for depth
+// Desktop POS: pure y-stack (no x offset — avoids right-edge clipping)
 const POS_D = [
-  { y: 0,    x: 0,  scale: 1,    zIndex: 10 },
-  { y: -68,  x: 20, scale: 0.97, zIndex: 9  },
-  { y: -136, x: 40, scale: 0.94, zIndex: 8  },
-  { y: -204, x: 60, scale: 0.91, zIndex: 7  },
-]
-
-// Mobile POS: no x offset — cards centered
-const POS_M = [
   { y: 0,    x: 0, scale: 1,    zIndex: 10 },
-  { y: -56,  x: 0, scale: 0.97, zIndex: 9  },
-  { y: -112, x: 0, scale: 0.94, zIndex: 8  },
-  { y: -168, x: 0, scale: 0.91, zIndex: 7  },
+  { y: -68,  x: 0, scale: 0.97, zIndex: 9  },
+  { y: -136, x: 0, scale: 0.94, zIndex: 8  },
+  { y: -204, x: 0, scale: 0.91, zIndex: 7  },
 ]
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
@@ -41,17 +33,23 @@ export default function ServiceShowcase() {
 
   useEffect(() => {
     const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
-    const POS = isMobile ? POS_M : POS_D
 
     const ctx = gsap.context(() => {
       const section = sectionRef.current
       if (!section) return
 
-      cardRefs.current.forEach((card, i) => {
-        if (card) gsap.set(card, { y: POS[i].y, x: POS[i].x, scale: POS[i].scale, zIndex: POS[i].zIndex })
-      })
+      if (isMobile) {
+        // Mobile: all cards sit at y:0, only the active card is visible (opacity crossfade)
+        cardRefs.current.forEach((card, i) => {
+          if (card) gsap.set(card, { y: 0, x: 0, scale: 1, opacity: i === 0 ? 1 : 0, zIndex: i === 0 ? 10 : 1 })
+        })
+        return
+      }
 
-      if (isMobile) return
+      // Desktop: staggered y-stack
+      cardRefs.current.forEach((card, i) => {
+        if (card) gsap.set(card, { y: POS_D[i].y, x: POS_D[i].x, scale: POS_D[i].scale, zIndex: POS_D[i].zIndex })
+      })
 
       ScrollTrigger.create({
         trigger: section,
@@ -96,7 +94,7 @@ export default function ServiceShowcase() {
       })
     }, sectionRef)
 
-    // Mobile: auto-cycle cards every 2.5s
+    // Mobile: auto-cycle cards every 2.5s via opacity crossfade
     let intervalId: ReturnType<typeof setInterval> | null = null
     if (isMobile) {
       let cur = 0
@@ -105,14 +103,12 @@ export default function ServiceShowcase() {
         setActiveIdx(cur)
         cardRefs.current.forEach((card, cardI) => {
           if (!card) return
-          const slot = (cardI - cur + N) % N
+          const isActive = cardI === cur
           gsap.to(card, {
-            y: POS[slot].y,
-            x: POS[slot].x,
-            scale: POS[slot].scale,
-            zIndex: POS[slot].zIndex,
-            duration: 0.65,
-            ease: 'power3.out',
+            opacity: isActive ? 1 : 0,
+            zIndex: isActive ? 10 : 1,
+            duration: 0.55,
+            ease: 'power2.inOut',
           })
         })
       }, 2500)
