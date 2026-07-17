@@ -409,34 +409,34 @@ html.lenis, html.lenis body { height: auto; }
   /* ── ServiceShowcase: stack heading + card on mobile ── */
   .services-section {
     height: auto !important;
-    min-height: 100svh !important;
+    min-height: 0 !important;
     align-items: flex-start !important;
-    padding: clamp(80px,14vw,120px) var(--container-px) clamp(60px,10vw,80px) !important;
-    overflow: visible !important;
+    padding: clamp(48px,10vw,80px) var(--container-px) !important;
+    overflow: hidden !important;
   }
   .services-grid {
     grid-template-columns: 1fr !important;
-    gap: 40px !important;
+    gap: clamp(28px,6vw,40px) !important;
     align-items: start !important;
   }
-  .services-heading { font-size: clamp(1.7rem, 8vw, 2.6rem) !important; }
+  .services-heading { font-size: clamp(1.6rem,7vw,2.5rem) !important; }
   .services-stack-col {
     display: block !important;
-    height: clamp(280px, 60vw, 420px) !important;
-    padding-top: 100px !important;
-    overflow: visible !important;
+    height: clamp(260px,70vw,380px) !important;
+    padding-top: 120px !important;
+    overflow: hidden !important;
     position: relative !important;
   }
-  .services-card-item { top: 100px !important; bottom: 0 !important; }
+  .services-card-item { top: 120px !important; bottom: 0 !important; }
   .services-card-header {
     flex-direction: column !important;
     gap: 4px !important;
     align-items: flex-start !important;
     padding: 16px 18px 12px !important;
   }
-  .services-card-title { font-size: 1.5rem !important; }
-  .services-card-image { height: clamp(150px, 28vw, 220px) !important; }
-  .services-card-desc { padding: 12px 18px 16px !important; }
+  .services-card-title { font-size: clamp(1rem,5vw,1.5rem) !important; }
+  .services-card-image { height: clamp(90px,24vw,140px) !important; }
+  .services-card-desc { display: none !important; }
 
   /* ── Metrics (Why choose us) ── */
   .metrics-grid {
@@ -683,33 +683,8 @@ section, footer, header, nav {
     height: clamp(280px, 72vw, 400px) !important;
   }
 
-  /* ── ServiceShowcase: single-column stacked on mobile ── */
-  .services-section {
-    height: auto !important;
-    padding: clamp(48px,10vw,80px) var(--container-px) !important;
-  }
-  .services-grid {
-    grid-template-columns: 1fr !important;
-    gap: clamp(28px,6vw,40px) !important;
-  }
-  .services-heading {
-    font-size: clamp(1.6rem,7vw,2.5rem) !important;
-  }
-  .services-stack-col {
-    height: clamp(260px,70vw,380px) !important;
-    padding-top: 120px !important;
-  }
-  .services-card-item { top: 120px !important; }
-  .services-card-image { height: clamp(90px,24vw,140px) !important; }
-  .services-card-title { font-size: clamp(1rem,5vw,1.5rem) !important; }
-  .services-card-desc { display: none !important; }
-
   /* ── Sticky Services cards: reduce top offset so cards stay readable ── */
   .sticky-service-card {
-    top: calc(64px + 0px) !important; /* flat on mobile */
+    top: 64px !important;
   }
-
-  /* ── FeaturedWork: always show mobile cards ── */
-  .fw-mobile-cards { display: block !important; }
-  .fw-desktop-cards { display: none !important; }
 }
