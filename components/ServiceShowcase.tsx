@@ -8,19 +8,28 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const SERVICES = [
-  { num: '01', name: 'Advertising', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb1dc9797d92e7aae3f_img6.webp',  desc: 'Strategic campaigns that capture attention and drive measurable results.' },
-  { num: '02', name: 'Graphic',     img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68aea452324447dec982d6b3_img9.webp',   desc: 'Visual communication that tells your brand story with impact.' },
-  { num: '03', name: 'Branding',    img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e424_img17.webp',  desc: 'Identity systems built to last across every touchpoint.' },
-  { num: '04', name: 'Website',     img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e41b_img16.webp',  desc: 'Digital experiences that convert visitors into loyal clients.' },
+  { num: '01', name: 'Performance Marketing', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb1dc9797d92e7aae3f_img6.webp',  desc: 'Data-driven campaigns across Google & Meta that turn ad spend into measurable growth.' },
+  { num: '02', name: 'Branding & Identity',   img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68aea452324447dec982d6b3_img9.webp',   desc: 'From strategy to logo — brand systems that people remember and trust.' },
+  { num: '03', name: 'SEO & Content',         img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e424_img17.webp',  desc: 'Rank higher, get found — technical SEO and content that compounds month on month.' },
+  { num: '04', name: 'IT & Web Dev',          img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e41b_img16.webp',  desc: 'Fast, conversion-optimised websites on WordPress, Shopify, Next.js, and more.' },
 ]
 
 const N = SERVICES.length
 
-const POS = [
+// Desktop POS: stagger with x for depth
+const POS_D = [
   { y: 0,    x: 0,  scale: 1,    zIndex: 10 },
   { y: -68,  x: 20, scale: 0.97, zIndex: 9  },
   { y: -136, x: 40, scale: 0.94, zIndex: 8  },
   { y: -204, x: 60, scale: 0.91, zIndex: 7  },
+]
+
+// Mobile POS: no x offset — cards centered
+const POS_M = [
+  { y: 0,    x: 0, scale: 1,    zIndex: 10 },
+  { y: -56,  x: 0, scale: 0.97, zIndex: 9  },
+  { y: -112, x: 0, scale: 0.94, zIndex: 8  },
+  { y: -168, x: 0, scale: 0.91, zIndex: 7  },
 ]
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
@@ -32,6 +41,7 @@ export default function ServiceShowcase() {
 
   useEffect(() => {
     const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
+    const POS = isMobile ? POS_M : POS_D
 
     const ctx = gsap.context(() => {
       const section = sectionRef.current
@@ -41,7 +51,7 @@ export default function ServiceShowcase() {
         if (card) gsap.set(card, { y: POS[i].y, x: POS[i].x, scale: POS[i].scale, zIndex: POS[i].zIndex })
       })
 
-      if (isMobile) return  // interval handled outside context
+      if (isMobile) return
 
       ScrollTrigger.create({
         trigger: section,
@@ -199,8 +209,8 @@ export default function ServiceShowcase() {
         {/* ── Right: stacking cards ── */}
         <div className="services-stack-col" style={{
           position: 'relative',
-          height: 'clamp(360px, 50vh, 540px)',
-          paddingTop: 220,
+          height: 'clamp(300px, 45vh, 500px)',
+          paddingTop: 160,
           boxSizing: 'content-box',
         }}>
           {SERVICES.map((svc, i) => (
@@ -211,7 +221,7 @@ export default function ServiceShowcase() {
               style={{
                 position: 'absolute',
                 left: 0, right: 0,
-                top: 220,
+                top: 160,
                 bottom: 0,
                 background: '#FFFFFF',
                 borderRadius: 20,
@@ -221,7 +231,7 @@ export default function ServiceShowcase() {
               }}
             >
               <div className="services-card-header" style={{
-                padding: 'clamp(16px, 2vw, 26px) clamp(18px, 2.2vw, 28px)',
+                padding: 'clamp(14px, 1.8vw, 22px) clamp(16px, 2vw, 24px)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
@@ -237,16 +247,17 @@ export default function ServiceShowcase() {
                 </span>
                 <span className="services-card-title" style={{
                   fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(1.6rem, 2.8vw, 2.6rem)',
+                  fontSize: 'clamp(1.25rem, 2.2vw, 2.2rem)',
                   fontWeight: 500,
                   color: '#111111',
                   lineHeight: 1,
+                  textAlign: 'right',
                 }}>
                   {svc.name}
                 </span>
               </div>
 
-              <div className="services-card-image" style={{ height: 'clamp(140px, 22vh, 260px)', overflow: 'hidden', position: 'relative' }}>
+              <div className="services-card-image" style={{ height: 'clamp(120px, 18vh, 240px)', overflow: 'hidden', position: 'relative' }}>
                 <Image
                   src={svc.img}
                   alt={svc.name}
@@ -256,10 +267,10 @@ export default function ServiceShowcase() {
                 />
               </div>
 
-              <div className="services-card-desc" style={{ padding: 'clamp(12px, 1.6vw, 20px) clamp(18px, 2.2vw, 28px)' }}>
+              <div className="services-card-desc" style={{ padding: 'clamp(10px, 1.4vw, 18px) clamp(16px, 2vw, 24px)' }}>
                 <p style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.875rem',
+                  fontSize: 'clamp(0.8rem, 1vw, 0.9rem)',
                   color: 'rgba(17,17,17,0.5)',
                   lineHeight: 1.6,
                   margin: 0,

@@ -1,159 +1,153 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SERVICES } from '@/constants'
 
-gsap.registerPlugin(ScrollTrigger)
+// Background shades per card — subtle progression so the stack looks layered
+const BG = ['#FFFFFF', '#FAFAFA', '#F7F7F7', '#F5F5F5', '#F2F2F2', '#EFEFEF']
 
 export default function Services() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
-    const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return
-        gsap.fromTo(card,
-          { opacity: 0, y: isMobile ? 0 : 60 },
-          {
-            opacity: 1, y: 0,
-            duration: isMobile ? 0.5 : 0.8,
-            ease: 'power3.out',
-            delay: isMobile ? 0 : i * 0.08,
-            scrollTrigger: {
-              trigger: card,
-              start: isMobile ? 'top 100%' : 'top 88%',
-              toggleActions: 'play none none none',
-              invalidateOnRefresh: true,
-            },
-          }
-        )
-      })
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <section
-      ref={sectionRef}
-      style={{
-        background: '#FFFFFF',
-        padding: 'clamp(80px, 10vw, 140px) var(--container-px)',
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div className="services-card-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 24,
+    <section style={{ background: '#F0F0F0' }}>
+      {/* Section header */}
+      <div style={{
+        padding: 'clamp(80px,10vw,140px) var(--container-px) clamp(40px,5vw,64px)',
+        maxWidth: 1280,
+        margin: '0 auto',
+      }}>
+        <p style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: '0.75rem', fontWeight: 600,
+          letterSpacing: '0.12em', textTransform: 'uppercase',
+          color: '#C82A2A', marginBottom: 14,
         }}>
+          What We Offer
+        </p>
+        <h2 style={{
+          fontFamily: 'var(--font-tight)',
+          fontSize: 'clamp(2rem,5vw,4rem)',
+          fontWeight: 500, color: '#111111', lineHeight: 1.1, margin: 0,
+        }}>
+          Services built for growth.
+        </h2>
+      </div>
+
+      {/* Sticky stack */}
+      <div style={{ padding: '0 var(--container-px)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           {SERVICES.map((svc, i) => (
             <div
               key={svc.number}
-              ref={el => { cardsRef.current[i] = el }}
+              className="sticky-service-card"
               style={{
-                opacity: 0,
-                background: '#FFFFFF',
-                border: '1px solid rgba(17,17,17,0.08)',
-                borderRadius: 12,
-                padding: 'clamp(24px, 3vw, 36px)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                minHeight: 340,
-                transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)'
-                ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(17,17,17,0.14)'
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.boxShadow = 'none'
-                ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(17,17,17,0.08)'
+                position: 'sticky',
+                top: `calc(72px + ${i * 8}px)`,
+                zIndex: i + 1,
               }}
             >
-              <div>
-                <span style={{
-                  fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
-                  fontWeight: 500,
-                  color: 'rgba(230,0,0,0.15)',
-                  lineHeight: 1,
-                  display: 'block',
-                  marginBottom: 16,
-                }}>
-                  {svc.number}
-                </span>
+              <div style={{
+                background: BG[i] || '#FFFFFF',
+                border: '1px solid rgba(17,17,17,0.07)',
+                borderRadius: '20px 20px 0 0',
+                padding: 'clamp(28px,3.5vw,48px)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'clamp(12px,1.5vw,18px)',
+                boxShadow: i > 0 ? '0 -4px 32px rgba(0,0,0,0.06)' : 'none',
+              }}>
 
-                <h3 style={{
-                  fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)',
-                  fontWeight: 600,
-                  color: '#111111',
-                  lineHeight: 1.3,
-                  marginBottom: 12,
+                {/* Top row */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  gap: 16,
+                  flexWrap: 'wrap',
                 }}>
-                  {svc.title}
-                </h3>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
+                    <span style={{
+                      fontFamily: 'var(--font-tight)',
+                      fontSize: 'clamp(2rem,4vw,3.5rem)',
+                      fontWeight: 500,
+                      color: 'rgba(200,42,42,0.12)',
+                      lineHeight: 1,
+                      flexShrink: 0,
+                    }}>
+                      {svc.number}
+                    </span>
+                    <h3 style={{
+                      fontFamily: 'var(--font-tight)',
+                      fontSize: 'clamp(1.25rem,2.2vw,2rem)',
+                      fontWeight: 600,
+                      color: '#111111',
+                      lineHeight: 1.15,
+                      margin: 0,
+                    }}>
+                      {svc.title}
+                    </h3>
+                  </div>
+                  <Link
+                    href={`/services/${svc.slug}`}
+                    style={{
+                      flexShrink: 0,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '0.875rem',
+                      fontWeight: 600,
+                      color: '#C82A2A',
+                      textDecoration: 'none',
+                      marginTop: 6,
+                      transition: 'gap 0.2s ease',
+                    }}
+                    onMouseEnter={e => ((e.currentTarget as HTMLElement).style.gap = '12px')}
+                    onMouseLeave={e => ((e.currentTarget as HTMLElement).style.gap = '6px')}
+                  >
+                    Learn More →
+                  </Link>
+                </div>
 
                 <p style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.875rem',
+                  fontSize: 'clamp(0.875rem,1.15vw,1rem)',
                   color: 'rgba(17,17,17,0.55)',
-                  lineHeight: 1.7,
-                  margin: '0 0 20px 0',
+                  lineHeight: 1.75,
+                  margin: 0,
+                  maxWidth: 680,
                 }}>
                   {svc.description}
                 </p>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 24 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {svc.tags.map(tag => (
                     <span
                       key={tag}
                       style={{
                         fontFamily: 'var(--font-sans)',
                         fontSize: '0.6875rem',
-                        fontWeight: 500,
-                        color: '#E60000',
-                        background: 'rgba(230,0,0,0.06)',
-                        padding: '4px 10px',
-                        borderRadius: 4,
+                        fontWeight: 600,
+                        color: '#C82A2A',
+                        background: 'rgba(200,42,42,0.07)',
+                        padding: '4px 12px',
+                        borderRadius: 20,
                         textTransform: 'uppercase',
-                        letterSpacing: '0.03em',
+                        letterSpacing: '0.04em',
                       }}
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-              </div>
 
-              <Link
-                href={`/services/${svc.slug}`}
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  color: '#E60000',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  transition: 'gap 0.2s ease',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.gap = '12px' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.gap = '6px' }}
-              >
-                Learn More →
-              </Link>
+              </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Bottom spacer so last card is fully readable */}
+      <div style={{ height: 'clamp(80px,12vw,140px)', background: '#EFEFEF' }} />
     </section>
   )
 }

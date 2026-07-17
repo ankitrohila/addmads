@@ -8,9 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const PROJECTS = [
-  { id: 1, title: 'Freight Line', category: 'Website design', image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb21fca2720f8edf53e_m4.webp' },
-  { id: 2, title: 'Helvetica',    category: 'Ads Direction',  image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb0fe820b5e5e3b2313_m2.webp' },
-  { id: 3, title: 'Marginal',     category: 'Brand Identity', image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb12d1cf332d8e24e8c_m3.webp' },
+  { id: 1, title: 'Performance Marketing', category: 'Google & Meta Ads · ROI-First Campaigns', image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb1dc9797d92e7aae3f_img6.webp' },
+  { id: 2, title: 'Brand & Identity',      category: 'Strategy · Logo · Visual System',        image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68aea452324447dec982d6b3_img9.webp' },
+  { id: 3, title: 'IT & Web Development',  category: 'Next.js · Shopify · WordPress · Apps',   image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e41b_img16.webp' },
 ]
 
 const N = PROJECTS.length
@@ -99,7 +99,7 @@ export default function FeaturedWork() {
             textTransform: 'uppercase',
             marginBottom: 10,
           }}>
-            Our work
+            What we do
           </div>
           <div style={{
             fontFamily: 'var(--font-tight)',
@@ -108,7 +108,7 @@ export default function FeaturedWork() {
             color: '#FFFFFF',
             lineHeight: 1.05,
           }}>
-            Discover.
+            Our Services.
           </div>
         </div>
 

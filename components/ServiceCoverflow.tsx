@@ -24,6 +24,9 @@ export default function ServiceCoverflow({ title, cards }: Props) {
   const touchStartX = useRef<number>(0)
   const touchStartY = useRef<number>(0)
   const isDragging = useRef(false)
+  const mouseStartX = useRef<number>(0)
+  const isMouseDragging = useRef(false)
+  const mouseMoved = useRef(false)
 
   // Measure real card width after render/resize
   useEffect(() => {
@@ -38,6 +41,7 @@ export default function ServiceCoverflow({ title, cards }: Props) {
   const prev = useCallback(() => setActive(a => Math.max(0, a - 1)), [])
   const next = useCallback(() => setActive(a => Math.min(cards.length - 1, a + 1)), [cards.length])
 
+  // Touch handlers
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
     touchStartY.current = e.touches[0].clientY
@@ -53,6 +57,32 @@ export default function ServiceCoverflow({ title, cards }: Props) {
     const dx = e.changedTouches[0].clientX - touchStartX.current
     if (dx < -40) next()
     else if (dx > 40) prev()
+  }
+
+  // Mouse drag handlers
+  const onMouseDown = (e: React.MouseEvent) => {
+    mouseStartX.current = e.clientX
+    isMouseDragging.current = true
+    mouseMoved.current = false
+    e.preventDefault()
+  }
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDragging.current) return
+    const dx = Math.abs(e.clientX - mouseStartX.current)
+    if (dx > 8) mouseMoved.current = true
+  }
+  const onMouseUp = (e: React.MouseEvent) => {
+    if (!isMouseDragging.current) return
+    isMouseDragging.current = false
+    if (!mouseMoved.current) return
+    const dx = e.clientX - mouseStartX.current
+    if (dx < -40) next()
+    else if (dx > 40) prev()
+  }
+  const onMouseLeave = () => {
+    if (isMouseDragging.current && mouseMoved.current) {
+      isMouseDragging.current = false
+    }
   }
 
   const getCardStyle = (i: number): React.CSSProperties => {
@@ -140,10 +170,14 @@ export default function ServiceCoverflow({ title, cards }: Props) {
 
       {/* Coverflow track */}
       <div
-        style={{ perspective: 1200, overflow: 'hidden' }}
+        style={{ perspective: 1200, overflow: 'hidden', cursor: isMouseDragging.current ? 'grabbing' : 'grab' }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
       >
         <div style={{
           display: 'flex',

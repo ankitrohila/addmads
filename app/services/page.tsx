@@ -9,6 +9,7 @@ import { MEGA_MENU_CATEGORIES } from '@/constants'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import UnifiedForm from '@/components/UnifiedForm'
+import Testimonials from '@/components/Testimonials'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -332,7 +333,10 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* ── 6. UNIFIED FORM ── */}
+        {/* ── 6. TESTIMONIALS ── */}
+        <Testimonials />
+
+        {/* ── 7. UNIFIED FORM ── */}
         <UnifiedForm showLeftInfo={false} bgColor="#F8F8F8" />
 
       </main>
