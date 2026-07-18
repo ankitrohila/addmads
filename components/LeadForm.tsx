@@ -182,7 +182,7 @@ export default function LeadForm() {
             )}
 
             <form onSubmit={handleSubmit}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 20px', marginBottom: 20 }}>
+              <div className="lead-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 20px', marginBottom: 20 }}>
                 {/* Name */}
                 <div style={{ gridColumn: 'span 2' }}>
                   <label style={labelStyle}>Full Name *</label>

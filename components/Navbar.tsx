@@ -170,8 +170,9 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mega menu — fixed full-width */}
+      {/* Mega menu — fixed full-width (desktop only; mobile uses full-screen menu) */}
       <div
+        className="mega-menu-wrap"
         onMouseEnter={openMega}
         onMouseLeave={closeMega}
         style={{
@@ -180,6 +181,7 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 48,
+          overflowX: 'hidden',
           pointerEvents: megaMenuOpen ? 'auto' : 'none',
         }}
       >

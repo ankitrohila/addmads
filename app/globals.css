@@ -494,6 +494,17 @@ html.lenis, html.lenis body { height: auto; }
   .form-row-grid {
     grid-template-columns: 1fr !important;
   }
+  /* Mega menu is desktop-only — mobile uses the full-screen menu */
+  .mega-menu-wrap {
+    display: none !important;
+  }
+  /* LeadForm: collapse 2-col grid + reset span-2 cells */
+  .lead-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .lead-form-grid > div {
+    grid-column: auto !important;
+  }
   /* ContactForm page */
   .contact-form-grid {
     grid-template-columns: 1fr !important;
