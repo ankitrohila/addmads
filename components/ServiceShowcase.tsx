@@ -74,14 +74,14 @@ export default function ServiceShowcase() {
             let y: number, x: number, scale: number, zIndex: number
 
             if (slot === 0) {
-              const from = POS[0], to = POS[N - 1]
+              const from = POS_D[0], to = POS_D[N - 1]
               y      = lerp(from.y, to.y, frac)
               x      = lerp(from.x, to.x, frac)
               scale  = lerp(from.scale, to.scale, frac)
-              zIndex = frac > 0.45 ? POS[N - 1].zIndex - 1 : POS[0].zIndex
+              zIndex = frac > 0.45 ? POS_D[N - 1].zIndex - 1 : POS_D[0].zIndex
             } else {
-              const from = POS[slot]
-              const to   = POS[Math.max(slot - 1, 0)]
+              const from = POS_D[slot]
+              const to   = POS_D[Math.max(slot - 1, 0)]
               y      = lerp(from.y, to.y, frac)
               x      = lerp(from.x, to.x, frac)
               scale  = lerp(from.scale, to.scale, frac)
