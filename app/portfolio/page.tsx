@@ -1,234 +1,195 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { PROJECTS } from '@/constants'
+import { useEffect, useRef, useState } from 'react'
+import clsx from 'clsx'
 import Navbar from '@/components/Navbar'
 import UnifiedForm from '@/components/UnifiedForm'
 import Footer from '@/components/Footer'
+import Reveal from '@/components/Reveal'
 
-gsap.registerPlugin(ScrollTrigger)
+interface Project {
+  name: string
+  url: string
+  domain: string
+  category: string
+}
 
-export default function PortfolioPage() {
-  const headerRef = useRef<HTMLDivElement>(null)
-  const projectsRef = useRef<(HTMLElement | null)[]>([])
+/**
+ * Live sites only — every entry loads its real homepage inside the preview
+ * frame (verified reachable and not frame-blocked before inclusion).
+ */
+const PROJECTS: Project[] = [
+  { name: 'Bluebells Luxury Real Estate', url: 'https://bluebellsluxury.com/', domain: 'bluebellsluxury.com', category: 'Real Estate & Lifestyle' },
+  { name: 'IBFW Weddings', url: 'https://ibfwweddings.com/', domain: 'ibfwweddings.com', category: 'Real Estate & Lifestyle' },
+  { name: 'Little Riders Cup', url: 'https://littleriddercup.com/', domain: 'littleriddercup.com', category: 'Real Estate & Lifestyle' },
+  { name: 'Flowvillas', url: 'https://flowvillas.in/', domain: 'flowvillas.in', category: 'Travel & Hospitality' },
+  { name: 'ABS Vacations', url: 'https://absvacations.com/', domain: 'absvacations.com', category: 'Travel & Hospitality' },
+  { name: 'Mike Diamond Plumbing', url: 'https://mikediamondservices.com/', domain: 'mikediamondservices.com', category: 'Home Services (USA)' },
+  { name: 'ALL-ISR', url: 'https://www.allisr.com/', domain: 'allisr.com', category: 'Home Services (USA)' },
+  { name: 'Chilly-Billy Heating & Cooling', url: 'https://www.hirechillybilly.com/', domain: 'hirechillybilly.com', category: 'Home Services (USA)' },
+  { name: 'James Armstrong Plumbing', url: 'https://www.jamesarmstrongplumbing.com/', domain: 'jamesarmstrongplumbing.com', category: 'Home Services (USA)' },
+  { name: 'AIMA', url: 'https://www.aima.in/', domain: 'aima.in', category: 'Corporate & Institutions' },
+  { name: 'Ananta Centre', url: 'https://anantacentre.in/', domain: 'anantacentre.in', category: 'Corporate & Institutions' },
+  { name: 'BYST', url: 'https://byst.org.in/', domain: 'byst.org.in', category: 'Corporate & Institutions' },
+  { name: 'EMS-Works', url: 'https://ems-works.com/', domain: 'ems-works.com', category: 'Corporate & Institutions' },
+  { name: 'Enseur', url: 'https://enseur.in/', domain: 'enseur.in', category: 'Corporate & Institutions' },
+  { name: 'Brandforce 360', url: 'https://www.brandforce360.com/', domain: 'brandforce360.com', category: 'Corporate & Institutions' },
+  { name: 'AVG Logistics', url: 'https://avglogistics.com/', domain: 'avglogistics.com', category: 'Industry & Manufacturing' },
+  { name: 'Maxvolt Energy', url: 'https://www.maxvoltenergy.com/', domain: 'maxvoltenergy.com', category: 'Industry & Manufacturing' },
+  { name: 'Netexpress UAE', url: 'https://netexpressuae.com/', domain: 'netexpressuae.com', category: 'Industry & Manufacturing' },
+  { name: 'Super Pattern', url: 'https://superpattern.in/', domain: 'superpattern.in', category: 'Industry & Manufacturing' },
+  { name: 'Boxica Packaging', url: 'https://boxika.in/', domain: 'boxika.in', category: 'Industry & Manufacturing' },
+  { name: 'PD Metals Craft', url: 'https://pdmetalcraft.co.in/', domain: 'pdmetalcraft.co.in', category: 'Industry & Manufacturing' },
+  { name: 'R S Solar', url: 'https://rssolar.in/', domain: 'rssolar.in', category: 'Industry & Manufacturing' },
+  { name: 'Shambhu Dayal School', url: 'https://shambhudayalschool.in/', domain: 'shambhudayalschool.in', category: 'Education & Local Business' },
+  { name: 'GSIL Edu. Society', url: 'https://gsiledusociety.com/', domain: 'gsiledusociety.com', category: 'Education & Local Business' },
+  { name: 'Vidyarthi Juniors', url: 'https://vidyarthijuniors.com/', domain: 'vidyarthijuniors.com', category: 'Education & Local Business' },
+  { name: 'Ohmypet Grooming', url: 'https://ohmypetgrooming.in/', domain: 'ohmypetgrooming.in', category: 'Education & Local Business' },
+  { name: 'Softhics', url: 'https://softhics.com/', domain: 'softhics.com', category: 'Education & Local Business' },
+]
+
+const CATEGORIES = ['All', ...Array.from(new Set(PROJECTS.map(p => p.category)))]
+
+/** Mounts the live-site iframe only once the card scrolls near the viewport. */
+function LivePreviewCard({ project }: { project: Project }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headerRef.current,
-        { opacity: 0, y: 60 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: 'power4.out',
-          delay: 0.2,
+    const el = wrapRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          io.disconnect()
         }
-      )
-
-      gsap.fromTo(
-        projectsRef.current.filter(Boolean),
-        { opacity: 0, y: 48 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          stagger: 0.12,
-          scrollTrigger: {
-            trigger: '.projects-grid',
-            start: 'top 70%',
-            toggleActions: 'play none none none',
-          },
-        }
-      )
-    })
-
-    return () => ctx.revert()
+      },
+      { rootMargin: '400px 0px' }
+    )
+    io.observe(el)
+    return () => io.disconnect()
   }, [])
+
+  return (
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block bg-white border border-black/[0.07] rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_48px_rgba(0,0,0,0.1)]"
+    >
+      {/* Live homepage preview — desktop page scaled to fit the card */}
+      <div ref={wrapRef} className="relative aspect-[16/10] overflow-hidden bg-[#F3F3F3]">
+        {!loaded && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="w-8 h-8 rounded-full border-2 border-black/10 border-t-[#C82A2A] animate-spin" />
+          </div>
+        )}
+        {visible && (
+          <iframe
+            src={project.url}
+            title={`${project.name} — live homepage preview`}
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin"
+            scrolling="no"
+            tabIndex={-1}
+            aria-hidden="true"
+            onLoad={() => setLoaded(true)}
+            className="absolute top-0 left-0 border-0 pointer-events-none select-none"
+            style={{
+              width: '400%',
+              height: '400%',
+              transform: 'scale(0.25)',
+              transformOrigin: 'top left',
+              opacity: loaded ? 1 : 0,
+              transition: 'opacity 0.5s ease',
+            }}
+          />
+        )}
+        {/* Hover veil */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/45 transition-colors duration-300">
+          <span className="btn-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ padding: '10px 22px', fontSize: '0.85rem' }}>
+            Visit live site ↗
+          </span>
+        </div>
+      </div>
+
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 style={{ fontSize: '1.1rem' }}>{project.name}</h3>
+            <p className="mt-1 text-[0.82rem] text-[#777]">{project.domain}</p>
+          </div>
+          <span className="mt-1 shrink-0 px-3 py-1 text-[0.7rem] text-black/55 bg-black/[0.045] rounded-full whitespace-nowrap">
+            {project.category}
+          </span>
+        </div>
+      </div>
+    </a>
+  )
+}
+
+export default function PortfolioPage() {
+  const [filter, setFilter] = useState('All')
+  const shown = filter === 'All' ? PROJECTS : PROJECTS.filter(p => p.category === filter)
 
   return (
     <>
       <Navbar />
+      <main>
+        <section className="bg-white" style={{ paddingTop: 'calc(var(--nav-h) + clamp(48px, 7vw, 96px))', paddingBottom: 'clamp(64px, 9vw, 120px)' }}>
+          <div className="container-x">
+            <Reveal>
+              <p className="eyebrow mb-5">Our work</p>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="h-display text-[#111]" style={{ fontSize: 'clamp(2.4rem, 6.5vw, 5.5rem)' }}>
+                {PROJECTS.length}+ live websites, one standard: results.
+              </h1>
+            </Reveal>
+            <Reveal delay={140}>
+              <p className="mt-5 text-[#555] max-w-[58ch]" style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)' }}>
+                Every card below is the real, live homepage — not a mockup. Hover any preview to
+                open the site. Built across real estate, home services, corporate, travel,
+                manufacturing, and education.
+              </p>
+            </Reveal>
 
-      <main style={{ paddingTop: 'var(--nav-h)' }}>
-        {/* Header Section */}
-        <section
-          ref={headerRef}
-          style={{
-            background: '#FFFFFF',
-            color: '#111111',
-            padding: 'clamp(100px, 14vw, 180px) var(--container-px)',
-            minHeight: '50vh',
-            display: 'flex',
-            alignItems: 'center',
-            opacity: 0,
-            borderBottom: '1px solid rgba(17,17,17,0.07)',
-          }}
-        >
-          <div>
-            <h1
-              style={{
-                fontFamily: 'var(--font-tight)',
-                fontSize: 'clamp(2.5rem, 8vw, 6rem)',
-                fontWeight: 500,
-                lineHeight: 1.15,
-                color: '#111111',
-                marginBottom: 'clamp(24px, 3vw, 40px)',
-              }}
-            >
-              Our Portfolio
-            </h1>
-            <p
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: 'clamp(1rem, 1.5vw, 1.25rem)',
-                fontWeight: 400,
-                color: 'rgba(17,17,17,0.55)',
-                maxWidth: 600,
-                lineHeight: 1.7,
-              }}
-            >
-              A selection of our favorite projects across branding, digital experience, and creative strategy. Each project represents our commitment to excellence and innovation.
-            </p>
-          </div>
-        </section>
-
-        {/* Projects Grid */}
-        <section
-          className="projects-grid"
-          style={{
-            background: '#F8F8F8',
-            padding: 'clamp(80px, 10vw, 160px) var(--container-px)',
-          }}
-        >
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-              gap: 'clamp(32px, 4vw, 48px)',
-              maxWidth: 1300,
-              margin: '0 auto',
-            }}
-          >
-            {PROJECTS.map((project, index) => (
-              <div
-                key={project.id}
-                ref={el => {
-                  projectsRef.current[index] = el
-                }}
-                style={{
-                  opacity: 0,
-                  borderRadius: 12,
-                  overflow: 'hidden',
-                  background: '#FFFFFF',
-                  border: '1px solid rgba(17,17,17,0.08)',
-                  transition: 'all 0.4s ease',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '100%',
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.transform = 'translateY(-8px)'
-                  el.style.boxShadow = '0 12px 40px rgba(200,42,42,0.12)'
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.transform = 'translateY(0)'
-                  el.style.boxShadow = 'none'
-                }}
-              >
-                {/* Project Image Placeholder */}
-                <div
-                  style={{
-                    background: `linear-gradient(135deg, ${project.accent}15 0%, ${project.accent}05 100%)`,
-                    height: 280,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '3rem',
-                    color: project.accent,
-                    opacity: 0.5,
-                  }}
-                >
-                  🎨
-                </div>
-
-                {/* Project Info */}
-                <div style={{ padding: 'clamp(24px, 3vw, 32px)', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <div
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.75rem',
-                        fontWeight: 500,
-                        color: '#C82A2A',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.02em',
-                        marginBottom: 8,
-                      }}
-                    >
-                      {project.category} • {project.year}
-                    </div>
-                    <h3
-                      style={{
-                        fontFamily: 'var(--font-tight)',
-                        fontSize: 'clamp(1.25rem, 2vw, 1.75rem)',
-                        fontWeight: 500,
-                        color: '#111111',
-                        margin: '0 0 12px 0',
-                        lineHeight: 1.3,
-                      }}
-                    >
-                      {project.title}
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.9375rem',
-                        fontWeight: 400,
-                        color: 'rgba(17,17,17,0.65)',
-                        margin: 0,
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Index */}
-                  <div
-                    style={{
-                      marginTop: 20,
-                      fontFamily: 'var(--font-tight)',
-                      fontSize: '2rem',
-                      fontWeight: 500,
-                      color: '#C82A2A',
-                      opacity: 0.2,
-                    }}
+            {/* Category filter */}
+            <Reveal delay={200}>
+              <div className="mt-8 flex flex-wrap gap-2">
+                {CATEGORIES.map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => setFilter(cat)}
+                    className={clsx(
+                      'px-4 py-2 text-[0.85rem] rounded-full border transition-colors duration-300',
+                      filter === cat
+                        ? 'bg-[#111] text-white border-[#111]'
+                        : 'bg-transparent text-black/60 border-black/[0.14] hover:border-black/40'
+                    )}
                   >
-                    {project.index}
-                  </div>
-                </div>
+                    {cat}
+                  </button>
+                ))}
               </div>
-            ))}
+            </Reveal>
+
+            {/* Cards */}
+            <div className="mt-[clamp(32px,4vw,48px)] grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {shown.map(p => (
+                <LivePreviewCard key={p.domain} project={p} />
+              ))}
+            </div>
           </div>
         </section>
 
         <UnifiedForm
-          heading="Start a New Project"
-          subheading="Tell us about your project and goals. We'll get back to you within 24 hours."
-          bgColor="#F8F8F8"
-          showLeftInfo={false}
+          heading="Want your site on this wall?"
+          subheading="Tell us about your project — we'll reply within 24 hours with a plan and pricing."
         />
       </main>
-
       <Footer />
     </>
   )
