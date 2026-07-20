@@ -1,98 +1,46 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-const Loader = dynamic(() => import('@/components/Loader'), { ssr: false })
-
 import Navbar from '@/components/Navbar'
-import Cursor from '@/components/Cursor'
 import Hero from '@/components/Hero'
+import UnifiedForm from '@/components/UnifiedForm'
 import About from '@/components/About'
 import ServiceShowcase from '@/components/ServiceShowcase'
 import Services from '@/components/Services'
 import FeaturedWork from '@/components/FeaturedWork'
 import Metrics from '@/components/Metrics'
 import Testimonials from '@/components/Testimonials'
-import UnifiedForm from '@/components/UnifiedForm'
 import FAQs from '@/components/FAQs'
 import Footer from '@/components/Footer'
 
 export default function Home() {
-  const [showLoader, setShowLoader] = useState(false)
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    const seen = sessionStorage.getItem('addmads_loaded')
-    const isMobile = window.matchMedia('(pointer: coarse)').matches
-
-    if (seen || isMobile) {
-      setLoaded(true)
-    } else {
-      setShowLoader(true)
-      document.body.style.overflow = 'hidden'
-    }
-    return () => { document.body.style.overflow = '' }
-  }, [])
-
-  const handleLoaderDone = () => {
-    sessionStorage.setItem('addmads_loaded', '1')
-    setShowLoader(false)
-    setLoaded(true)
-    document.body.style.overflow = ''
-    setTimeout(() => ScrollTrigger.refresh(), 120)
-    setTimeout(() => ScrollTrigger.refresh(), 600)
-  }
-
   return (
     <>
-      {showLoader && <Loader onComplete={handleLoaderDone} />}
-      <Cursor />
+      <Navbar />
+      <main>
+        <Hero />
 
-      <div
-        style={{
-          opacity: loaded ? 1 : 0,
-          transition: 'opacity 0.5s ease',
-          pointerEvents: loaded ? 'auto' : 'none',
-        }}
-      >
-        <Navbar />
+        {/* Lead form — second section, right after the hero */}
+        <UnifiedForm
+          heading="Let's Build Your Digital Success"
+          subheading="Share your vision and we'll create something extraordinary. Fill in the details and we'll get back to you within 24 hours."
+        />
 
-        <main>
-          {/* 1 — Hero */}
-          <Hero />
+        <About />
+        <ServiceShowcase />
+        <Services />
+        <FeaturedWork />
+        <Metrics />
+        <Testimonials />
 
-          {/* 2 — About (scroll-triggered red sweep animation) */}
-          <About />
+        {/* Second form placement — around testimonials */}
+        <UnifiedForm
+          heading="Ready to grow like they did?"
+          subheading="Join 60+ brands scaling with AddMads. Tell us your goal — we'll map the plan."
+          bgColor="#FFFFFF"
+          showLeftInfo={false}
+        />
 
-          {/* 3 — Service Showcase (red bg, methodology + tab card) */}
-          <ServiceShowcase />
-
-          {/* 4 — Services (white bg, 3-col card grid) */}
-          <Services />
-
-          {/* 5 — Work (dark, Discover. + projects) */}
-          <FeaturedWork />
-
-          {/* 6 — Why us (dark, stats) */}
-          <Metrics />
-
-          {/* 7 — Contact Form */}
-          <UnifiedForm
-            heading="Let's Build Your Digital Success"
-            subheading="Share your vision and we'll create something extraordinary. Fill in the details and we'll get back to you within 24 hours."
-          />
-
-          {/* 8 — Testimonials */}
-          <Testimonials />
-
-          {/* 9 — FAQs */}
-          <FAQs />
-        </main>
-
-        <Footer />
-      </div>
+        <FAQs />
+      </main>
+      <Footer />
     </>
   )
 }

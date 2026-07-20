@@ -1,49 +1,33 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import gsap from 'gsap'
 import clsx from 'clsx'
-import { NAV_LINKS, CONTACT_PHONE, MEGA_MENU_CATEGORIES } from '@/constants'
-import MegaMenu from './MegaMenu'
+import { NAV_LINKS, CONTACT_PHONE, CONTACT_EMAIL, MEGA_MENU_CATEGORIES } from '@/constants'
 
 export default function Navbar() {
-  const navRef = useRef<HTMLElement>(null)
-  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const [megaMenuOpen, setMegaMenuOpen] = useState(false)
+  const [megaOpen, setMegaOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
-  const menuLinksRef = useRef<(HTMLElement | null)[]>([])
   const lastY = useRef(0)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const openMega = useCallback(() => {
-    if (closeTimer.current) { clearTimeout(closeTimer.current); closeTimer.current = null }
-    setMegaMenuOpen(true)
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    setMegaOpen(true)
   }, [])
-
   const closeMega = useCallback(() => {
-    closeTimer.current = setTimeout(() => setMegaMenuOpen(false), 120)
+    closeTimer.current = setTimeout(() => setMegaOpen(false), 140)
   }, [])
 
   useEffect(() => {
-    const isHome = pathname === '/'
-    const isMobileNav = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
-    gsap.fromTo(
-      navRef.current,
-      { yPercent: -100, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: isMobileNav ? 0.4 : 1.1, ease: 'power4.out', delay: isMobileNav ? 0.1 : (isHome ? 3.0 : 0) }
-    )
-
     const onScroll = () => {
       const y = window.scrollY
       setScrolled(y > 48)
-      setHidden(y > 120 && y > lastY.current)
+      setHidden(y > 140 && y > lastY.current)
       lastY.current = y
     }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -51,281 +35,224 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    const menu = menuRef.current
-    if (!menu) return
-    const validLinks = menuLinksRef.current.filter(Boolean) as HTMLElement[]
-
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden'
-      setServicesOpen(false)
-      gsap.set(menu, { display: 'flex' })
-      gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, {
-        clipPath: 'inset(0 0 0% 0)', duration: 0.75, ease: 'power4.inOut',
-      })
-      gsap.fromTo(validLinks, { opacity: 0, y: 48 }, {
-        opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.07, delay: 0.25,
-      })
-    } else {
-      document.body.style.overflow = ''
-      gsap.to(menu, {
-        clipPath: 'inset(0 0 100% 0)', duration: 0.6, ease: 'power4.inOut',
-        onComplete: () => gsap.set(menu, { display: 'none' }),
-      })
-    }
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    if (!menuOpen) setServicesOpen(false)
+    return () => { document.body.style.overflow = '' }
   }, [menuOpen])
+
+  const closeAll = () => { setMenuOpen(false); setServicesOpen(false); setMegaOpen(false) }
 
   return (
     <>
       <nav
-        ref={navRef}
-        style={{ opacity: 0, paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)' }}
+        aria-label="Main navigation"
+        style={{ paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)' }}
         className={clsx(
           'fixed left-0 right-0 top-0 z-50 flex items-center justify-between',
-          'transition-all duration-500',
+          'bg-white/[0.96] backdrop-blur-xl border-b border-black/[0.07]',
+          'transition-transform duration-500',
           hidden && !menuOpen ? '-translate-y-full' : 'translate-y-0',
-          scrolled
-            ? 'py-4 bg-white/[0.96] backdrop-blur-xl border-b border-black/[0.08]'
-            : 'py-5 bg-white/[0.96] backdrop-blur-xl border-b border-black/[0.06]'
+          scrolled ? 'py-3' : 'py-4'
         )}
       >
-        {/* Logo */}
-        <Link href="/" aria-label="AddMads">
+        <Link href="/" aria-label="AddMads — home" onClick={closeAll}>
           <Image
             src="/logo-light.svg"
             alt="AddMads"
             width={160}
             height={44}
             priority
-            style={{ objectFit: 'contain', height: 44, width: 'auto' }}
+            style={{ objectFit: 'contain', height: 40, width: 'auto' }}
           />
         </Link>
 
-        {/* Center nav — desktop */}
-        <ul className="hidden md:flex items-center gap-8 list-none absolute left-1/2 -translate-x-1/2">
-          {NAV_LINKS.map((link) => (
+        {/* Desktop nav */}
+        <ul className="hidden lg:flex items-center gap-8 list-none absolute left-1/2 -translate-x-1/2">
+          {NAV_LINKS.map(link => (
             <li
               key={link.label}
-              style={{ position: 'relative' }}
+              className="relative"
               onMouseEnter={() => link.hasSubmenu && openMega()}
               onMouseLeave={() => link.hasSubmenu && closeMega()}
             >
               <Link
                 href={link.href}
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  color: 'rgba(17,17,17,0.7)',
-                  transition: 'color 0.25s ease',
-                  letterSpacing: '0.01em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  paddingBottom: link.hasSubmenu ? 20 : 0,
-                  marginBottom: link.hasSubmenu ? -20 : 0,
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#111111' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(17,17,17,0.7)' }}
+                className="flex items-center gap-1 text-[0.875rem] font-medium text-black/70 hover:text-black transition-colors"
+                style={link.hasSubmenu ? { paddingBottom: 20, marginBottom: -20 } : undefined}
               >
                 {link.label}
                 {link.hasSubmenu && (
-                  <span style={{
-                    fontSize: '0.55rem',
-                    display: 'inline-block',
-                    transition: 'transform 0.3s ease',
-                    transform: megaMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}>▼</span>
+                  <svg
+                    width="9" height="6" viewBox="0 0 12 8" aria-hidden="true"
+                    className={clsx('transition-transform duration-300', megaOpen && 'rotate-180')}
+                  >
+                    <path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
                 )}
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Right — CTA + hamburger */}
         <div className="flex items-center gap-4">
-          <Link
-            href="/contact"
-            className="hidden md:flex btn-red"
-            style={{ padding: '10px 22px', fontSize: '0.875rem' }}
-          >
+          <Link href="/contact" className="hidden lg:inline-flex btn-red" style={{ padding: '10px 22px', fontSize: '0.875rem' }}>
             Get Started
           </Link>
 
           {/* Hamburger */}
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden relative w-8 h-8 flex flex-col items-end justify-center gap-[6px]"
-            aria-label="Toggle navigation"
+            onClick={() => setMenuOpen(o => !o)}
+            className="lg:hidden relative w-9 h-9 flex flex-col items-end justify-center gap-[6px]"
+            aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+            aria-expanded={menuOpen}
           >
             {[0, 1, 2].map(i => (
-              <span key={i} className="block h-px" style={{
-                width: i === 1 ? (menuOpen ? 0 : 16) : 24,
-                backgroundColor: '#111111',
-                transition: 'all 0.4s ease',
-                opacity: i === 1 && menuOpen ? 0 : 1,
-                transform: i === 0 && menuOpen ? 'rotate(45deg) translate(3px,3px)' : i === 2 && menuOpen ? 'rotate(-45deg) translate(3px,-3px)' : 'none',
-              }} />
+              <span
+                key={i}
+                className="block h-[1.5px] bg-[#111] transition-all duration-300"
+                style={{
+                  width: i === 1 ? (menuOpen ? 0 : 16) : 24,
+                  opacity: i === 1 && menuOpen ? 0 : 1,
+                  transform:
+                    i === 0 && menuOpen ? 'rotate(45deg) translate(3px,4px)'
+                    : i === 2 && menuOpen ? 'rotate(-45deg) translate(3px,-4px)'
+                    : 'none',
+                }}
+              />
             ))}
           </button>
         </div>
       </nav>
 
-      {/* Mega menu — fixed full-width (desktop only; mobile uses full-screen menu) */}
+      {/* Desktop mega menu */}
       <div
-        className="mega-menu-wrap"
         onMouseEnter={openMega}
         onMouseLeave={closeMega}
-        style={{
-          position: 'fixed',
-          top: 68,
-          left: 0,
-          right: 0,
-          zIndex: 48,
-          overflowX: 'hidden',
-          pointerEvents: megaMenuOpen ? 'auto' : 'none',
-        }}
+        className={clsx(
+          'hidden lg:block fixed left-0 right-0 z-40 transition-all duration-300',
+          megaOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
+        )}
+        style={{ top: 'var(--nav-h)' }}
       >
-        <MegaMenu isOpen={megaMenuOpen} onClose={() => setMegaMenuOpen(false)} />
+        <div
+          className="mx-auto bg-white border-b border-x border-black/[0.08] shadow-[0_24px_64px_rgba(0,0,0,0.1)] rounded-b-2xl"
+          style={{ maxWidth: 1240, padding: '32px 40px' }}
+        >
+          <div className="grid grid-cols-5 gap-8">
+            {MEGA_MENU_CATEGORIES.map(cat => (
+              <div key={cat.id}>
+                <Link
+                  href={cat.href}
+                  onClick={closeAll}
+                  className="block text-[0.78rem] font-bold uppercase tracking-[0.08em] text-[#C82A2A] mb-3 hover:underline"
+                >
+                  {cat.label}
+                </Link>
+                <ul className="list-none space-y-2">
+                  {cat.services.map(svc => (
+                    <li key={svc.href}>
+                      <Link
+                        href={svc.href}
+                        onClick={closeAll}
+                        className="block text-[0.85rem] text-black/60 hover:text-black transition-colors leading-snug"
+                      >
+                        {svc.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Mobile full-screen menu */}
       <div
-        ref={menuRef}
+        className={clsx(
+          'lg:hidden fixed inset-0 z-40 bg-[#111] flex flex-col overflow-y-auto transition-[clip-path] duration-500',
+        )}
         style={{
-          display: 'none',
-          position: 'fixed',
-          inset: 0,
-          zIndex: 40,
-          background: '#111111',
-          clipPath: 'inset(0 0 100% 0)',
-          paddingTop: 'calc(var(--nav-h) + 24px)',
+          clipPath: menuOpen ? 'inset(0 0 0% 0)' : 'inset(0 0 100% 0)',
+          transitionTimingFunction: 'cubic-bezier(0.87, 0, 0.13, 1)',
+          paddingTop: 'calc(var(--nav-h) + 20px)',
           paddingLeft: 'var(--container-px)',
           paddingRight: 'var(--container-px)',
-          paddingBottom: '32px',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          overflowY: 'auto',
+          paddingBottom: 32,
         }}
+        aria-hidden={!menuOpen}
       >
-        <ul className="list-none space-y-1">
+        <ul className="list-none">
           {NAV_LINKS.map((link, i) => (
-            <li key={link.label} ref={el => { menuLinksRef.current[i] = el }} style={{ opacity: 0 }}>
+            <li
+              key={link.label}
+              className="transition-all duration-500"
+              style={{
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? 'none' : 'translateY(32px)',
+                transitionDelay: menuOpen ? `${180 + i * 60}ms` : '0ms',
+              }}
+            >
               {link.hasSubmenu ? (
                 <div>
-                  {/* Services row: label + toggle */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div className="flex items-center justify-between">
                     <Link
                       href={link.href}
-                      onClick={() => { setMenuOpen(false); setServicesOpen(false) }}
-                      style={{
-                        fontFamily: 'var(--font-tight)',
-                        fontSize: 'clamp(2.5rem, 12vw, 4.5rem)',
-                        fontWeight: 500,
-                        color: '#D1D1D1',
-                        display: 'block',
-                        paddingTop: 12,
-                        paddingBottom: 12,
-                        transition: 'color 0.3s ease',
-                        lineHeight: 1.1,
-                      }}
+                      onClick={closeAll}
+                      className="block py-3 text-[#D1D1D1] leading-[1.1]"
+                      style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(2.4rem, 11vw, 4.5rem)', fontWeight: 500 }}
                     >
                       {link.label}
                     </Link>
                     <button
-                      onClick={() => setServicesOpen(prev => !prev)}
-                      style={{
-                        background: 'rgba(255,255,255,0.08)',
-                        border: '1px solid rgba(255,255,255,0.15)',
-                        borderRadius: 8,
-                        width: 40,
-                        height: 40,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        color: '#FFFFFF',
-                        fontSize: '1rem',
-                        flexShrink: 0,
-                        transition: 'transform 0.3s ease',
-                        transform: servicesOpen ? 'rotate(45deg)' : 'rotate(0deg)',
-                      }}
-                      aria-label="Toggle services"
+                      onClick={() => setServicesOpen(o => !o)}
+                      aria-label="Toggle services list"
+                      aria-expanded={servicesOpen}
+                      className="w-10 h-10 shrink-0 flex items-center justify-center rounded-lg text-white bg-white/[0.08] border border-white/[0.15] transition-transform duration-300"
+                      style={{ transform: servicesOpen ? 'rotate(45deg)' : 'none' }}
                     >
                       +
                     </button>
                   </div>
-
-                  {/* Services accordion dropdown */}
-                  {servicesOpen && (
-                    <div style={{
-                      paddingBottom: 16,
-                      borderBottom: '1px solid rgba(255,255,255,0.07)',
-                      marginBottom: 8,
-                    }}>
-                      {MEGA_MENU_CATEGORIES.map(cat => (
-                        <div key={cat.id} style={{ marginBottom: 16 }}>
-                          <Link
-                            href={cat.href}
-                            onClick={() => { setMenuOpen(false); setServicesOpen(false) }}
-                            style={{
-                              fontFamily: 'var(--font-sans)',
-                              fontSize: '0.8125rem',
-                              fontWeight: 700,
-                              letterSpacing: '0.08em',
-                              textTransform: 'uppercase',
-                              color: '#E60000',
-                              display: 'block',
-                              marginBottom: 8,
-                              textDecoration: 'none',
-                            }}
-                          >
-                            {cat.label} →
-                          </Link>
-                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}>
-                            {cat.services.map(svc => (
-                              <Link
-                                key={svc.href}
-                                href={svc.href}
-                                onClick={() => { setMenuOpen(false); setServicesOpen(false) }}
-                                style={{
-                                  fontFamily: 'var(--font-sans)',
-                                  fontSize: '0.875rem',
-                                  color: 'rgba(255,255,255,0.65)',
-                                  textDecoration: 'none',
-                                  padding: '5px 12px',
-                                  background: 'rgba(255,255,255,0.07)',
-                                  borderRadius: 20,
-                                  border: '1px solid rgba(255,255,255,0.1)',
-                                  display: 'inline-block',
-                                  transition: 'all 0.2s ease',
-                                }}
-                              >
-                                {svc.label}
-                              </Link>
-                            ))}
+                  <div
+                    className="grid transition-[grid-template-rows] duration-400"
+                    style={{ gridTemplateRows: servicesOpen ? '1fr' : '0fr' }}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="pb-4 mb-2 border-b border-white/[0.07]">
+                        {MEGA_MENU_CATEGORIES.map(cat => (
+                          <div key={cat.id} className="mb-4">
+                            <Link
+                              href={cat.href}
+                              onClick={closeAll}
+                              className="block mb-2 text-[0.78rem] font-bold uppercase tracking-[0.08em] text-[#FF4444]"
+                            >
+                              {cat.label} →
+                            </Link>
+                            <div className="flex flex-wrap gap-x-2 gap-y-[6px]">
+                              {cat.services.map(svc => (
+                                <Link
+                                  key={svc.href}
+                                  href={svc.href}
+                                  onClick={closeAll}
+                                  className="inline-block px-3 py-[5px] text-[0.85rem] text-white/65 bg-white/[0.07] border border-white/10 rounded-full"
+                                >
+                                  {svc.label}
+                                </Link>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               ) : (
                 <Link
                   href={link.href}
-                  onClick={() => { setMenuOpen(false); setMegaMenuOpen(false) }}
-                  style={{
-                    fontFamily: 'var(--font-tight)',
-                    fontSize: 'clamp(2.5rem, 12vw, 4.5rem)',
-                    fontWeight: 500,
-                    color: '#D1D1D1',
-                    display: 'block',
-                    paddingTop: 12,
-                    paddingBottom: 12,
-                    transition: 'color 0.3s ease',
-                    lineHeight: 1.1,
-                  }}
-                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}
-                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1D1D1'}
+                  onClick={closeAll}
+                  className="block py-3 text-[#D1D1D1] hover:text-white transition-colors leading-[1.1]"
+                  style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(2.4rem, 11vw, 4.5rem)', fontWeight: 500 }}
                 >
                   {link.label}
                 </Link>
@@ -335,33 +262,22 @@ export default function Navbar() {
         </ul>
 
         <div
-          ref={el => { menuLinksRef.current[NAV_LINKS.length] = el }}
+          className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 transition-all duration-500"
           style={{
-            opacity: 0,
-            marginTop: 40,
-            paddingTop: 24,
-            borderTop: '1px solid rgba(255,255,255,0.1)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 12,
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? 'none' : 'translateY(24px)',
+            transitionDelay: menuOpen ? '480ms' : '0ms',
           }}
         >
           <div>
-            <a href={`tel:${CONTACT_PHONE.replace(/-/g,'')}`} style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1rem', display: 'block', marginBottom: 4 }}>
+            <a href={`tel:${CONTACT_PHONE.replace(/-/g, '')}`} className="block mb-1 text-white/60">
               {CONTACT_PHONE}
             </a>
-            <a href="mailto:info@addmads.com" style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem' }}>
-              info@addmads.com
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-[0.875rem] text-white/40">
+              {CONTACT_EMAIL}
             </a>
           </div>
-          <Link
-            href="/contact"
-            onClick={() => setMenuOpen(false)}
-            className="btn-red"
-            style={{ padding: '10px 20px', fontSize: '0.875rem', whiteSpace: 'nowrap', flexShrink: 0 }}
-          >
+          <Link href="/contact" onClick={closeAll} className="btn-red shrink-0" style={{ padding: '10px 20px', fontSize: '0.875rem' }}>
             Get Started
           </Link>
         </div>

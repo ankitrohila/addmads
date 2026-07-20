@@ -1,285 +1,70 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Link from 'next/link'
+import clsx from 'clsx'
+import Reveal from './Reveal'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const SERVICES = [
-  { num: '01', name: 'Performance Marketing', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb1dc9797d92e7aae3f_img6.webp',  desc: 'Data-driven campaigns across Google & Meta that turn ad spend into measurable growth.' },
-  { num: '02', name: 'Branding & Identity',   img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68aea452324447dec982d6b3_img9.webp',   desc: 'From strategy to logo — brand systems that people remember and trust.' },
-  { num: '03', name: 'SEO & Content',         img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e424_img17.webp',  desc: 'Rank higher, get found — technical SEO and content that compounds month on month.' },
-  { num: '04', name: 'IT & Web Dev',          img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e41b_img16.webp',  desc: 'Fast, conversion-optimised websites on WordPress, Shopify, Next.js, and more.' },
+const SHOWCASE = [
+  { num: '01', name: 'Performance Marketing', href: '/services/performance-marketing', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb1dc9797d92e7aae3f_img6.webp', desc: 'Data-driven campaigns across Google & Meta that turn ad spend into measurable growth.' },
+  { num: '02', name: 'Branding & Identity', href: '/services/branding', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68aea452324447dec982d6b3_img9.webp', desc: 'From strategy to logo — brand systems that people remember and trust.' },
+  { num: '03', name: 'SEO & Content', href: '/services/seo', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e424_img17.webp', desc: 'Rank higher, get found — technical SEO and content that compounds month on month.' },
+  { num: '04', name: 'IT & Web Dev', href: '/services/it-services', img: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e41b_img16.webp', desc: 'Fast, conversion-optimised websites on WordPress, Shopify, Next.js, and more.' },
 ]
-
-const N = SERVICES.length
-
-// Desktop POS: pure y-stack (no x offset — avoids right-edge clipping)
-const POS_D = [
-  { y: 0,    x: 0, scale: 1,    zIndex: 10 },
-  { y: -68,  x: 0, scale: 0.97, zIndex: 9  },
-  { y: -136, x: 0, scale: 0.94, zIndex: 8  },
-  { y: -204, x: 0, scale: 0.91, zIndex: 7  },
-]
-
-function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
 
 export default function ServiceShowcase() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const cardRefs   = useRef<(HTMLDivElement | null)[]>([])
-  const [activeIdx, setActiveIdx] = useState(0)
-
-  useEffect(() => {
-    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768
-
-    const ctx = gsap.context(() => {
-      const section = sectionRef.current
-      if (!section) return
-
-      if (isMobile) {
-        // Mobile: all cards sit at y:0, only the active card is visible (opacity crossfade)
-        cardRefs.current.forEach((card, i) => {
-          if (card) gsap.set(card, { y: 0, x: 0, scale: 1, opacity: i === 0 ? 1 : 0, zIndex: i === 0 ? 10 : 1 })
-        })
-        return
-      }
-
-      // Desktop: staggered y-stack
-      cardRefs.current.forEach((card, i) => {
-        if (card) gsap.set(card, { y: POS_D[i].y, x: POS_D[i].x, scale: POS_D[i].scale, zIndex: POS_D[i].zIndex })
-      })
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${window.innerHeight * N}`,
-        pin: true,
-        anticipatePin: 1,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const phase = self.progress * N
-          const cur   = Math.min(Math.floor(phase), N - 1)
-          const frac  = phase - cur
-
-          setActiveIdx(cur)
-
-          cardRefs.current.forEach((card, cardI) => {
-            if (!card) return
-
-            const slot = (cardI - cur + N) % N
-
-            let y: number, x: number, scale: number, zIndex: number
-
-            if (slot === 0) {
-              const from = POS_D[0], to = POS_D[N - 1]
-              y      = lerp(from.y, to.y, frac)
-              x      = lerp(from.x, to.x, frac)
-              scale  = lerp(from.scale, to.scale, frac)
-              zIndex = frac > 0.45 ? POS_D[N - 1].zIndex - 1 : POS_D[0].zIndex
-            } else {
-              const from = POS_D[slot]
-              const to   = POS_D[Math.max(slot - 1, 0)]
-              y      = lerp(from.y, to.y, frac)
-              x      = lerp(from.x, to.x, frac)
-              scale  = lerp(from.scale, to.scale, frac)
-              zIndex = frac > 0.5 ? to.zIndex : from.zIndex
-            }
-
-            gsap.set(card, { y, x, scale, zIndex })
-          })
-        },
-      })
-    }, sectionRef)
-
-    // Mobile: auto-cycle cards every 2.5s via opacity crossfade
-    let intervalId: ReturnType<typeof setInterval> | null = null
-    if (isMobile) {
-      let cur = 0
-      intervalId = setInterval(() => {
-        cur = (cur + 1) % N
-        setActiveIdx(cur)
-        cardRefs.current.forEach((card, cardI) => {
-          if (!card) return
-          const isActive = cardI === cur
-          gsap.to(card, {
-            opacity: isActive ? 1 : 0,
-            zIndex: isActive ? 10 : 1,
-            duration: 0.55,
-            ease: 'power2.inOut',
-          })
-        })
-      }, 2500)
-    }
-
-    return () => {
-      ctx.revert()
-      if (intervalId) clearInterval(intervalId)
-    }
-  }, [])
+  const [active, setActive] = useState(0)
+  const current = SHOWCASE[active]
 
   return (
-    <section
-      ref={sectionRef}
-      className="services-section"
-      style={{
-        background: '#C82A2A',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        padding: 'clamp(80px, 10vw, 140px) var(--container-px)',
-        overflow: 'hidden',
-      }}
-    >
-      <div className="services-grid" style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 'clamp(48px, 6vw, 96px)',
-        alignItems: 'center',
-        width: '100%',
-      }}>
+    <section className="section-pad" style={{ background: '#C82A2A', color: '#fff' }}>
+      <div className="container-x">
+        <Reveal>
+          <p className="eyebrow mb-6" style={{ color: 'rgba(255,255,255,0.8)' }}>How we work</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="h-display max-w-[20ch]" style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}>
+            One team. Full funnel. Zero handoff gaps.
+          </h2>
+        </Reveal>
 
-        {/* ── Left text ── */}
-        <div>
-          <div className="services-heading" style={{
-            fontFamily: 'var(--font-tight)',
-            fontSize: 'clamp(2rem, 4.5vw, 4rem)',
-            fontWeight: 500,
-            color: '#FFFFFF',
-            lineHeight: 1.2,
-            marginBottom: 'clamp(20px, 2.5vw, 36px)',
-          }}>
-            We introduce methodologies, processes, and learnings to drive digital innovation projects.
-          </div>
-
-          <p style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'clamp(0.875rem, 1.3vw, 1.1rem)',
-            fontWeight: 400,
-            color: 'rgba(255,255,255,0.58)',
-            lineHeight: 1.75,
-            maxWidth: 380,
-            margin: 0,
-          }}>
-            Ensuring impactful experiences that drive growth and success.
-          </p>
-
-          <div style={{ marginTop: 'clamp(28px, 3.5vw, 48px)', display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {SERVICES.map((s, i) => (
-              <div
-                key={s.num}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  opacity: activeIdx === i ? 1 : 0.38,
-                  transition: 'opacity 0.4s ease',
-                }}
+        <div className="mt-[clamp(32px,5vw,64px)] grid gap-8 lg:grid-cols-2 items-start">
+          {/* Tab list */}
+          <div role="tablist" aria-label="Service showcase" className="flex flex-col">
+            {SHOWCASE.map((svc, i) => (
+              <button
+                key={svc.num}
+                role="tab"
+                aria-selected={active === i}
+                onClick={() => setActive(i)}
+                className={clsx(
+                  'flex items-baseline gap-4 text-left py-4 border-b transition-colors',
+                  active === i ? 'border-white/60 text-white' : 'border-white/20 text-white/55 hover:text-white/85'
+                )}
               >
-                <span style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.7rem',
-                  fontWeight: 500,
-                  color: 'rgba(255,255,255,0.55)',
-                  letterSpacing: '0.1em',
-                  minWidth: 24,
-                }}>
-                  {s.num}
-                </span>
-                <span style={{
-                  fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(1rem, 1.8vw, 1.55rem)',
-                  fontWeight: 500,
-                  color: '#FFFFFF',
-                  lineHeight: 1,
-                }}>
-                  {s.name}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Right: stacking cards ── */}
-        <div className="services-stack-col" style={{
-          position: 'relative',
-          height: 'clamp(300px, 45vh, 500px)',
-          paddingTop: 160,
-          boxSizing: 'content-box',
-          zIndex: 0,       /* creates stacking context — cards' z-index stays inside this column */
-          overflow: 'hidden',
-        }}>
-          {SERVICES.map((svc, i) => (
-            <div
-              key={svc.num}
-              ref={el => { cardRefs.current[i] = el }}
-              className="services-card-item"
-              style={{
-                position: 'absolute',
-                left: 0, right: 0,
-                top: 160,
-                bottom: 0,
-                background: '#FFFFFF',
-                borderRadius: 20,
-                overflow: 'hidden',
-                willChange: 'transform',
-                transformOrigin: 'top center',
-              }}
-            >
-              <div className="services-card-header" style={{
-                padding: 'clamp(14px, 1.8vw, 22px) clamp(16px, 2vw, 24px)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-              }}>
-                <span style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.75rem',
-                  fontWeight: 500,
-                  color: 'rgba(17,17,17,0.35)',
-                  letterSpacing: '0.1em',
-                }}>
-                  {svc.num}.
-                </span>
-                <span className="services-card-title" style={{
-                  fontFamily: 'var(--font-tight)',
-                  fontSize: 'clamp(1.25rem, 2.2vw, 2.2rem)',
-                  fontWeight: 500,
-                  color: '#111111',
-                  lineHeight: 1,
-                  textAlign: 'right',
-                }}>
+                <span className="text-[0.8rem] font-semibold shrink-0">{svc.num}</span>
+                <span style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.3rem, 2.6vw, 2.2rem)', fontWeight: 500 }}>
                   {svc.name}
                 </span>
-              </div>
+              </button>
+            ))}
+          </div>
 
-              <div className="services-card-image" style={{ height: 'clamp(120px, 18vh, 240px)', overflow: 'hidden', position: 'relative' }}>
-                <Image
-                  src={svc.img}
-                  alt={svc.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-
-              <div className="services-card-desc" style={{ padding: 'clamp(10px, 1.4vw, 18px) clamp(16px, 2vw, 24px)' }}>
-                <p style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: 'clamp(0.8rem, 1vw, 0.9rem)',
-                  color: 'rgba(17,17,17,0.5)',
-                  lineHeight: 1.6,
-                  margin: 0,
-                }}>
-                  {svc.desc}
-                </p>
-              </div>
+          {/* Active card */}
+          <div key={current.num} className="animate-pop-in bg-white text-[#111] rounded-2xl overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.18)]">
+            <div className="relative aspect-[16/9]">
+              <Image src={current.img} alt={current.name} fill sizes="(max-width: 1024px) 92vw, 600px" className="object-cover" unoptimized />
             </div>
-          ))}
+            <div className="p-[clamp(20px,2.5vw,32px)]">
+              <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)' }}>{current.name}</h3>
+              <p className="mt-2 text-[#555] text-[0.95rem]">{current.desc}</p>
+              <Link href={current.href} className="btn-dark mt-5" style={{ padding: '10px 22px', fontSize: '0.875rem' }}>
+                Explore service →
+              </Link>
+            </div>
+          </div>
         </div>
-
       </div>
     </section>
   )
