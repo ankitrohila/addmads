@@ -3,15 +3,12 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MEGA_MENU_CATEGORIES } from '@/constants'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import UnifiedForm from '@/components/UnifiedForm'
 import Testimonials from '@/components/Testimonials'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useRevealAll } from '@/lib/useRevealAll'
 
 const STATS = [
   { value: '250+', label: 'Projects Delivered' },
@@ -43,32 +40,7 @@ export default function ServicesPage() {
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(heroRef.current?.querySelectorAll('[data-a]') ?? [],
-        { opacity: 0, y: 48 },
-        { opacity: 1, y: 0, duration: 1.0, ease: 'power4.out', stagger: 0.12, delay: 0.2 }
-      )
-
-      document.querySelectorAll('[data-scroll]').forEach(el => {
-        gsap.fromTo(el, { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 82%', toggleActions: 'play none none none' },
-        })
-      })
-    })
-    return () => ctx.revert()
-  }, [])
-
-  useEffect(() => {
-    if (imageRef.current) {
-      if (activeHover !== null) {
-        gsap.to(imageRef.current, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' })
-      } else {
-        gsap.to(imageRef.current, { opacity: 0, scale: 0.95, duration: 0.25, ease: 'power2.in' })
-      }
-    }
-  }, [activeHover])
+  useRevealAll()
 
   return (
     <>
@@ -81,7 +53,7 @@ export default function ServicesPage() {
           ref={heroRef}
           data-dark
           className="services-page-hero"
-          style={{ background: '#111111', color: '#FFFFFF', padding: 'clamp(100px,14vw,180px) var(--container-px) clamp(80px,10vw,140px)', minHeight: '70vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}
+          style={{ background: '#111111', color: '#FFFFFF', padding: 'clamp(100px,14vw,180px) var(--container-px) 0', minHeight: '70vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}
         >
           <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 70% 50%, rgba(230,0,0,0.07) 0%, transparent 60%)', pointerEvents: 'none' }} />
 
@@ -104,7 +76,7 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div className="services-hero-stats" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, borderTop: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexWrap: 'wrap' }}>
+          <div className="services-hero-stats" style={{ marginTop: 'clamp(48px,7vw,96px)', marginLeft: 'calc(-1 * var(--container-px))', marginRight: 'calc(-1 * var(--container-px))', borderTop: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexWrap: 'wrap' }}>
             {STATS.map((s, i) => (
               <div key={i} style={{ flex: 1, minWidth: 120, padding: '20px var(--container-px)', borderRight: i < STATS.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', textAlign: 'center' }}>
                 <div style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.5rem,3vw,2.25rem)', fontWeight: 700, color: '#E60000' }}>{s.value}</div>
@@ -135,11 +107,11 @@ export default function ServicesPage() {
                 height: 400,
                 borderRadius: 16,
                 overflow: 'hidden',
-                opacity: 0,
-                scale: 0.95,
+                opacity: activeHover !== null ? 1 : 0,
                 pointerEvents: 'none',
                 zIndex: 30,
-                transform: 'translateY(-50%)',
+                transform: activeHover !== null ? 'translateY(-50%) scale(1)' : 'translateY(-50%) scale(0.95)',
+                transition: 'opacity 0.3s ease, transform 0.3s ease',
                 boxShadow: '0 24px 64px rgba(0,0,0,0.2)',
               }}
             >

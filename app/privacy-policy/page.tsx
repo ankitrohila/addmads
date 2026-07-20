@@ -41,7 +41,7 @@ const SECTIONS = [
   },
   {
     title: '9. Security',
-    body: `We implement reasonable security practices as required by SPDI Rules 2011, including encryption in transit (TLS), access controls, and secure data storage. While we take all reasonable precautions, no transmission over the internet is 100% secure. Please notify us immediately of any suspected breach at rohilla77@gmail.com.`,
+    body: `We implement reasonable security practices as required by SPDI Rules 2011, including encryption in transit (TLS), access controls, and secure data storage. While we take all reasonable precautions, no transmission over the internet is 100% secure. Please notify us immediately of any suspected breach at info@addmads.com.`,
   },
   {
     title: '10. Cross-Border Data Transfers',

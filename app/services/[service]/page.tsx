@@ -1,18 +1,15 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MEGA_MENU_CATEGORIES } from '@/constants'
 import Navbar from '@/components/Navbar'
 import UnifiedForm from '@/components/UnifiedForm'
 import FAQs from '@/components/FAQs'
 import Footer from '@/components/Footer'
 import ServiceCoverflow from '@/components/ServiceCoverflow'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useRevealAll } from '@/lib/useRevealAll'
 
 // ─── Service data map ────────────────────────────────────────────────────────
 const SERVICE_DATA: Record<string, {
@@ -210,24 +207,7 @@ export default function ServiceDetailPage() {
   const benefitsRef = useRef<(HTMLElement | null)[]>([])
   const processRef  = useRef<(HTMLElement | null)[]>([])
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(heroRef.current?.querySelectorAll('[data-a]') ?? [],
-        { opacity: 0, y: 48 },
-        { opacity: 1, y: 0, duration: 1.0, ease: 'power4.out', stagger: 0.1, delay: 0.2 }
-      )
-      const scrollAnim = (els: (HTMLElement | null)[], trigger: string) => {
-        const valid = els.filter(Boolean) as HTMLElement[]
-        gsap.fromTo(valid, { opacity: 0, y: 32 }, {
-          opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', stagger: 0.08,
-          scrollTrigger: { trigger, start: 'top 78%', toggleActions: 'play none none none' },
-        })
-      }
-      scrollAnim(benefitsRef.current, '#benefits')
-      scrollAnim(processRef.current, '#process')
-    })
-    return () => ctx.revert()
-  }, [slug])
+  useRevealAll()
 
   const category = MEGA_MENU_CATEGORIES.find(c => c.id === slug || c.href === `/services/${slug}`)
 
@@ -280,7 +260,7 @@ export default function ServiceDetailPage() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
             {data.benefits.map((b, i) => (
-              <div key={i} ref={el => { benefitsRef.current[i] = el }} style={{ opacity: 0, background: '#FFFFFF', borderLeft: '3px solid #E60000', borderRadius: '0 8px 8px 0', padding: '24px 28px' }}>
+              <div key={i} data-scroll ref={el => { benefitsRef.current[i] = el }} style={{ opacity: 0, background: '#FFFFFF', borderLeft: '3px solid #E60000', borderRadius: '0 8px 8px 0', padding: '24px 28px' }}>
                 <h3 style={{ fontFamily: 'var(--font-tight)', fontSize: '1.125rem', fontWeight: 600, color: '#111111', marginBottom: 10 }}>{b.title}</h3>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: 'rgba(17,17,17,0.6)', lineHeight: 1.65, margin: 0 }}>{b.body}</p>
               </div>
@@ -301,7 +281,7 @@ export default function ServiceDetailPage() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 32 }}>
             {data.process.map((step, i) => (
-              <div key={i} ref={el => { processRef.current[i] = el }} style={{ opacity: 0 }}>
+              <div key={i} data-scroll ref={el => { processRef.current[i] = el }} style={{ opacity: 0 }}>
                 <div style={{ fontFamily: 'var(--font-tight)', fontSize: '3rem', fontWeight: 700, color: '#E60000', opacity: 0.35, lineHeight: 1, marginBottom: 16 }}>
                   {String(i + 1).padStart(2, '0')}
                 </div>

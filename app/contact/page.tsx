@@ -1,9 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import dynamic from 'next/dynamic'
+import { useRef } from 'react'
 import Link from 'next/link'
-import gsap from 'gsap'
 import Navbar from '@/components/Navbar'
 import UnifiedForm from '@/components/UnifiedForm'
 import FAQs from '@/components/FAQs'
@@ -55,14 +53,6 @@ const SOCIAL_LINKS = [
 
 export default function ContactPage() {
   const heroRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    gsap.fromTo(
-      heroRef.current?.querySelectorAll('[data-anim]') ?? [],
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.12, delay: 0.15 }
-    )
-  }, [])
 
   return (
     <>

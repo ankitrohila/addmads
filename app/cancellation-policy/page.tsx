@@ -17,7 +17,7 @@ const SECTIONS = [
   },
   {
     title: '3. Cancellation by the Client',
-    body: `Clients may cancel an engagement by submitting a written cancellation notice to rohilla77@gmail.com. The following schedule applies:\n\n• Before project initiation (before briefing call and before any work begins): Full refund of advance payment, less any applicable payment gateway charges\n• Within 48 hours of project initiation: 75% refund of advance payment\n• After briefing / discovery phase is complete: 50% refund of advance payment\n• After concepts or initial designs have been delivered: 25% refund of advance payment\n• After revisions have been delivered or at any stage post mid-project milestone: No refund; outstanding balance (if any) remains due\n\n"Project initiation" is defined as the date of the first project briefing call, kick-off meeting, or commencement of design work, whichever occurs first.`,
+    body: `Clients may cancel an engagement by submitting a written cancellation notice to info@addmads.com. The following schedule applies:\n\n• Before project initiation (before briefing call and before any work begins): Full refund of advance payment, less any applicable payment gateway charges\n• Within 48 hours of project initiation: 75% refund of advance payment\n• After briefing / discovery phase is complete: 50% refund of advance payment\n• After concepts or initial designs have been delivered: 25% refund of advance payment\n• After revisions have been delivered or at any stage post mid-project milestone: No refund; outstanding balance (if any) remains due\n\n"Project initiation" is defined as the date of the first project briefing call, kick-off meeting, or commencement of design work, whichever occurs first.`,
   },
   {
     title: '4. Cancellation by AddMads',
@@ -37,7 +37,7 @@ const SECTIONS = [
   },
   {
     title: '8. Disputes',
-    body: `Any dispute regarding cancellation or refunds should first be raised by email to rohilla77@gmail.com. We aim to resolve all disputes within 14 working days. Unresolved disputes are subject to the dispute resolution mechanism in our Terms of Service.`,
+    body: `Any dispute regarding cancellation or refunds should first be raised by email to info@addmads.com. We aim to resolve all disputes within 14 working days. Unresolved disputes are subject to the dispute resolution mechanism in our Terms of Service.`,
   },
   {
     title: '9. Consumer Rights',
@@ -49,7 +49,7 @@ const SECTIONS = [
   },
   {
     title: '11. Contact',
-    body: `For all cancellation, refund, or policy enquiries:\n\nEmail: rohilla77@gmail.com\nPhone: +91-8950205038\nResponse time: within 1 working day`,
+    body: `For all cancellation, refund, or policy enquiries:\n\nEmail: info@addmads.com\nPhone: +91-9220872212\nResponse time: within 1 working day`,
   },
 ]
 
