@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
+import Image from 'next/image'
 import clsx from 'clsx'
 import Navbar from '@/components/Navbar'
 import UnifiedForm from '@/components/UnifiedForm'
@@ -15,8 +16,8 @@ interface Project {
 }
 
 /**
- * Live sites only — every entry loads its real homepage inside the preview
- * frame (verified reachable and not frame-blocked before inclusion).
+ * Live sites only — every entry was verified reachable before inclusion,
+ * and each card shows a real screenshot of its homepage (public/portfolio/<domain>.jpg).
  */
 const PROJECTS: Project[] = [
   { name: 'Bluebells Luxury Real Estate', url: 'https://bluebellsluxury.com/', domain: 'bluebellsluxury.com', category: 'Real Estate & Lifestyle' },
@@ -50,28 +51,8 @@ const PROJECTS: Project[] = [
 
 const CATEGORIES = ['All', ...Array.from(new Set(PROJECTS.map(p => p.category)))]
 
-/** Mounts the live-site iframe only once the card scrolls near the viewport. */
+/** Card with a real homepage screenshot linking to the live site. */
 function LivePreviewCard({ project }: { project: Project }) {
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    const el = wrapRef.current
-    if (!el) return
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          io.disconnect()
-        }
-      },
-      { rootMargin: '400px 0px' }
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
-
   return (
     <a
       href={project.url}
@@ -79,34 +60,15 @@ function LivePreviewCard({ project }: { project: Project }) {
       rel="noopener noreferrer"
       className="group block bg-white border border-black/[0.07] rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_48px_rgba(0,0,0,0.1)]"
     >
-      {/* Live homepage preview — desktop page scaled to fit the card */}
-      <div ref={wrapRef} className="relative aspect-[16/10] overflow-hidden bg-[#F3F3F3]">
-        {!loaded && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="w-8 h-8 rounded-full border-2 border-black/10 border-t-[#C82A2A] animate-spin" />
-          </div>
-        )}
-        {visible && (
-          <iframe
-            src={project.url}
-            title={`${project.name} — live homepage preview`}
-            loading="lazy"
-            sandbox="allow-scripts allow-same-origin"
-            scrolling="no"
-            tabIndex={-1}
-            aria-hidden="true"
-            onLoad={() => setLoaded(true)}
-            className="absolute top-0 left-0 border-0 pointer-events-none select-none"
-            style={{
-              width: '400%',
-              height: '400%',
-              transform: 'scale(0.25)',
-              transformOrigin: 'top left',
-              opacity: loaded ? 1 : 0,
-              transition: 'opacity 0.5s ease',
-            }}
-          />
-        )}
+      {/* Homepage screenshot preview */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-[#F3F3F3]">
+        <Image
+          src={`/portfolio/${project.domain}.jpg`}
+          alt={`${project.name} — homepage`}
+          fill
+          sizes="(max-width: 640px) 92vw, (max-width: 1280px) 46vw, 30vw"
+          className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+        />
         {/* Hover veil */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/45 transition-colors duration-300">
           <span className="btn-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ padding: '10px 22px', fontSize: '0.85rem' }}>
@@ -150,8 +112,8 @@ export default function PortfolioPage() {
             </Reveal>
             <Reveal delay={140}>
               <p className="mt-5 text-[#555] max-w-[58ch]" style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)' }}>
-                Every card below is the real, live homepage — not a mockup. Hover any preview to
-                open the site. Built across real estate, home services, corporate, travel,
+                Every card shows the real homepage of a live site we built — hover any preview
+                to visit it. Built across real estate, home services, corporate, travel,
                 manufacturing, and education.
               </p>
             </Reveal>
