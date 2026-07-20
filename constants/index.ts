@@ -124,13 +124,6 @@ export const LEAD_FORM_SERVICES = [
   { value: 'others', label: 'Others / Custom', group: 'Other' },
 ]
 
-export const BUDGET_RANGES = [
-  { value: 'below-50k', label: 'Below ₹50,000' },
-  { value: '50k-2l', label: '₹50,000 – ₹2,00,000' },
-  { value: '2l-5l', label: '₹2,00,000 – ₹5,00,000' },
-  { value: 'above-5l', label: 'Above ₹5,00,000' },
-]
-
 // Main services for homepage Services section
 export const SERVICES = [
   {

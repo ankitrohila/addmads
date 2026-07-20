@@ -12,7 +12,6 @@ interface LeadPayload {
   email?: string
   phone?: string
   service?: string
-  budget?: string
   message?: string
   source?: string
   recaptchaToken?: string
@@ -45,7 +44,6 @@ export async function POST(req: NextRequest) {
   const email = (body.email ?? '').trim().slice(0, 200)
   const phone = (body.phone ?? '').trim().slice(0, 20)
   const service = (body.service ?? '').trim().slice(0, 100)
-  const budget = (body.budget ?? '').trim().slice(0, 50)
   const message = (body.message ?? '').trim().slice(0, 2000)
   const source = (body.source ?? 'Website Lead').trim().slice(0, 60)
 
@@ -65,7 +63,6 @@ export async function POST(req: NextRequest) {
 
   const description = [
     `Service: ${service}`,
-    budget ? `Budget: ${budget}` : '',
     message ? `Message: ${message}` : '',
     `Form: ${source}`,
   ].filter(Boolean).join('\n')

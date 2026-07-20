@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Script from 'next/script'
-import { LEAD_FORM_SERVICES, BUDGET_RANGES } from '@/constants'
+import { LEAD_FORM_SERVICES } from '@/constants'
 
 declare global {
   interface Window {
@@ -28,11 +28,10 @@ interface FormState {
   email: string
   phone: string
   service: string
-  budget: string
   message: string
 }
 
-const INITIAL: FormState = { name: '', email: '', phone: '', service: '', budget: '', message: '' }
+const INITIAL: FormState = { name: '', email: '', phone: '', service: '', message: '' }
 
 const GROUPS = LEAD_FORM_SERVICES.reduce<Record<string, typeof LEAD_FORM_SERVICES>>((acc, svc) => {
   ;(acc[svc.group] ??= []).push(svc)
@@ -75,7 +74,6 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Please enter a valid email address'
     if (!/^[+\d\s\-()]{7,15}$/.test(form.phone.trim())) e.phone = 'Please enter a valid phone number'
     if (!form.service) e.service = 'Please select a service'
-    if (!form.budget) e.budget = 'Please select a budget range'
     if (SITEKEY && window.grecaptcha && !window.grecaptcha.getResponse(widgetId.current ?? undefined)) {
       e.recaptcha = 'Please complete the reCAPTCHA'
     }
@@ -183,40 +181,24 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
             {errors.phone && <span className="field-error">{errors.phone}</span>}
           </div>
           <div>
-            <label className="field-label" htmlFor={`lf-budget-${sourceLabel}`}>Budget *</label>
+            <label className="field-label" htmlFor={`lf-service-${sourceLabel}`}>Service *</label>
             <select
-              id={`lf-budget-${sourceLabel}`}
-              className={`field-input ${errors.budget ? 'has-error' : ''}`}
-              value={form.budget}
-              onChange={set('budget')}
+              id={`lf-service-${sourceLabel}`}
+              className={`field-input ${errors.service ? 'has-error' : ''}`}
+              value={form.service}
+              onChange={set('service')}
             >
-              <option value="">Select budget range</option>
-              {BUDGET_RANGES.map(b => (
-                <option key={b.value} value={b.value}>{b.label}</option>
+              <option value="">What do you need help with?</option>
+              {Object.entries(GROUPS).map(([group, svcs]) => (
+                <optgroup key={group} label={group}>
+                  {svcs.map(s => (
+                    <option key={s.value} value={s.value}>{s.label}</option>
+                  ))}
+                </optgroup>
               ))}
             </select>
-            {errors.budget && <span className="field-error">{errors.budget}</span>}
+            {errors.service && <span className="field-error">{errors.service}</span>}
           </div>
-        </div>
-
-        <div>
-          <label className="field-label" htmlFor={`lf-service-${sourceLabel}`}>Service *</label>
-          <select
-            id={`lf-service-${sourceLabel}`}
-            className={`field-input ${errors.service ? 'has-error' : ''}`}
-            value={form.service}
-            onChange={set('service')}
-          >
-            <option value="">What do you need help with?</option>
-            {Object.entries(GROUPS).map(([group, svcs]) => (
-              <optgroup key={group} label={group}>
-                {svcs.map(s => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-          {errors.service && <span className="field-error">{errors.service}</span>}
         </div>
 
         <div>
