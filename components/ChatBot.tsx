@@ -2,109 +2,35 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { CONTACT_EMAIL, CONTACT_PHONE } from '@/constants'
+import {
+  matchIntent,
+  buildFallback,
+  GREETING_MESSAGE,
+  GREETING_QUICK_REPLIES,
+  type KBLink,
+} from '@/data/chatbot-kb'
 
 interface Msg {
   from: 'bot' | 'user'
   text: string
+  link?: KBLink
   quickReplies?: string[]
 }
 
-interface KBEntry {
-  keywords: string[]
-  answer: string
-  quickReplies?: string[]
-}
-
-/** Keyword-matched knowledge base covering the whole site — runs fully client-side. */
-const KB: KBEntry[] = [
-  {
-    keywords: ['service', 'offer', 'what do you do', 'help with', 'work'],
-    answer: 'We offer six core services:\n\n1. Performance Marketing — Google Ads, Meta Ads, PPC, retargeting\n2. SEO — technical, on-page, local, e-commerce, plus AEO & GEO for AI search\n3. Branding — strategy, logo, visual identity, guidelines\n4. Graphics & Design — UI/UX, motion, social creatives, print\n5. IT & Web Development — WordPress, Shopify, React/Next.js, Laravel, web apps\n6. Social Media Management — content, community, growth\n\nWhich one would you like to know more about?',
-    quickReplies: ['Pricing', 'Google Ads', 'SEO', 'Web development'],
-  },
-  {
-    keywords: ['price', 'pricing', 'cost', 'charge', 'fee', 'budget', 'how much'],
-    answer: 'Our transparent starting prices:\n\n• Performance Marketing — from ₹25,000/month management (min. ad spend ₹50,000/month)\n• SEO retainers — from ₹15,000/month\n• Branding projects — from ₹30,000\n• Websites — ₹15,000 (landing pages) to ₹3,00,000+ (custom web apps)\n\nNo hidden fees. Want a custom proposal? Share your details in our contact form and we reply within 24 hours.',
-    quickReplies: ['Contact us', 'What results can I expect?'],
-  },
-  {
-    keywords: ['google ads', 'ppc', 'meta', 'facebook', 'instagram ads', 'roas', 'ads', 'campaign', 'performance marketing'],
-    answer: 'Our performance marketing team runs Google Ads, Meta/Facebook Ads, PPC, and retargeting campaigns. Clients typically reach 3×–6× ROAS within 60–90 days.\n\nEvery campaign includes audience segmentation, creative A/B testing, bid optimisation, and a live dashboard so you see exactly where every rupee goes. Management starts at ₹25,000/month.',
-    quickReplies: ['Pricing', 'Contact us'],
-  },
-  {
-    keywords: ['seo', 'rank', 'google search', 'organic', 'traffic', 'aeo', 'geo', 'chatgpt', 'gemini', 'ai search', 'answer engine'],
-    answer: 'We do three layers of search optimisation:\n\n• SEO — technical fixes, on-page, link building, local & e-commerce SEO\n• AEO (Answer Engine Optimisation) — winning Google AI Overviews and featured snippets\n• GEO (Generative Engine Optimisation) — getting your brand cited in ChatGPT, Gemini, and Perplexity answers\n\nTechnical gains show in 4–6 weeks; competitive rankings typically take 6–12 months. Retainers start at ₹15,000/month with monthly reports.',
-    quickReplies: ['How long for results?', 'Pricing'],
-  },
-  {
-    keywords: ['website', 'web development', 'wordpress', 'shopify', 'next', 'react', 'laravel', 'app', 'e-commerce', 'ecommerce', 'landing page'],
-    answer: 'We build on WordPress (incl. WooCommerce), Shopify, Webflow, Wix, React/Next.js, PHP/Laravel, and Node.js — matched to your goal.\n\nAll sites are mobile-first, Core Web Vitals-optimised, and schema-ready for search. Landing pages start at ₹15,000; custom web apps range up to ₹3,00,000+.',
-    quickReplies: ['Pricing', 'Contact us'],
-  },
-  {
-    keywords: ['brand', 'logo', 'identity', 'packaging', 'design', 'ui', 'ux', 'graphic'],
-    answer: 'Our branding and design team covers brand strategy, logo design, visual identity systems, brand guidelines, packaging, UI/UX design, motion graphics, and social media creatives.\n\nBranding projects start at ₹30,000. Want to see examples? Check our portfolio page.',
-    quickReplies: ['Pricing', 'Contact us'],
-  },
-  {
-    keywords: ['result', 'how long', 'timeline', 'when', 'expect', 'guarantee'],
-    answer: 'Typical timelines:\n\n• Ads (Google/Meta) — meaningful ROAS gains in 60–90 days\n• SEO — technical wins in 4–6 weeks, rankings in 3–5 months, top-3 competitive terms in 6–12 months\n• Websites — landing pages in 1–2 weeks, full sites 4–8 weeks\n• Branding — 2–6 weeks depending on scope\n\nEvery client gets a live dashboard and monthly reports, so you track every gain.',
-    quickReplies: ['Pricing', 'Contact us'],
-  },
-  {
-    keywords: ['contact', 'call', 'phone', 'email', 'reach', 'talk', 'meeting', 'consult'],
-    answer: `You can reach us at:\n\n• Phone: ${CONTACT_PHONE}\n• Email: ${CONTACT_EMAIL}\n• Or fill the enquiry form on our contact page — we reply within 24 hours.\n\nWe're based in Sonipat, Haryana, India and work with clients across the globe.`,
-    quickReplies: ['Our services', 'Pricing'],
-  },
-  {
-    keywords: ['who', 'about', 'addmads', 'company', 'agency', 'team', 'where'],
-    answer: 'AddMads is a full-service performance marketing and digital growth agency based in Sonipat, Haryana, India. We\'ve delivered 250+ projects for 60+ global clients across e-commerce, real estate, healthcare, finance, FMCG, EdTech, and SaaS — with a 98% client satisfaction rate.\n\nWhat makes us different: full-funnel ownership under one roof, AI-era search readiness (GEO/AEO), and fully transparent reporting.',
-    quickReplies: ['Our services', 'Contact us'],
-  },
-  {
-    keywords: ['refund', 'cancel', 'policy', 'terms', 'privacy'],
-    answer: 'All our policies are published on the website:\n\n• Privacy Policy — /privacy-policy\n• Terms of Service — /terms-of-service\n• Refund Policy — /refund-policy\n• Cancellation Policy — /cancellation-policy\n\nIn short: you can cancel monthly retainers with notice, and refunds are handled per the published policy.',
-    quickReplies: ['Contact us'],
-  },
-  {
-    keywords: ['social media', 'instagram', 'content', 'community', 'influencer'],
-    answer: 'Our social media management covers content creation, posting schedules, community engagement, influencer marketing, and analytics — focused on building authentic communities around your brand across Instagram, LinkedIn, YouTube, X, and Facebook.',
-    quickReplies: ['Pricing', 'Contact us'],
-  },
-]
-
-const GREETING: Msg = {
-  from: 'bot',
-  text: 'Hi! 👋 I\'m the AddMads assistant. Ask me anything about our services, pricing, timelines, or how we get brands into Google and AI search results.',
-  quickReplies: ['Our services', 'Pricing', 'SEO & AI search', 'Contact us'],
-}
-
-const FALLBACK: Msg = {
-  from: 'bot',
-  text: `I'm not sure about that one — but our team will be! Reach us at ${CONTACT_PHONE} or ${CONTACT_EMAIL}, or ask me about services, pricing, SEO, ads, branding, or web development.`,
-  quickReplies: ['Our services', 'Pricing', 'Contact us'],
-}
-
-function findAnswer(input: string): Msg {
-  const q = input.toLowerCase()
-  let best: KBEntry | null = null
-  let bestScore = 0
-  for (const entry of KB) {
-    const score = entry.keywords.reduce((n, kw) => (q.includes(kw) ? n + kw.length : n), 0)
-    if (score > bestScore) {
-      bestScore = score
-      best = entry
-    }
+function answerFor(input: string): Msg {
+  const intent = matchIntent(input)
+  if (intent) {
+    return { from: 'bot', text: intent.answer, link: intent.link, quickReplies: intent.quickReplies }
   }
-  if (!best) return FALLBACK
-  return { from: 'bot', text: best.answer, quickReplies: best.quickReplies }
+  const fb = buildFallback(input)
+  return { from: 'bot', text: fb.answer, quickReplies: fb.quickReplies }
 }
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false)
-  const [messages, setMessages] = useState<Msg[]>([GREETING])
+  const [messages, setMessages] = useState<Msg[]>([
+    { from: 'bot', text: GREETING_MESSAGE, quickReplies: GREETING_QUICK_REPLIES },
+  ])
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
   const bodyRef = useRef<HTMLDivElement>(null)
@@ -120,9 +46,9 @@ export default function ChatBot() {
     setInput('')
     setTyping(true)
     setTimeout(() => {
-      setMessages(m => [...m, findAnswer(trimmed)])
+      setMessages(m => [...m, answerFor(trimmed)])
       setTyping(false)
-    }, 650)
+    }, 600 + Math.min(trimmed.length * 15, 500))
   }
 
   return (
@@ -175,6 +101,30 @@ export default function ChatBot() {
               >
                 {m.text}
               </div>
+
+              {/* Land the user on the page that resolves the query */}
+              {m.from === 'bot' && m.link && (
+                <div className="mt-2">
+                  {m.link.href.startsWith('http') ? (
+                    <a
+                      href={m.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 text-[0.82rem] font-medium bg-[#111] text-white rounded-full hover:bg-[#C82A2A] transition-colors"
+                    >
+                      {m.link.label} →
+                    </a>
+                  ) : (
+                    <Link
+                      href={m.link.href}
+                      className="inline-flex items-center gap-2 px-4 py-2 text-[0.82rem] font-medium bg-[#111] text-white rounded-full hover:bg-[#C82A2A] transition-colors"
+                    >
+                      {m.link.label} →
+                    </Link>
+                  )}
+                </div>
+              )}
+
               {m.from === 'bot' && m.quickReplies && i === messages.length - 1 && !typing && (
                 <div className="mt-2 flex flex-wrap gap-2">
                   {m.quickReplies.map(qr => (
@@ -203,7 +153,7 @@ export default function ChatBot() {
           )}
         </div>
 
-        {/* Footer CTA + input */}
+        {/* Input */}
         <div className="shrink-0 border-t border-black/[0.07] bg-white">
           <form
             onSubmit={e => { e.preventDefault(); send(input) }}
@@ -212,7 +162,7 @@ export default function ChatBot() {
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
-              placeholder="Ask about services, pricing…"
+              placeholder="Type your question…"
               aria-label="Chat message"
               className="flex-1 px-4 py-[10px] text-[0.9rem] bg-[#F3F3F3] rounded-full outline-none focus:ring-2 focus:ring-[#C82A2A]/30"
             />

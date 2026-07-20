@@ -135,8 +135,12 @@ input, select, textarea { font-family: inherit; font-size: 1rem; color: inherit;
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-x 32s linear infinite;
+  animation: marquee-x 60s linear infinite;
   will-change: transform;
+}
+@media (max-width: 768px) {
+  /* Shorter visible track on mobile makes the same duration look faster — slow it further */
+  .marquee-track { animation-duration: 90s; }
 }
 
 /* ─── Forms ──────────────────────────────────── */
@@ -199,7 +203,7 @@ select.field-input {
 }
 .animate-fade-up { animation: fade-up 0.9s var(--ease-expo) both; }
 .animate-fade-in { animation: fade-in 0.5s ease both; }
-.animate-spin-slow { animation: spin-slow 10s linear infinite; }
+.animate-spin-slow { animation: spin-slow 22s linear infinite; }
 .animate-pop-in { animation: pop-in 0.45s var(--ease-expo) both; }
 
 /* ─── Footer wordmark ────────────────────────── */
