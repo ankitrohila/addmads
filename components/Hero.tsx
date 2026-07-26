@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { MARQUEE_ITEMS } from '@/constants'
 
@@ -47,7 +47,6 @@ function RedStar() {
 }
 
 // ─── Smooth continuous ticker — rAF scroll, no CSS infinite animation ─────────
-// Duplicates items so when pos reaches the first-copy width it wraps seamlessly.
 function TickerBelt() {
   const trackRef = useRef<HTMLDivElement>(null)
   const posRef   = useRef(0)
@@ -55,11 +54,10 @@ function TickerBelt() {
   const rafRef   = useRef<number>(0)
 
   useEffect(() => {
-    const SPEED = 55 // px / second — slow and smooth
+    const SPEED = 55
 
     const frame = (ts: number) => {
       if (prevRef.current === null) prevRef.current = ts
-      // Cap dt to 50 ms to avoid a jump when the tab regains focus
       const dt = Math.min(ts - prevRef.current, 50) / 1000
       prevRef.current = ts
 
@@ -76,7 +74,6 @@ function TickerBelt() {
 
   return (
     <div style={{ overflow: 'hidden', width: '100%' }}>
-      {/* Two copies side-by-side — when first copy scrolls off, second is already in place */}
       <div ref={trackRef} style={{ display: 'flex', width: 'max-content' }}>
         {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
           <span
@@ -102,28 +99,42 @@ function TickerBelt() {
   )
 }
 
-// ─── Scroll-driven heading colour: black/grey → brand red ────────────────────
-// Mirrors the "text revealing in accent colour" effect from the portfolio.
-function useScrollColors() {
-  const [p, setP] = useState(0)  // 0 = at top, 1 = scrolled 400 px
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+// Heading uses the same clip-path scroll-reveal technique as the portfolio site:
+//   • dim layer  (opacity 0.2) — always visible, provides layout + a11y text
+//   • bright overlay (clip-path: inset(0 var(--sp) 0 0)) — reveals left-to-right
+// A single scroll listener sets --sp on each word's overlay span with stagger.
+export default function Hero() {
+  const rRef = useRef<HTMLSpanElement>(null) // "Results" overlay
+  const tRef = useRef<HTMLSpanElement>(null) // "that"    overlay
+  const sRef = useRef<HTMLSpanElement>(null) // "scale"   overlay
 
   useEffect(() => {
-    const handler = () => setP(Math.min(window.scrollY / 400, 1))
-    window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
+    // Staggered per-word reveal over first ~480 px of scroll
+    // Results: 0–320 px  |  that: 80–400 px  |  scale: 160–480 px
+    const update = () => {
+      const y = window.scrollY
+      const words = [rRef, tRef, sRef]
+      words.forEach((ref, i) => {
+        if (!ref.current) return
+        const start = i * 80
+        const end   = start + 320
+        const p     = Math.max(0, Math.min(1, (y - start) / (end - start)))
+        ref.current.style.setProperty('--sp', `${(1 - p) * 100}%`)
+      })
+    }
+    window.addEventListener('scroll', update, { passive: true })
+    update()
+    return () => window.removeEventListener('scroll', update)
   }, [])
 
-  // "Results" / "scale": #111111 (17,17,17) → #C82A2A (200,42,42)
-  const main = `rgb(${Math.round(17 + 183 * p)},${Math.round(17 + 25 * p)},${Math.round(17 + 25 * p)})`
-  // "that": #D1D1D1 (209,209,209) → #C82A2A (200,42,42)
-  const that = `rgb(${Math.round(209 - 9 * p)},${Math.round(209 - 167 * p)},${Math.round(209 - 167 * p)})`
-
-  return { main, that }
-}
-
-// ─── Hero ─────────────────────────────────────────────────────────────────────
-export default function Hero() {
-  const { main, that } = useScrollColors()
+  // Inline style for the bright overlay span
+  const overlay = (color: string): React.CSSProperties => ({
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    color,
+    clipPath: 'inset(0 var(--sp, 100%) 0 0)',
+  })
 
   return (
     <section id="hero" className="bg-white">
@@ -132,16 +143,33 @@ export default function Hero() {
         style={{ minHeight: '100svh', paddingTop: 'var(--nav-h)' }}
       >
         <div className="container-x">
-          {/* Headline — words turn red as user scrolls */}
           <h1
             className="h-display animate-fade-up"
             style={{ fontSize: 'clamp(3.2rem, 11vw, 11rem)', lineHeight: 1.04 }}
           >
-            <span className="block" style={{ color: main }}>Results</span>
+            {/* "Results" — block line */}
+            <span style={{ display: 'block', position: 'relative' }}>
+              {/* dim base — provides layout height and a11y text */}
+              <span style={{ color: '#C82A2A', opacity: 0.2 }}>Results</span>
+              {/* bright overlay — wipes in left-to-right on scroll */}
+              <span ref={rRef} style={overlay('#C82A2A')} aria-hidden="true">Results</span>
+            </span>
+
+            {/* "that ✳ scale" — flex row */}
             <span className="flex items-center gap-[clamp(16px,3vw,40px)] flex-wrap">
-              <span style={{ color: that }}>that</span>
+              {/* "that" */}
+              <span style={{ position: 'relative', display: 'inline-block' }}>
+                <span style={{ color: '#111111', opacity: 0.2 }}>that</span>
+                <span ref={tRef} style={overlay('#111111')} aria-hidden="true">that</span>
+              </span>
+
               <Asterisk />
-              <span style={{ color: main }}>scale</span>
+
+              {/* "scale" */}
+              <span style={{ position: 'relative', display: 'inline-block' }}>
+                <span style={{ color: '#C82A2A', opacity: 0.2 }}>scale</span>
+                <span ref={sRef} style={overlay('#C82A2A')} aria-hidden="true">scale</span>
+              </span>
             </span>
           </h1>
 
