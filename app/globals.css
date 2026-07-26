@@ -128,19 +128,31 @@ input, select, textarea { font-family: inherit; font-size: 1rem; color: inherit;
 }
 
 /* ─── Marquee ────────────────────────────────── */
+@-webkit-keyframes marquee-x {
+  from { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+  to   { -webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0); }
+}
 @keyframes marquee-x {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 .marquee-track {
   display: flex;
   width: max-content;
+  -webkit-animation: marquee-x 60s linear infinite;
   animation: marquee-x 60s linear infinite;
-  will-change: transform;
+  /* will-change: transform causes iOS Safari to run animations at wrong speed */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 @media (max-width: 768px) {
   /* Shorter visible track on mobile makes the same duration look faster — slow it further */
-  .marquee-track { animation-duration: 90s; }
+  .marquee-track {
+    -webkit-animation-duration: 90s;
+    animation-duration: 90s;
+  }
 }
 
 /* ─── Forms ──────────────────────────────────── */
@@ -196,14 +208,26 @@ select.field-input {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-@keyframes spin-slow { to { transform: rotate(360deg); } }
+@-webkit-keyframes spin-slow {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to   { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 @keyframes pop-in {
   from { opacity: 0; transform: translateY(16px) scale(0.98); }
   to   { opacity: 1; transform: none; }
 }
 .animate-fade-up { animation: fade-up 0.9s var(--ease-expo) both; }
 .animate-fade-in { animation: fade-in 0.5s ease both; }
-.animate-spin-slow { animation: spin-slow 22s linear infinite; }
+.animate-spin-slow {
+  -webkit-animation: spin-slow 22s linear infinite;
+  animation: spin-slow 22s linear infinite;
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+}
 .animate-pop-in { animation: pop-in 0.45s var(--ease-expo) both; }
 
 /* ─── Footer wordmark ────────────────────────── */
