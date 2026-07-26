@@ -127,33 +127,9 @@ input, select, textarea { font-family: inherit; font-size: 1rem; color: inherit;
   .reveal { opacity: 1; transform: none; }
 }
 
-/* ─── Marquee ────────────────────────────────── */
-@-webkit-keyframes marquee-x {
-  from { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
-  to   { -webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0); }
-}
-@keyframes marquee-x {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  -webkit-animation: marquee-x 60s linear infinite;
-  animation: marquee-x 60s linear infinite;
-  /* will-change: transform causes iOS Safari to run animations at wrong speed */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-@media (max-width: 768px) {
-  /* Shorter visible track on mobile makes the same duration look faster — slow it further */
-  .marquee-track {
-    -webkit-animation-duration: 90s;
-    animation-duration: 90s;
-  }
-}
+/* ─── Ticker carousel (JS-driven, no CSS infinite animation) ─────────────── */
+/* No CSS animation rules needed — the carousel uses setInterval + one-shot
+   CSS transition which works correctly on all platforms including iOS Safari. */
 
 /* ─── Forms ──────────────────────────────────── */
 .field-label {
