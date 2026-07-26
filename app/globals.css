@@ -176,6 +176,10 @@ select.field-input {
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 
 /* ─── Keyframes ──────────────────────────────── */
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: none; }
