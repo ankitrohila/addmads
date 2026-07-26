@@ -1,14 +1,33 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { MARQUEE_ITEMS } from '@/constants'
 
-// ─── Red spinning asterisk ──────────────────────────────────────────────────
+// ─── Red spinning asterisk — JS rAF driven (immune to iOS animation-clock bug)
 function Asterisk({ size = 'clamp(52px, 6vw, 88px)' }: { size?: string }) {
+  const divRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number>(0)
+
+  useEffect(() => {
+    const PERIOD = 22000 // ms per full rotation
+    let startTime: number | null = null
+
+    const frame = (ts: number) => {
+      if (startTime === null) startTime = ts
+      const deg = (((ts - startTime) % PERIOD) / PERIOD) * 360
+      if (divRef.current) divRef.current.style.transform = `rotate(${deg}deg)`
+      rafRef.current = requestAnimationFrame(frame)
+    }
+
+    rafRef.current = requestAnimationFrame(frame)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
   return (
     <div
-      className="animate-spin-slow relative shrink-0"
+      ref={divRef}
+      className="relative shrink-0"
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
@@ -28,18 +47,44 @@ function Asterisk({ size = 'clamp(52px, 6vw, 88px)' }: { size?: string }) {
   )
 }
 
-// ─── JS-driven ticker carousel (no CSS infinite animation → iOS-safe) ───────
+// ─── SVG 8-point star — replaces the ✳ Unicode emoji character.
+// iOS renders U+2733 (✳) with native emoji colours regardless of CSS color.
+// This SVG is always red on every platform.
+function RedStar({ size = 13 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 14 14"
+      fill="none"
+      aria-hidden="true"
+      style={{ flexShrink: 0 }}
+    >
+      {[0, 45, 90, 135].map(a => (
+        <line
+          key={a}
+          x1="7" y1="1" x2="7" y2="13"
+          stroke="#C82A2A"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          transform={`rotate(${a} 7 7)`}
+        />
+      ))}
+    </svg>
+  )
+}
+
+// ─── JS-driven ticker carousel — no CSS infinite animation → iOS-safe ────────
 const ITEMS = MARQUEE_ITEMS
-const DUPED = [...ITEMS, ...ITEMS]   // duplicate for seamless wrap
-const N     = ITEMS.length           // 10
-const TOTAL = DUPED.length           // 20
+const DUPED = [...ITEMS, ...ITEMS]
+const N     = ITEMS.length   // 10
+const TOTAL = DUPED.length   // 20
 
 function TickerCarousel() {
-  const [offset, setOffset]           = useState(0)
+  const [offset, setOffset]            = useState(0)
   const [shouldAnimate, setShouldAnim] = useState(true)
-  const [visible, setVisible]          = useState(4)   // items on screen at once
+  const [visible, setVisible]          = useState(4)
 
-  // Responsive: fewer items on small screens
   useEffect(() => {
     const update = () =>
       setVisible(window.innerWidth < 560 ? 2 : window.innerWidth < 900 ? 3 : 4)
@@ -48,35 +93,23 @@ function TickerCarousel() {
     return () => window.removeEventListener('resize', update)
   }, [])
 
-  // Auto-advance every 2.5 s
   useEffect(() => {
     const t = setInterval(() => setOffset(p => p + 1), 2500)
     return () => clearInterval(t)
   }, [])
 
-  // Seamless wrap: when first copy is exhausted, snap back silently
   useEffect(() => {
     if (offset < N) return
     const t = setTimeout(() => {
       setShouldAnim(false)
       setOffset(0)
-      // Re-enable transition after one paint so the snap is invisible
       setTimeout(() => setShouldAnim(true), 30)
-    }, 520) // slightly after the 0.5 s transition
+    }, 520)
     return () => clearTimeout(t)
   }, [offset])
 
-  /*
-   * Layout maths:
-   *   track width = (TOTAL / visible) × 100%  of overflow container
-   *   each item   = (1 / TOTAL) × 100%        of track
-   *   translateX  = -(offset / TOTAL) × 100%  of track
-   *                 ≡ -(offset × itemWidthPct)%
-   *
-   * After N steps the second copy is showing — same visually as start → snap.
-   */
-  const itemPct      = 100 / TOTAL                    // % of track per item
-  const translatePct = -(offset * itemPct)            // % of track
+  const itemPct      = 100 / TOTAL
+  const translatePct = -(offset * itemPct)
 
   return (
     <div style={{ overflow: 'hidden', width: '100%' }}>
@@ -97,7 +130,7 @@ function TickerCarousel() {
               flex: `0 0 ${itemPct}%`,
               display: 'flex',
               alignItems: 'center',
-              gap: 'clamp(10px,1.4vw,20px)',
+              gap: 'clamp(10px,1.4vw,18px)',
               paddingRight: 'clamp(20px,2.5vw,40px)',
               fontFamily: 'var(--font-tight)',
               fontSize: 'clamp(1rem,1.6vw,1.5rem)',
@@ -107,7 +140,7 @@ function TickerCarousel() {
             }}
           >
             {item}
-            <span style={{ color: '#C82A2A', flexShrink: 0 }}>✳</span>
+            <RedStar />
           </div>
         ))}
       </div>
@@ -115,7 +148,7 @@ function TickerCarousel() {
   )
 }
 
-// ─── Scroll-driven colour for "that": grey → black ──────────────────────────
+// ─── Scroll-driven colour for "that": grey → black ───────────────────────────
 function useScrollColor() {
   const [progress, setProgress] = useState(0)
 
@@ -125,12 +158,11 @@ function useScrollColor() {
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  // Interpolate #D1D1D1 (209,209,209) → #111111 (17,17,17)
   const ch = Math.round(209 - 192 * progress)
   return `rgb(${ch},${ch},${ch})`
 }
 
-// ─── Hero ────────────────────────────────────────────────────────────────────
+// ─── Hero ─────────────────────────────────────────────────────────────────────
 export default function Hero() {
   const thatColor = useScrollColor()
 
@@ -154,7 +186,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          {/* Sub row: CTAs + tagline */}
+          {/* CTAs + tagline */}
           <div
             className="mt-[clamp(28px,4vw,56px)] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 animate-fade-up"
             style={{ animationDelay: '0.25s' }}
