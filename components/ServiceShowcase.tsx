@@ -50,7 +50,8 @@ export default function ServiceShowcase() {
       const scrollable = el.offsetHeight - window.innerHeight
       if (scrollable <= 0) return
       const progress = Math.min(scrolled / scrollable, 0.9999)
-      setActive(Math.min(Math.floor(progress * N), N - 1))
+      // N*2 travel so services loop 01→04→01→04 before section ends
+      setActive(Math.floor(progress * N * 2) % N)
     }
     window.addEventListener('scroll', update, { passive: true })
     update()
@@ -61,7 +62,7 @@ export default function ServiceShowcase() {
 
   return (
     // Tall wrapper — each service gets 100 vh of scroll travel
-    <div ref={wrapperRef} style={{ height: `${N * 100}vh` }}>
+    <div ref={wrapperRef} style={{ height: `${N * 2 * 100}vh` }}>
       {/* Sticky viewport panel */}
       <div
         style={{
@@ -138,7 +139,7 @@ export default function ServiceShowcase() {
             {/* ── Right: stacked card deck (desktop) ── */}
             <div
               className="hidden lg:block relative"
-              style={{ height: 'clamp(340px,46vh,460px)' }}
+              style={{ height: 'clamp(390px,50vh,500px)' }}
             >
               {SHOWCASE.map((svc, i) => {
                 const pos = i - active // 0=front, 1-3=stacked behind, <0=past
@@ -159,7 +160,6 @@ export default function ServiceShowcase() {
                       borderRadius: 16,
                       background: '#fff',
                       color: '#111',
-                      overflow: 'hidden',
                       zIndex: isFront ? 10 : isBehind ? 10 - pos : 0,
                       transform: `translate(${tx}px, ${ty}px) scale(${sc})`,
                       transformOrigin: 'bottom left',
@@ -193,8 +193,8 @@ export default function ServiceShowcase() {
 
                     {isFront && (
                       <>
-                        {/* Image */}
-                        <div className="relative" style={{ height: '55%' }}>
+                        {/* Image — overflow:hidden here clips image to rounded top corners */}
+                        <div className="relative" style={{ height: 'clamp(160px,22vh,200px)', overflow: 'hidden', borderRadius: '16px 16px 0 0' }}>
                           <Image
                             src={svc.img}
                             alt={svc.name}
