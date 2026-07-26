@@ -19,20 +19,31 @@ export default function FAQs() {
 
   return (
     <section id="faqs" className="section-pad" style={{ background: '#F5F5F5' }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+      />
       <div className="container-x">
         <div className="grid gap-[clamp(24px,4vw,64px)] lg:grid-cols-[1fr_2fr] items-start">
-          <Reveal>
-            <p className="eyebrow mb-5">FAQs</p>
-            <h2 className="h-display text-[#111]" style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)' }}>
-              Questions, answered.
-            </h2>
-            <p className="mt-4 text-[#555] max-w-[40ch]">
-              Everything about our services, pricing, timelines, and how we get your brand into
-              Google and AI search results.
-            </p>
-          </Reveal>
 
+          {/* ── Left column — sticky until last FAQ scrolls past ── */}
+          <div className="lg:sticky lg:self-start" style={{ top: 'calc(var(--nav-h) + 24px)' }}>
+            <Reveal>
+              <p className="eyebrow mb-5">FAQs</p>
+              <h2
+                className="h-display text-[#111]"
+                style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)' }}
+              >
+                Questions,<br />answered.
+              </h2>
+              <p className="mt-4 text-[#555] max-w-[34ch]" style={{ lineHeight: 1.7 }}>
+                Everything about our services, pricing, timelines, and how we get your brand into
+                Google and AI search results.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* ── Right column — FAQ accordion ── */}
           <div>
             {FAQS.map((faq, i) => {
               const open = expanded === faq.id
@@ -44,7 +55,13 @@ export default function FAQs() {
                       aria-expanded={open}
                       className="w-full flex items-start justify-between gap-4 py-5 text-left"
                     >
-                      <span className="font-medium" style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1rem, 1.4vw, 1.2rem)' }}>
+                      <span
+                        className="font-medium"
+                        style={{
+                          fontFamily: 'var(--font-tight)',
+                          fontSize: 'clamp(1rem, 1.4vw, 1.2rem)',
+                        }}
+                      >
                         {faq.question}
                       </span>
                       <span
@@ -57,7 +74,10 @@ export default function FAQs() {
                     </button>
                     <div
                       className="grid transition-[grid-template-rows] duration-400"
-                      style={{ gridTemplateRows: open ? '1fr' : '0fr', transitionTimingFunction: 'var(--ease-expo)' }}
+                      style={{
+                        gridTemplateRows: open ? '1fr' : '0fr',
+                        transitionTimingFunction: 'var(--ease-expo)',
+                      }}
                     >
                       <div className="overflow-hidden">
                         <p className="pb-6 pr-8 text-[0.94rem] text-[#555]">{faq.answer}</p>
@@ -68,6 +88,7 @@ export default function FAQs() {
               )
             })}
           </div>
+
         </div>
       </div>
     </section>
