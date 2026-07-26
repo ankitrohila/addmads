@@ -145,19 +145,17 @@ export default function Hero() {
         <div className="container-x">
           <h1
             className="h-display animate-fade-up"
-            style={{ fontSize: 'clamp(3.2rem, 11vw, 11rem)', lineHeight: 1.04 }}
+            style={{ fontSize: 'clamp(3.2rem, 14vw, 14rem)', lineHeight: 1.04 }}
           >
-            {/* "Results" — block line */}
+            {/* "Results" — dim base is dark so reveal goes black → red */}
             <span style={{ display: 'block', position: 'relative' }}>
-              {/* dim base — provides layout height and a11y text */}
-              <span style={{ color: '#C82A2A', opacity: 0.2 }}>Results</span>
-              {/* bright overlay — wipes in left-to-right on scroll */}
+              <span style={{ color: '#111111', opacity: 0.2 }}>Results</span>
               <span ref={rRef} style={overlay('#C82A2A')} aria-hidden="true">Results</span>
             </span>
 
-            {/* "that ✳ scale" — flex row */}
+            {/* "that ✳ scale" */}
             <span className="flex items-center gap-[clamp(16px,3vw,40px)] flex-wrap">
-              {/* "that" */}
+              {/* "that" — dark → dark */}
               <span style={{ position: 'relative', display: 'inline-block' }}>
                 <span style={{ color: '#111111', opacity: 0.2 }}>that</span>
                 <span ref={tRef} style={overlay('#111111')} aria-hidden="true">that</span>
@@ -165,9 +163,9 @@ export default function Hero() {
 
               <Asterisk />
 
-              {/* "scale" */}
+              {/* "scale" — dark → red */}
               <span style={{ position: 'relative', display: 'inline-block' }}>
-                <span style={{ color: '#C82A2A', opacity: 0.2 }}>scale</span>
+                <span style={{ color: '#111111', opacity: 0.2 }}>scale</span>
                 <span ref={sRef} style={overlay('#C82A2A')} aria-hidden="true">scale</span>
               </span>
             </span>
