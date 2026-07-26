@@ -6,7 +6,6 @@ export const NAV_LINKS = [
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services', hasSubmenu: true },
   { label: 'Portfolio', href: '/portfolio' },
-  { label: 'CUSTOM', href: 'https://develop.addmads.com' },
   { label: 'Contact', href: '/contact' },
 ]
 
