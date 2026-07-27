@@ -62,8 +62,7 @@ export async function POST(req: NextRequest) {
   const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '.'
 
   const description = [
-    `Service: ${service}`,
-    message ? `Message: ${message}` : '',
+    message ? message : '',
     `Form: ${source}`,
   ].filter(Boolean).join('\n')
 
@@ -73,12 +72,13 @@ export async function POST(req: NextRequest) {
   fd.append('xmIwtLD', ZOHO_XMIWTLD)
   fd.append('actionType', 'TGVhZHM=')
   fd.append('returnURL', 'https://addmads.com/contact')
-  fd.append('Company', source)
+  fd.append('Company', 'Not Provided')
   fd.append('First Name', firstName)
   fd.append('Last Name', lastName)
   fd.append('Email', email)
   fd.append('Phone', phone)
   fd.append('Lead Source', 'Web Site')
+  fd.append('Industry', service)
   fd.append('Description', description)
 
   try {
