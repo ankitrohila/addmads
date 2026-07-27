@@ -17,6 +17,7 @@ const COL_LEGAL = [
   { label: 'Refund Policy', href: '/refund-policy' },
   { label: 'Cancellation Policy', href: '/cancellation-policy' },
   { label: 'Shipping & Delivery', href: '/shipping-delivery-policy' },
+  { label: 'Sitemap', href: '/sitemap' },
 ]
 
 const SOCIALS = [
@@ -80,7 +81,10 @@ export default function Footer() {
           {/* Services */}
           <div>
             <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/25 mb-5">Services</h4>
-            <ul className="list-none space-y-2">
+            <ul
+              className="list-none space-y-2"
+              style={{ maxHeight: 260, overflowY: 'auto', paddingRight: 4 }}
+            >
               {FOOTER_SERVICES.map(l => (
                 <li key={l.label}>
                   <Link href={l.href} className="block text-[0.875rem] text-white/60 hover:text-white transition-colors">

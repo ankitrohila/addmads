@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/refund-policy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/cancellation-policy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/shipping-delivery-policy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/sitemap`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
   ]
 
   const servicePages: MetadataRoute.Sitemap = MEGA_MENU_CATEGORIES.flatMap(cat => [
