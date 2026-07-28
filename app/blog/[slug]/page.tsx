@@ -8,7 +8,7 @@ import UnifiedForm from '@/components/UnifiedForm'
 import { BLOG_POSTS } from '../data'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -16,7 +16,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = BLOG_POSTS.find(p => p.slug === params.slug)
+  const { slug } = await params
+  const post = BLOG_POSTS.find(p => p.slug === slug)
   if (!post) return {}
   return {
     title: `${post.title} | AddMads Blog`,
@@ -42,8 +43,9 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-export default function BlogPostPage({ params }: Props) {
-  const post = BLOG_POSTS.find(p => p.slug === params.slug)
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params
+  const post = BLOG_POSTS.find(p => p.slug === slug)
   if (!post) notFound()
 
   const related = BLOG_POSTS.filter(p => p.categorySlug === post.categorySlug && p.slug !== post.slug).slice(0, 3)

@@ -5,10 +5,11 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import UnifiedForm from '@/components/UnifiedForm'
 import { BLOG_POSTS } from './data'
+import BlogCard from './BlogCard'
 
 export const metadata: Metadata = {
   title: 'Blog — Digital Marketing Insights | AddMads',
-  description: 'Expert insights on performance marketing, SEO, AEO, GEO, branding, UI/UX design, and web development. Stay ahead of the curve with AddMads\' digital marketing blog.',
+  description: 'Expert insights on performance marketing, SEO, AEO, GEO, branding, UI/UX design, and web development. Stay ahead with AddMads.',
   openGraph: {
     title: 'Blog — Digital Marketing Insights | AddMads',
     description: 'Expert articles on Google Ads, SEO, AEO, Generative Engine Optimisation, branding, and web development from the AddMads team.',
@@ -66,7 +67,7 @@ export default function BlogListingPage() {
 
       <main style={{ paddingTop: 'var(--nav-h)' }}>
 
-        {/* ── Hero ── */}
+        {/* Hero */}
         <section style={{ background: '#111', color: '#fff', padding: 'clamp(80px,12vw,160px) var(--container-px) clamp(60px,8vw,100px)' }}>
           <div style={{ maxWidth: 860, margin: '0 auto' }}>
             <p style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#C82A2A', marginBottom: 20 }}>
@@ -81,7 +82,7 @@ export default function BlogListingPage() {
           </div>
         </section>
 
-        {/* ── Category filters ── */}
+        {/* Category filters */}
         <div style={{ background: '#F5F5F5', borderBottom: '1px solid rgba(0,0,0,0.07)', padding: '0 var(--container-px)', overflowX: 'auto' }}>
           <div style={{ display: 'flex', gap: 8, padding: '14px 0', minWidth: 'max-content' }}>
             {CATEGORIES.map(cat => (
@@ -93,7 +94,6 @@ export default function BlogListingPage() {
                   background: '#fff', border: '1px solid rgba(0,0,0,0.1)',
                   borderRadius: 999, fontSize: '0.85rem', color: '#333',
                   textDecoration: 'none', whiteSpace: 'nowrap',
-                  transition: 'all 0.2s',
                 }}
               >
                 {cat.label}
@@ -104,7 +104,7 @@ export default function BlogListingPage() {
 
         <div style={{ padding: 'clamp(56px,8vw,100px) var(--container-px)', maxWidth: 1240, margin: '0 auto' }}>
 
-          {/* ── Featured post ── */}
+          {/* Featured post */}
           <Link href={`/blog/${featured.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', marginBottom: 'clamp(48px,6vw,80px)' }}>
             <div style={{ display: 'grid', gap: 'clamp(24px,4vw,56px)', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', alignItems: 'center' }}>
               <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 16, aspectRatio: '16/9' }}>
@@ -113,7 +113,7 @@ export default function BlogListingPage() {
                   alt={featured.title}
                   fill
                   sizes="(max-width: 768px) 92vw, 55vw"
-                  style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }}
+                  style={{ objectFit: 'cover' }}
                   unoptimized
                 />
               </div>
@@ -139,51 +139,14 @@ export default function BlogListingPage() {
             </div>
           </Link>
 
-          {/* ── All posts grid ── */}
+          {/* All posts grid */}
           <h2 style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.5rem,2.5vw,2rem)', fontWeight: 700, color: '#111', marginBottom: 32, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.08)' }}>
             All Articles
           </h2>
 
           <div style={{ display: 'grid', gap: 32, gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))' }}>
             {rest.map(post => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <article style={{ borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid rgba(0,0,0,0.07)', transition: 'box-shadow 0.25s, transform 0.25s' }}
-                  onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = '0 8px 32px rgba(0,0,0,0.12)'; el.style.transform = 'translateY(-2px)' }}
-                  onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = ''; el.style.transform = '' }}>
-                  <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9' }}>
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      sizes="(max-width: 768px) 92vw, 30vw"
-                      style={{ objectFit: 'cover' }}
-                      unoptimized
-                    />
-                  </div>
-                  <div style={{ padding: '20px 24px 24px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#C82A2A', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                        {post.category}
-                      </span>
-                      <span style={{ fontSize: '0.75rem', color: '#aaa' }}>{post.readTime} min</span>
-                    </div>
-                    <h3 style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.05rem,1.3vw,1.2rem)', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: 12 }}>
-                      {post.title}
-                    </h3>
-                    <p style={{ fontSize: '0.875rem', color: '#666', lineHeight: 1.6, marginBottom: 16, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                      {post.excerpt}
-                    </p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
-                      {post.tags.slice(0, 3).map(tag => (
-                        <span key={tag} style={{ display: 'inline-block', padding: '3px 10px', background: '#F5F5F5', borderRadius: 999, fontSize: '0.73rem', color: '#555' }}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <p style={{ fontSize: '0.8rem', color: '#aaa' }}>{formatDate(post.date)}</p>
-                  </div>
-                </article>
-              </Link>
+              <BlogCard key={post.slug} post={post} />
             ))}
           </div>
         </div>
