@@ -1,0 +1,139 @@
+# AddMads — Digital Marketing Agency
+
+> AddMads is a full-service performance-first digital marketing agency based in India, serving clients across India and globally. Founded with the mission to make data-driven marketing accessible to businesses of every size, AddMads combines media buying, SEO, branding, design, and web development under one roof.
+
+## About AddMads
+
+**Company Name:** AddMads
+**Website:** https://addmads.com
+**Email:** info@addmads.com
+**Phone:** +91-9220872212
+**Headquarters:** India
+**Founded:** 2017
+**Clients Served:** 60+ globally
+**Projects Delivered:** 250+
+**Client Satisfaction:** 98%
+
+AddMads is a performance-first digital marketing agency that helps businesses grow through data-driven advertising, organic search, brand building, and web development. Every service is measured, every rupee is tracked, and every result is reported transparently.
+
+## What Makes AddMads Different
+
+1. **Full-funnel ownership** — Strategy, creative, media buying, SEO, web development, and analytics under one roof. No handoff gaps between teams.
+2. **AI-era search readiness** — AddMads builds for GEO (Generative Engine Optimisation), AEO (Answer Engine Optimisation), and AIO (AI Input Optimisation) alongside traditional SEO, so clients appear in Google, ChatGPT, Gemini, Perplexity, and Claude answers.
+3. **Transparent performance** — Every client gets a live Looker Studio dashboard, monthly reports, and full account ownership. No black-box billing.
+4. **Measurable results** — Average client ROAS of 3×–6× on Google and Meta Ads; page-1 rankings within 5–8 months for target keywords; websites loading in under 1.5 seconds.
+
+## Services
+
+### Performance Marketing
+AddMads designs, launches, and optimises paid advertising campaigns across Google Ads (Search, Display, Shopping, YouTube, Performance Max), Meta Ads (Facebook & Instagram), LinkedIn Ads, and retargeting platforms.
+
+- **Google Ads & PPC** — Search, display, shopping, and Performance Max campaigns with Target ROAS and Target CPA bidding.
+- **Meta / Facebook Ads** — Facebook and Instagram campaigns with Advantage+ Shopping and manual audience targeting.
+- **Social Media Marketing** — Organic and paid social strategy across all major platforms.
+- **Email Marketing** — Automated sequences, newsletters, and lifecycle campaigns in Klaviyo, Mailchimp, and HubSpot.
+- **Content Marketing** — SEO-driven content strategy, blog writing, and thought leadership.
+- **Influencer Marketing** — Creator partnerships at nano, micro, and macro level.
+
+Typical outcomes: 3×–6× ROAS within 60–90 days; 30%–50% reduction in CPA over 6 months.
+
+### SEO Services (including AEO and GEO)
+AddMads provides comprehensive SEO that covers traditional organic rankings, Answer Engine Optimisation (AEO) for Google AI Overviews and featured snippets, and Generative Engine Optimisation (GEO) for AI chatbot visibility.
+
+- **Technical SEO** — Core Web Vitals, crawlability, schema markup, IndexNow, mobile-first optimisation.
+- **On-Page SEO** — Keyword strategy, content optimisation, meta tags, internal linking.
+- **Off-Page & Link Building** — White-hat editorial backlinks, digital PR, resource link building.
+- **Local SEO** — Google Business Profile, local citations, NAP consistency, local schema.
+- **E-commerce SEO** — Product page, category page, and site architecture optimisation for WooCommerce and Shopify.
+- **AEO** — Structuring content for Google AI Overviews and featured snippets using BLUF framework and FAQ schema.
+- **GEO** — Building authoritative, citation-worthy content that appears in ChatGPT, Gemini, Perplexity, and Claude answers.
+- **YouTube SEO** — Video ranking optimisation for YouTube and Google.
+
+Typical outcomes: Top-10 rankings within 4–6 months; top-3 within 8–12 months; 4×+ organic traffic growth.
+
+### Branding & Visual Identity
+Complete brand identity development from strategy to execution.
+
+- **Brand Strategy** — Market positioning, audience personas, competitive analysis, brand architecture.
+- **Logo Design** — Primary, secondary, and icon lockups in all formats.
+- **Visual Identity** — Colour palette, typography, imagery style, iconography.
+- **Brand Guidelines** — Comprehensive brand book for consistent application.
+- **Brand Voice & Messaging** — Tone of voice, messaging pillars, copy style guide.
+- **Packaging Design** — Product packaging for retail, e-commerce, and food & beverage.
+
+### Graphics & Design
+Professional creative services for digital and print.
+
+- **Graphic Design** — All digital and print collateral.
+- **UI/UX Design** — Web and mobile interface design, wireframing, prototyping.
+- **Motion Graphics** — Animated videos, reels, explainer videos, ad creatives.
+- **Print Design** — Business cards, brochures, catalogues, packaging.
+- **Social Media Creatives** — Platform-native posts, stories, reels, ad creatives.
+- **Presentation Design** — Investor decks, pitch decks, corporate presentations.
+
+### IT Services & Web Development
+End-to-end web and application development.
+
+- **WordPress Development** — Custom themes, plugins, WooCommerce stores.
+- **Shopify / E-commerce** — Shopify stores, custom themes, Shopify Plus.
+- **React & Next.js** — High-performance web applications with SSR/SSG.
+- **PHP / Laravel** — Backend development for complex web applications.
+- **Webflow / Wix** — No-code and low-code rapid website development.
+- **Web Apps & SaaS** — Full-stack SaaS product development from MVP to scale.
+- **Landing Pages** — Conversion-optimised landing pages for paid campaigns.
+- **AI & Automation** — Chatbots, AI integrations, workflow automation.
+
+### Social Media Management
+Complete social media presence management.
+
+- Content creation (graphics, video, copy) for Instagram, Facebook, LinkedIn, X, YouTube.
+- Community management and engagement.
+- Monthly content calendars planned and approved in advance.
+- Analytics and monthly performance reporting.
+- Paid social integration and boosting.
+
+## Pricing
+
+- Performance Marketing management: from ₹25,000/month (+ ad spend minimum ₹30,000/month)
+- SEO retainers: from ₹15,000/month
+- Branding projects: from ₹30,000
+- Website development: ₹15,000 (landing page) to ₹3,00,000+ (custom web app)
+- Social media management: from ₹12,000/month
+
+## Client Results (Case Studies)
+
+- **ShopNest India** — Google Ads ROAS improved from 1.8× to 4.5× in 3 months
+- **Verdant Skincare** — Complete rebrand; customer recall doubled post-rebrand
+- **Lunara Wellness** — Website moved from page 6 to page 1 on Google in 5 months
+- **Helix Financial** — Next.js website loads in 1.2 seconds; converts 40% better than previous site
+
+## Industries Served
+
+E-commerce, D2C brands, real estate, healthcare, finance, FMCG, EdTech, SaaS, hospitality, manufacturing, professional services, non-profits, startups.
+
+## Technologies Used
+
+Google Ads, Meta Ads Manager, Google Analytics 4, Google Search Console, Looker Studio, SEMrush, Ahrefs, Screaming Frog, WordPress, WooCommerce, Shopify, React, Next.js, Node.js, PHP/Laravel, Figma, Adobe Creative Suite, Klaviyo, HubSpot, Mailchimp, Zapier, Make.com.
+
+## Key Locations
+
+India (primary market), UK, USA, UAE, Australia (international clients served remotely).
+
+## Blog & Resources
+
+AddMads publishes educational content on digital marketing at https://addmads.com/blog, covering:
+- Performance marketing and Google/Meta Ads
+- SEO, AEO (Answer Engine Optimisation), GEO (Generative Engine Optimisation)
+- Branding and visual identity
+- UI/UX design and web development
+- AI automation and business technology
+
+## Contact
+
+- **Website:** https://addmads.com
+- **Contact page:** https://addmads.com/contact
+- **Email:** info@addmads.com
+- **Phone:** +91-9220872212
+- **Services overview:** https://addmads.com/services
+- **Portfolio:** https://addmads.com/portfolio
+- **Blog:** https://addmads.com/blog

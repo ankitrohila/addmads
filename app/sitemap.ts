@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { MEGA_MENU_CATEGORIES } from '@/constants'
+import { BLOG_POSTS } from './blog/data'
 
 const BASE = 'https://addmads.com'
 
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/services`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/portfolio`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/privacy-policy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/terms-of-service`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
@@ -30,5 +32,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ])
 
-  return [...staticPages, ...servicePages]
+  const blogPages: MetadataRoute.Sitemap = [
+    ...BLOG_POSTS.map(post => ({
+      url: `${BASE}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+  ]
+
+  return [...staticPages, ...servicePages, ...blogPages]
 }

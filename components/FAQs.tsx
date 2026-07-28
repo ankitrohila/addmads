@@ -4,29 +4,39 @@ import { useState } from 'react'
 import Reveal from './Reveal'
 import { FAQS } from '@/constants'
 
-const FAQ_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map(f => ({
-    '@type': 'Question',
-    name: f.question,
-    acceptedAnswer: { '@type': 'Answer', text: f.answer },
-  })),
+interface FAQItem {
+  id?: number
+  question: string
+  answer: string
 }
 
-export default function FAQs() {
+interface FAQsProps {
+  faqs?: FAQItem[]
+}
+
+export default function FAQs({ faqs: customFaqs }: FAQsProps = {}) {
+  const items = customFaqs ?? FAQS
   const [expanded, setExpanded] = useState<number | null>(null)
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  }
 
   return (
     <section id="faqs" className="section-pad" style={{ background: '#F5F5F5' }}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <div className="container-x">
         <div className="grid gap-[clamp(24px,4vw,64px)] lg:grid-cols-[1fr_2fr] items-start">
 
-          {/* ── Left column — sticky until last FAQ scrolls past ── */}
           <div className="lg:sticky lg:self-start" style={{ top: 'calc(var(--nav-h) + 24px)' }}>
             <Reveal>
               <p className="eyebrow mb-5">FAQs</p>
@@ -43,15 +53,15 @@ export default function FAQs() {
             </Reveal>
           </div>
 
-          {/* ── Right column — FAQ accordion ── */}
           <div>
-            {FAQS.map((faq, i) => {
-              const open = expanded === faq.id
+            {items.map((faq, i) => {
+              const key = faq.id ?? i
+              const open = expanded === key
               return (
-                <Reveal key={faq.id} delay={Math.min(i * 40, 240)}>
+                <Reveal key={key} delay={Math.min(i * 40, 240)}>
                   <div className="border-b border-black/[0.09]">
                     <button
-                      onClick={() => setExpanded(open ? null : faq.id)}
+                      onClick={() => setExpanded(open ? null : key)}
                       aria-expanded={open}
                       className="w-full flex items-start justify-between gap-4 py-5 text-left"
                     >

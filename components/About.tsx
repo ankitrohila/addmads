@@ -5,9 +5,9 @@ import Link from 'next/link'
 import Reveal from './Reveal'
 
 const IMGS = [
-  { src: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7a6fcc22a8eb9beed44bb_1.webp', alt: 'Creative 3D artwork' },
-  { src: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7a6fd493c862c8d570e8d_2.webp', alt: 'Mobile app design' },
-  { src: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7a83c438727240e53a84b_5.jpg', alt: 'Product headset render' },
+  { src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=700&fit=crop&q=80', alt: 'Marketing team strategy session' },
+  { src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=700&fit=crop&q=80', alt: 'Digital marketing analytics dashboard' },
+  { src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&h=700&fit=crop&q=80', alt: 'Modern creative agency office' },
 ]
 
 export default function About() {
@@ -23,7 +23,9 @@ export default function About() {
             className="h-display text-[#111] max-w-[18ch]"
             style={{ fontSize: 'clamp(2rem, 5.5vw, 4.5rem)' }}
           >
-            A performance-first agency built for the AI-search era.
+            A performance-first agency built for the{' '}
+            <br className="hidden lg:block" />
+            AI-search era.
           </h2>
         </Reveal>
 

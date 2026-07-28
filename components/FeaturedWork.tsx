@@ -5,9 +5,9 @@ import Link from 'next/link'
 import Reveal from './Reveal'
 
 const PROJECTS = [
-  { id: 1, title: 'Performance Marketing', category: 'Google & Meta Ads · ROI-First Campaigns', href: '/services/performance-marketing', image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b7abb1dc9797d92e7aae3f_img6.webp' },
-  { id: 2, title: 'Brand & Identity', category: 'Strategy · Logo · Visual System', href: '/services/branding', image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68aea452324447dec982d6b3_img9.webp' },
-  { id: 3, title: 'IT & Web Development', category: 'Next.js · Shopify · WordPress · Apps', href: '/services/it-services', image: 'https://cdn.prod.website-files.com/68ae68d1a017ccf41fd5f812/68b53ed5e0ae8eda7ac7e41b_img16.webp' },
+  { id: 1, title: 'Performance Marketing', category: 'Google & Meta Ads · ROI-First Campaigns', href: '/services/performance-marketing', image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=700&h=900&fit=crop&q=80' },
+  { id: 2, title: 'Brand & Identity', category: 'Strategy · Logo · Visual System', href: '/services/branding', image: 'https://images.unsplash.com/photo-1493723843671-1d655e66ac1c?w=700&h=900&fit=crop&q=80' },
+  { id: 3, title: 'IT & Web Development', category: 'Next.js · Shopify · WordPress · Apps', href: '/services/it-services', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&h=900&fit=crop&q=80' },
 ]
 
 export default function FeaturedWork() {
