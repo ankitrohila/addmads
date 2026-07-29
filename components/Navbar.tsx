@@ -14,6 +14,7 @@ export default function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false)
   const lastY = useRef(0)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
 
   const openMega = useCallback(() => {
     if (closeTimer.current) clearTimeout(closeTimer.current)
@@ -38,6 +39,16 @@ export default function Navbar() {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     if (!menuOpen) setServicesOpen(false)
     return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
+  useEffect(() => {
+    const el = mobileMenuRef.current
+    if (!el) return
+    if (menuOpen) {
+      el.removeAttribute('inert')
+    } else {
+      el.setAttribute('inert', '')
+    }
   }, [menuOpen])
 
   const closeAll = () => { setMenuOpen(false); setServicesOpen(false); setMegaOpen(false) }
@@ -169,6 +180,7 @@ export default function Navbar() {
 
       {/* Mobile full-screen menu */}
       <div
+        ref={mobileMenuRef}
         className={clsx(
           'lg:hidden fixed inset-0 z-40 bg-[#111] flex flex-col overflow-y-auto transition-[clip-path] duration-500',
         )}
@@ -181,6 +193,8 @@ export default function Navbar() {
           paddingBottom: 32,
         }}
         aria-hidden={!menuOpen}
+        aria-modal="true"
+        role="dialog"
       >
         <ul className="list-none">
           {NAV_LINKS.map((link, i) => (

@@ -119,9 +119,26 @@ Google Ads, Meta Ads Manager, Google Analytics 4, Google Search Console, Looker 
 
 India (primary market), UK, USA, UAE, Australia (international clients served remotely).
 
+## Key Pages
+
+- [Home](https://www.addmads.com/): Full-service digital marketing agency overview
+- [Services](https://www.addmads.com/services): All services — performance marketing, SEO, branding, design, IT
+- [Performance Marketing](https://www.addmads.com/services/performance-marketing): Google Ads, Meta Ads, email marketing and paid campaigns
+- [Google Ads](https://www.addmads.com/services/performance-marketing/google-ads): Google Search, Display, Shopping and YouTube campaign management
+- [Meta Ads](https://www.addmads.com/services/performance-marketing/meta-ads): Facebook and Instagram advertising
+- [SEO Services](https://www.addmads.com/services/seo): Technical, on-page, off-page, local, e-commerce and YouTube SEO
+- [Technical SEO](https://www.addmads.com/services/seo/technical-seo): Core Web Vitals, crawlability and schema markup
+- [Local SEO](https://www.addmads.com/services/seo/local-seo): Google Business Profile and local citation building
+- [Branding](https://www.addmads.com/services/branding): Brand strategy, logo design, visual identity and brand guidelines
+- [Logo Design](https://www.addmads.com/services/branding/logo-design): Custom logo design with full file package
+- [Graphics & Design](https://www.addmads.com/services/graphics-design): UI/UX, motion graphics, social creatives and print design
+- [IT Services](https://www.addmads.com/services/it-services): WordPress, Shopify, Next.js, Laravel, web apps and AI automation
+- [Blog](https://www.addmads.com/blog): Educational articles on digital marketing, SEO, branding and web development
+- [Contact](https://www.addmads.com/contact): Get a free quote or consultation
+
 ## Blog & Resources
 
-AddMads publishes educational content on digital marketing at https://addmads.com/blog, covering:
+AddMads publishes educational content on digital marketing at [addmads.com/blog](https://www.addmads.com/blog), covering:
 - Performance marketing and Google/Meta Ads
 - SEO, AEO (Answer Engine Optimisation), GEO (Generative Engine Optimisation)
 - Branding and visual identity
@@ -130,10 +147,9 @@ AddMads publishes educational content on digital marketing at https://addmads.co
 
 ## Contact
 
-- **Website:** https://addmads.com
-- **Contact page:** https://addmads.com/contact
+- **Website:** [addmads.com](https://www.addmads.com)
+- **Contact page:** [addmads.com/contact](https://www.addmads.com/contact)
 - **Email:** info@addmads.com
 - **Phone:** +91-9220872212
-- **Services overview:** https://addmads.com/services
-- **Portfolio:** https://addmads.com/portfolio
-- **Blog:** https://addmads.com/blog
+- **Services overview:** [addmads.com/services](https://www.addmads.com/services)
+- **Blog:** [addmads.com/blog](https://www.addmads.com/blog)
