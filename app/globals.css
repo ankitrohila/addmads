@@ -195,14 +195,8 @@ select.field-input {
 .animate-fade-up { animation: fade-up 0.9s var(--ease-expo) both; }
 .animate-fade-in { animation: fade-in 0.5s ease both; }
 .animate-pop-in  { animation: pop-in 0.45s var(--ease-expo) both; }
-@keyframes spin-asterisk {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes ticker-belt {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
+/* asterisk + ticker are rAF-driven in Hero.tsx — CSS infinite animations run
+   at the wrong speed on iOS Safari, so no keyframes for them here */
 
 /* ─── Footer wordmark ────────────────────────── */
 .footer-wordmark {

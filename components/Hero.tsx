@@ -4,14 +4,27 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { MARQUEE_ITEMS } from '@/constants'
 
-// ─── Red spinning asterisk — CSS animation on compositor thread ──────────────
+// ─── Red spinning asterisk — rAF-driven: immune to the iOS Safari bug where
+// CSS infinite animations run at the wrong speed after resume/backgrounding ───
 function Asterisk({ size = 'clamp(52px, 6vw, 88px)' }: { size?: string }) {
+  const divRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number>(0)
+
+  useEffect(() => {
+    const PERIOD = 22000
+    let t0: number | null = null
+    const frame = (ts: number) => {
+      if (t0 === null) t0 = ts
+      const deg = (((ts - t0) % PERIOD) / PERIOD) * 360
+      if (divRef.current) divRef.current.style.transform = `rotate(${deg}deg)`
+      rafRef.current = requestAnimationFrame(frame)
+    }
+    rafRef.current = requestAnimationFrame(frame)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
   return (
-    <div
-      className="relative shrink-0"
-      style={{ width: size, height: size, animation: 'spin-asterisk 22s linear infinite', willChange: 'transform' }}
-      aria-hidden="true"
-    >
+    <div ref={divRef} className="relative shrink-0" style={{ width: size, height: size }} aria-hidden="true">
       {[0, 90, 45, -45].map(angle => (
         <div
           key={angle}
@@ -34,11 +47,38 @@ function RedStar() {
   )
 }
 
-// ─── Ticker belt — GPU-accelerated CSS animation, zero main-thread cost ───────
+// ─── Ticker belt — rAF scroll with clamped delta: constant speed on all
+// platforms including iOS Safari (no CSS infinite animation) ─────────────────
 function TickerBelt() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const posRef   = useRef(0)
+  const prevRef  = useRef<number | null>(null)
+  const rafRef   = useRef<number>(0)
+
+  useEffect(() => {
+    const SPEED = 55 // px per second
+
+    const frame = (ts: number) => {
+      if (prevRef.current === null) prevRef.current = ts
+      const dt = Math.min(ts - prevRef.current, 50) / 1000
+      prevRef.current = ts
+
+      if (trackRef.current) {
+        const halfW = trackRef.current.scrollWidth / 2
+        if (halfW > 0) {
+          posRef.current = (posRef.current + SPEED * dt) % halfW
+          trackRef.current.style.transform = `translateX(${-posRef.current}px)`
+        }
+      }
+      rafRef.current = requestAnimationFrame(frame)
+    }
+    rafRef.current = requestAnimationFrame(frame)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
   return (
     <div style={{ overflow: 'hidden', width: '100%' }}>
-      <div style={{ display: 'flex', width: 'max-content', animation: 'ticker-belt 25s linear infinite', willChange: 'transform' }}>
+      <div ref={trackRef} style={{ display: 'flex', width: 'max-content' }}>
         {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
           <span
             key={i}
@@ -117,13 +157,14 @@ export default function Hero() {
       <div ref={wrapRef} style={{ height: '220svh' }}>
         {/* Sticky panel — stays pinned until the reveal completes */}
         <div
-          className="relative flex flex-col justify-center overflow-hidden"
+          className="relative flex flex-col overflow-hidden"
           style={{ position: 'sticky', top: 0, height: '100svh', paddingTop: 'var(--nav-h)' }}
         >
-          <div className="container-x">
+          {/* Content centres in the space above the ticker — never overlaps it */}
+          <div className="container-x flex-1 flex flex-col justify-center min-h-0">
             <h1
               className="h-display animate-fade-up"
-              style={{ fontSize: 'clamp(3.2rem, 14vw, 14rem)', lineHeight: 1.04 }}
+              style={{ fontSize: 'clamp(3.2rem, min(14vw, 21svh), 14rem)', lineHeight: 1.04 }}
             >
               {/* "Results" — black → red */}
               <span style={{ display: 'block', position: 'relative' }}>
@@ -151,7 +192,7 @@ export default function Hero() {
 
             {/* CTAs + tagline */}
             <div
-              className="mt-[clamp(28px,4vw,56px)] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 animate-fade-up"
+              className="mt-[clamp(20px,3.5vh,56px)] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 animate-fade-up"
               style={{ animationDelay: '0.25s' }}
             >
               <div className="flex flex-wrap items-center gap-4">
@@ -168,9 +209,9 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Smooth ticker strip — pinned to the bottom of the sticky panel */}
+          {/* Smooth ticker strip — in normal flow at the bottom of the panel */}
           <div
-            className="absolute bottom-0 left-0 right-0 border-t border-b border-black/[0.07] py-[clamp(14px,1.6vw,22px)] overflow-hidden select-none"
+            className="shrink-0 border-t border-b border-black/[0.07] py-[clamp(14px,1.6vw,22px)] overflow-hidden select-none"
             aria-hidden="true"
           >
             <TickerBelt />
