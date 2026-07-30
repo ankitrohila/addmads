@@ -1,11 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Inter_Tight } from 'next/font/google'
-import dynamic from 'next/dynamic'
+import ClientWidgets from '@/components/ClientWidgets'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '@/constants'
 import './globals.css'
-
-const LeadPopup = dynamic(() => import('@/components/LeadPopup'), { ssr: false })
-const ChatBot   = dynamic(() => import('@/components/ChatBot'),   { ssr: false })
 
 const inter = Inter({
   subsets: ['latin'],
@@ -114,8 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning>
         {children}
-        <LeadPopup />
-        <ChatBot />
+        <ClientWidgets />
       </body>
     </html>
   )
