@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#111111"/>
-  <text x="3" y="23" font-family="Arial,system-ui,sans-serif" font-weight="900" font-size="15" fill="#FFFFFF">A</text>
-  <text x="15" y="23" font-family="Arial,system-ui,sans-serif" font-weight="900" font-size="15" fill="#E60000">M</text>
+  <g transform="translate(2.984,21.732) scale(0.007820,-0.007820)">
+    <path fill="#FFFFFF" d="M1052 242H536L465 0H2L553 1466H1047L1598 0H1124ZM957 559 795 1086 634 559Z"/>
+    <path fill="#E60000" d="M1678 1466H2274L2504 574L2733 1466H3327V0H2957V1118L2670 0H2335L2049 1118V0H1678Z"/>
+  </g>
 </svg>
