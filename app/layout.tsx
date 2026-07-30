@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Inter_Tight } from 'next/font/google'
 import ClientWidgets from '@/components/ClientWidgets'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '@/constants'
 import './globals.css'
 
@@ -112,6 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning>
         {children}
         <ClientWidgets />
+        <GoogleAnalytics />
       </body>
     </html>
   )

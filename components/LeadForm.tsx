@@ -94,6 +94,7 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
         body: JSON.stringify({
           ...form,
           source: sourceLabel,
+          page: window.location.pathname + window.location.search,
           recaptchaToken:
             SITEKEY && window.grecaptcha ? window.grecaptcha.getResponse(widgetId.current ?? undefined) : '',
         }),

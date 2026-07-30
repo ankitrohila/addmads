@@ -14,6 +14,7 @@ interface LeadPayload {
   service?: string
   message?: string
   source?: string
+  page?: string
   recaptchaToken?: string
 }
 
@@ -46,6 +47,9 @@ export async function POST(req: NextRequest) {
   const service = (body.service ?? '').trim().slice(0, 100)
   const message = (body.message ?? '').trim().slice(0, 2000)
   const source = (body.source ?? 'Website Lead').trim().slice(0, 60)
+  // Page path the lead was submitted from, e.g. /services/branding/logo-design
+  const rawPage = (body.page ?? '').trim().slice(0, 300)
+  const page = /^\/[\w\-/?=&%.]*$/.test(rawPage) ? rawPage : ''
 
   if (name.length < 2) return NextResponse.json({ error: 'Please enter your full name' }, { status: 400 })
   if (!EMAIL_RE.test(email)) return NextResponse.json({ error: 'Please enter a valid email address' }, { status: 400 })
@@ -63,6 +67,9 @@ export async function POST(req: NextRequest) {
 
   const description = [
     message ? message : '',
+    message ? '—' : '',
+    `Service: ${service}`,
+    page ? `Page: https://www.addmads.com${page}` : '',
     `Form: ${source}`,
   ].filter(Boolean).join('\n')
 
