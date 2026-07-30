@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Inter_Tight } from 'next/font/google'
-import LeadPopup from '@/components/LeadPopup'
-import ChatBot from '@/components/ChatBot'
+import dynamic from 'next/dynamic'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '@/constants'
 import './globals.css'
+
+const LeadPopup = dynamic(() => import('@/components/LeadPopup'), { ssr: false })
+const ChatBot   = dynamic(() => import('@/components/ChatBot'),   { ssr: false })
 
 const inter = Inter({
   subsets: ['latin'],
@@ -100,6 +102,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${interTight.variable}`}>
       <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

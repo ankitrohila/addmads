@@ -71,11 +71,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.prod.website-files.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
+    minimumCacheTTL: 86400,
   },
   async headers() {
     return [

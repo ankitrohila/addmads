@@ -4,26 +4,14 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { MARQUEE_ITEMS } from '@/constants'
 
-// ─── Red spinning asterisk — rAF-driven, immune to iOS animation-clock bug ───
+// ─── Red spinning asterisk — CSS animation on compositor thread ──────────────
 function Asterisk({ size = 'clamp(52px, 6vw, 88px)' }: { size?: string }) {
-  const divRef = useRef<HTMLDivElement>(null)
-  const rafRef = useRef<number>(0)
-
-  useEffect(() => {
-    const PERIOD = 22000
-    let t0: number | null = null
-    const frame = (ts: number) => {
-      if (t0 === null) t0 = ts
-      const deg = (((ts - t0) % PERIOD) / PERIOD) * 360
-      if (divRef.current) divRef.current.style.transform = `rotate(${deg}deg)`
-      rafRef.current = requestAnimationFrame(frame)
-    }
-    rafRef.current = requestAnimationFrame(frame)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [])
-
   return (
-    <div ref={divRef} className="relative shrink-0" style={{ width: size, height: size }} aria-hidden="true">
+    <div
+      className="relative shrink-0"
+      style={{ width: size, height: size, animation: 'spin-asterisk 22s linear infinite', willChange: 'transform' }}
+      aria-hidden="true"
+    >
       {[0, 90, 45, -45].map(angle => (
         <div
           key={angle}
@@ -35,7 +23,7 @@ function Asterisk({ size = 'clamp(52px, 6vw, 88px)' }: { size?: string }) {
   )
 }
 
-// ─── SVG star separator — never renders as emoji on iOS ──────────────────────
+// ─── SVG star separator ───────────────────────────────────────────────────────
 function RedStar() {
   return (
     <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
@@ -46,35 +34,11 @@ function RedStar() {
   )
 }
 
-// ─── Smooth continuous ticker — rAF scroll, no CSS infinite animation ─────────
+// ─── Ticker belt — GPU-accelerated CSS animation, zero main-thread cost ───────
 function TickerBelt() {
-  const trackRef = useRef<HTMLDivElement>(null)
-  const posRef   = useRef(0)
-  const prevRef  = useRef<number | null>(null)
-  const rafRef   = useRef<number>(0)
-
-  useEffect(() => {
-    const SPEED = 55
-
-    const frame = (ts: number) => {
-      if (prevRef.current === null) prevRef.current = ts
-      const dt = Math.min(ts - prevRef.current, 50) / 1000
-      prevRef.current = ts
-
-      if (trackRef.current) {
-        const halfW = trackRef.current.scrollWidth / 2
-        posRef.current = (posRef.current + SPEED * dt) % halfW
-        trackRef.current.style.transform = `translateX(${-posRef.current}px)`
-      }
-      rafRef.current = requestAnimationFrame(frame)
-    }
-    rafRef.current = requestAnimationFrame(frame)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [])
-
   return (
     <div style={{ overflow: 'hidden', width: '100%' }}>
-      <div ref={trackRef} style={{ display: 'flex', width: 'max-content' }}>
+      <div style={{ display: 'flex', width: 'max-content', animation: 'ticker-belt 25s linear infinite', willChange: 'transform' }}>
         {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
           <span
             key={i}

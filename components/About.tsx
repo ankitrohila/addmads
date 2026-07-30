@@ -52,7 +52,6 @@ export default function About() {
                     fill
                     sizes="(max-width: 1024px) 30vw, 200px"
                     className="object-cover"
-                    unoptimized
                   />
                 </div>
               </Reveal>

@@ -1,14 +1,16 @@
+import dynamic from 'next/dynamic'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import UnifiedForm from '@/components/UnifiedForm'
 import About from '@/components/About'
-import ServiceShowcase from '@/components/ServiceShowcase'
-import Services from '@/components/Services'
-import FeaturedWork from '@/components/FeaturedWork'
-import Metrics from '@/components/Metrics'
-import Testimonials from '@/components/Testimonials'
 import FAQs from '@/components/FAQs'
 import Footer from '@/components/Footer'
+
+const ServiceShowcase = dynamic(() => import('@/components/ServiceShowcase'))
+const Services        = dynamic(() => import('@/components/Services'))
+const FeaturedWork    = dynamic(() => import('@/components/FeaturedWork'))
+const Metrics         = dynamic(() => import('@/components/Metrics'))
+const Testimonials    = dynamic(() => import('@/components/Testimonials'))
 
 export default function Home() {
   return (

@@ -137,7 +137,6 @@ export default async function BlogPostPage({ params }: Props) {
               priority
               sizes="(max-width: 800px) 92vw, 800px"
               style={{ objectFit: 'cover' }}
-              unoptimized
             />
           </div>
         </div>

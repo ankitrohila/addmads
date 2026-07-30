@@ -114,7 +114,6 @@ export default function BlogListingPage() {
                   fill
                   sizes="(max-width: 768px) 92vw, 55vw"
                   style={{ objectFit: 'cover' }}
-                  unoptimized
                 />
               </div>
               <div>

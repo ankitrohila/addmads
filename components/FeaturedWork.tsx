@@ -34,7 +34,6 @@ export default function FeaturedWork() {
                     fill
                     sizes="(max-width: 768px) 92vw, 30vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                    unoptimized
                   />
                 </div>
                 <h3 className="mt-5" style={{ fontSize: 'clamp(1.2rem, 1.7vw, 1.5rem)' }}>{p.title}</h3>

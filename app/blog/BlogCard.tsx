@@ -38,7 +38,6 @@ export default function BlogCard({ post }: { post: BlogPost }) {
             fill
             sizes="(max-width: 768px) 92vw, 30vw"
             style={{ objectFit: 'cover' }}
-            unoptimized
           />
         </div>
         <div style={{ padding: '20px 24px 24px' }}>

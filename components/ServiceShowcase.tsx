@@ -201,7 +201,6 @@ export default function ServiceShowcase() {
                             fill
                             sizes="(max-width: 1280px) 50vw, 620px"
                             className="object-cover"
-                            unoptimized
                           />
                         </div>
                         {/* Content */}
