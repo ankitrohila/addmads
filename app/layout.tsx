@@ -42,6 +42,17 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://addmads.com',
     siteName: 'AddMads',
+    images: [
+      {
+        url: 'https://addmads.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'AddMads — Performance Marketing & Digital Growth Agency',
+      },
+    ],
+  },
+  alternates: {
+    canonical: 'https://addmads.com',
   },
   twitter: {
     card: 'summary_large_image',
@@ -71,28 +82,98 @@ export const viewport: Viewport = {
 
 const ORG_SCHEMA = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  '@id': 'https://addmads.com/#organization',
-  name: 'AddMads',
-  url: 'https://addmads.com',
-  logo: 'https://addmads.com/logo.svg',
-  description:
-    'Performance marketing and digital growth agency offering Google Ads, Meta Ads, SEO, AEO, GEO, branding, graphics design, and web development services.',
-  telephone: CONTACT_PHONE,
-  email: CONTACT_EMAIL,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Sonipat',
-    addressRegion: 'Haryana',
-    addressCountry: 'IN',
-  },
-  areaServed: 'IN',
-  priceRange: '₹₹',
-  sameAs: [
-    'https://instagram.com/addmads',
-    'https://youtube.com/@addmads',
-    'https://linkedin.com/company/addmads',
-    'https://x.com/addmads',
+  '@graph': [
+    {
+      '@type': ['MarketingAgency', 'LocalBusiness', 'ProfessionalService'],
+      '@id': 'https://addmads.com/#organization',
+      name: 'AddMads',
+      legalName: 'AddMads Digital Marketing Agency',
+      url: 'https://addmads.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://addmads.com/logo.svg',
+        width: 200,
+        height: 60,
+      },
+      image: 'https://addmads.com/logo.svg',
+      description:
+        'AddMads is a performance marketing and digital growth agency based in Sonipat, Haryana, India. We offer Google Ads, Meta Ads, SEO, AEO, GEO, branding, graphics design, and web development for businesses across India (Sonipat, Ganaur, Delhi, Panipat, Haryana) and globally in the UK, USA, and UAE.',
+      telephone: CONTACT_PHONE,
+      email: CONTACT_EMAIL,
+      foundingDate: '2017',
+      numberOfEmployees: { '@type': 'QuantitativeValue', value: 10 },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Sonipat',
+        addressLocality: 'Sonipat',
+        addressRegion: 'Haryana',
+        postalCode: '131001',
+        addressCountry: 'IN',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 28.9931,
+        longitude: 77.0151,
+      },
+      areaServed: [
+        { '@type': 'City',    name: 'Sonipat' },
+        { '@type': 'City',    name: 'Ganaur' },
+        { '@type': 'City',    name: 'Panipat' },
+        { '@type': 'City',    name: 'Delhi' },
+        { '@type': 'City',    name: 'Gurugram' },
+        { '@type': 'City',    name: 'Noida' },
+        { '@type': 'State',   name: 'Haryana' },
+        { '@type': 'Country', name: 'India' },
+        { '@type': 'Country', name: 'United Kingdom' },
+        { '@type': 'Country', name: 'United States' },
+        { '@type': 'Country', name: 'United Arab Emirates' },
+      ],
+      priceRange: '₹₹',
+      currenciesAccepted: 'INR, GBP, USD, AED',
+      paymentAccepted: 'Cash, Credit Card, Bank Transfer, UPI',
+      openingHours: 'Mo-Sa 09:00-18:00',
+      sameAs: [
+        'https://instagram.com/addmads',
+        'https://youtube.com/@addmads',
+        'https://linkedin.com/company/addmads',
+        'https://x.com/addmads',
+        'https://facebook.com/addmads',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Digital Marketing Services',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Google Ads & PPC Management', url: 'https://addmads.com/services/performance-marketing/google-ads' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Meta Facebook & Instagram Ads', url: 'https://addmads.com/services/performance-marketing/meta-ads' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO Services', url: 'https://addmads.com/services/seo' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO', url: 'https://addmads.com/services/seo/local-seo' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Branding & Logo Design', url: 'https://addmads.com/services/branding' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website Development', url: 'https://addmads.com/services/it-services' } },
+        ],
+      },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        reviewCount: '60',
+        bestRating: '5',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://addmads.com/#website',
+      url: 'https://addmads.com',
+      name: 'AddMads',
+      description: 'Performance Marketing & Digital Growth Agency',
+      publisher: { '@id': 'https://addmads.com/#organization' },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://addmads.com/blog?q={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
   ],
 }
 

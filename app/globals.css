@@ -198,6 +198,25 @@ select.field-input {
 /* asterisk + ticker are rAF-driven in Hero.tsx — CSS infinite animations run
    at the wrong speed on iOS Safari, so no keyframes for them here */
 
+/* ─── Service-related link cards (subservice page "More Services" section) ── */
+.svc-rel-link {
+  display: block;
+  padding: 16px 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: #111111;
+  text-decoration: none;
+  border: 1px solid rgba(17,17,17,0.07);
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+}
+.svc-rel-link:hover {
+  border-color: #E60000;
+  color: #E60000;
+  background: #FFF5F5;
+}
+
 /* ─── Footer wordmark ────────────────────────── */
 .footer-wordmark {
   font-family: var(--font-tight);

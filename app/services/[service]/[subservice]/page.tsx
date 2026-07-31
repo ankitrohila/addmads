@@ -1,6 +1,3 @@
-'use client'
-
-import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -922,10 +919,22 @@ function toTitle(slug: string) {
   return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
 }
 
-export default function SubservicePage() {
-  const params = useParams()
-  const serviceSlug    = params.service as string
-  const subserviceSlug = params.subservice as string
+export function generateStaticParams() {
+  return MEGA_MENU_CATEGORIES.flatMap(cat => {
+    const serviceSlug = cat.href.replace('/services/', '')
+    return cat.services.map(svc => {
+      const subserviceSlug = svc.href.replace(`/services/${serviceSlug}/`, '')
+      return { service: serviceSlug, subservice: subserviceSlug }
+    })
+  })
+}
+
+export default async function SubservicePage({
+  params,
+}: {
+  params: Promise<{ service: string; subservice: string }>
+}) {
+  const { service: serviceSlug, subservice: subserviceSlug } = await params
 
   const category   = MEGA_MENU_CATEGORIES.find(c => c.href.endsWith(serviceSlug))
   const subservice = category?.services.find(s => s.href.endsWith(subserviceSlug))
@@ -935,8 +944,33 @@ export default function SubservicePage() {
   const key         = `${serviceSlug}/${subserviceSlug}`
   const data        = SUBSERVICE_DATA[key]
 
+  const faqSchema = data?.faqs?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: data.faqs.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      }
+    : null
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home',        item: 'https://addmads.com' },
+      { '@type': 'ListItem', position: 2, name: 'Services',    item: 'https://addmads.com/services' },
+      { '@type': 'ListItem', position: 3, name: parentTitle,   item: `https://addmads.com/services/${serviceSlug}` },
+      { '@type': 'ListItem', position: 4, name: title,         item: `https://addmads.com/services/${serviceSlug}/${subserviceSlug}` },
+    ],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <Navbar />
 
       <main style={{ paddingTop: 'var(--nav-h)' }}>
@@ -1084,13 +1118,7 @@ export default function SubservicePage() {
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px,1fr))', gap: 12 }}>
               {category.services.filter(s => !s.href.endsWith(subserviceSlug)).map(svc => (
-                <Link key={svc.href} href={svc.href} style={{
-                  display: 'block', padding: '16px 20px', background: '#FFFFFF', borderRadius: 8,
-                  fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', color: '#111111', textDecoration: 'none',
-                  border: '1px solid rgba(17,17,17,0.07)', transition: 'all 0.25s',
-                }}
-                  onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = '#E60000'; el.style.color = '#E60000'; el.style.background = '#FFF5F5' }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = 'rgba(17,17,17,0.07)'; el.style.color = '#111111'; el.style.background = '#FFFFFF' }}>
+                <Link key={svc.href} href={svc.href} className="svc-rel-link">
                   {svc.label} →
                 </Link>
               ))}

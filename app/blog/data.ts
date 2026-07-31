@@ -517,4 +517,334 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     conclusion: 'AI automation in 2025 is not science fiction and it is not just for large enterprises. Businesses of every size are implementing specific, targeted automations that save significant time and cost within weeks of deployment. The key is to start specific, measure rigorously, and expand based on proven results. AddMads builds AI and automation solutions for businesses — from intelligent chatbots and marketing automation to custom workflow systems — designed to deliver measurable ROI within 90 days of deployment.',
   },
+
+  {
+    slug: 'digital-marketing-agency-sonipat-haryana-guide',
+    title: 'Digital Marketing Agency in Sonipat: How to Grow Your Business Online in 2025',
+    excerpt: 'A complete guide for Sonipat businesses on how to use digital marketing — Google Ads, SEO, social media, and web development — to attract more customers and grow revenue.',
+    category: 'Performance Marketing',
+    categorySlug: 'performance-marketing',
+    date: '2025-08-01',
+    readTime: 9,
+    image: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=800&h=450&fit=crop&q=80',
+    tags: ['Digital Marketing Sonipat', 'Marketing Agency Haryana', 'Google Ads Sonipat', 'SEO Sonipat', 'Local Business Marketing India'],
+    intro: 'Sonipat is one of the fastest-growing cities in Haryana — and the competition for customers is growing just as fast. Whether you run a manufacturing business, a school, a clinic, a retail store, or a service company, your potential customers are already searching for you on Google, browsing Instagram, and watching YouTube. The businesses that grow fastest in Sonipat are the ones that have mastered digital marketing. This guide covers exactly what digital marketing strategies work for Sonipat businesses in 2025 — and how to choose the right agency partner to execute them.',
+    sections: [
+      {
+        heading: 'Why Digital Marketing Is Non-Negotiable for Sonipat Businesses in 2025',
+        body: 'Five years ago, Sonipat businesses could still grow primarily through word of mouth, hoardings, and local newspaper ads. That era is over. Today, 76% of consumers search online before visiting a local business — and for Sonipat businesses, that means your potential customers are on Google, Instagram, and YouTube right now, looking for exactly what you offer. If you are not visible online, your competitors are getting those customers.',
+        list: [
+          '76% of local customers search online before visiting a business — Google, Instagram, and YouTube are their first stops',
+          '"Near me" searches have grown 200%+ in the past 3 years, and Sonipat is no exception',
+          'Businesses that invest in digital marketing grow 2.8× faster than those that rely on traditional methods only',
+          'The average Sonipat customer checks at least 2–3 online sources (Google, social media, reviews) before making a purchase decision',
+        ],
+      },
+      {
+        heading: 'Google Ads: The Fastest Way to Get Customers in Sonipat',
+        body: 'Google Ads puts your business at the top of Google search results for the keywords your customers are typing right now. Unlike SEO (which takes months), Google Ads can generate leads and enquiries within days of launch. For Sonipat businesses, a well-managed Google Ads campaign geotargeted to Sonipat district and surrounding areas (Ganaur, Kundli, Murthal, Bahalgarh) delivers exactly the customers you want — people in your area, actively searching for your service. The key is proper campaign structure, conversion tracking, and ongoing optimisation. Without these, budgets are wasted on irrelevant clicks.',
+        list: [
+          'Search campaigns: appear when customers search "your service + Sonipat" or nearby terms',
+          'Call-only campaigns: drive direct phone calls from mobile searchers — ideal for local services',
+          'Display retargeting: stay visible to people who visited your website but did not enquire',
+          'Minimum recommended budget: ₹15,000–₹30,000/month in ad spend for meaningful results',
+        ],
+      },
+      {
+        heading: 'Local SEO: Own the Google Maps Results in Sonipat',
+        body: 'When someone in Sonipat searches "dentist near me" or "AC repair in Sonipat", they see a map with 3 business listings before any website results. This is the Local Pack — and it is the most valuable real estate in local search. Appearing in the Local Pack requires a fully optimised Google Business Profile, consistent NAP (Name, Address, Phone) data across directories, genuine customer reviews, and a locally relevant website. AddMads specialises in getting Sonipat businesses into the Local Pack — the businesses that appear there receive 70%+ of the clicks on local search results.',
+      },
+      {
+        heading: 'Social Media Marketing That Works in Sonipat',
+        body: 'Instagram and Facebook are where Sonipat consumers spend hours every day. Consistent, branded social media presence builds the kind of trust that turns followers into customers. For Sonipat businesses, the most effective social media strategy is: weekly branded posts (services, results, behind-the-scenes), Instagram Reels for reach, local hashtags (#Sonipat, #Haryana), customer testimonials, and seasonal promotions tied to local events.',
+      },
+      {
+        heading: 'Web Development for Sonipat Businesses',
+        body: 'A professional website is your most important marketing asset. It works 24 hours a day, 7 days a week, and converts visitors who found you through Google, social media, or word of mouth. For Sonipat businesses, we recommend a fast-loading WordPress or Next.js website with clear service pages, a contact form or click-to-call button, Google Maps integration, and customer testimonials. A website that loads in under 1.5 seconds converts 3× more visitors than a slow site.',
+      },
+      {
+        heading: 'How to Choose a Digital Marketing Agency in Sonipat',
+        body: 'Not all agencies are equal. When choosing a digital marketing partner in Sonipat or Haryana, look for an agency that provides transparent reporting (you should always be able to see where your money is going), has proven local experience (case studies and results from similar businesses), gives you full ownership of your accounts and data, and communicates clearly and promptly. AddMads is based in Sonipat — we have been serving local businesses for 7+ years and you can meet us in person.',
+        list: [
+          'Transparency: you should have full access to all your ad accounts and see exactly where every rupee goes',
+          'Local knowledge: the agency should understand Sonipat-specific markets, competition, and seasonality',
+          'Full ownership: all accounts, data, and content you pay for should belong to you, not the agency',
+          'Measurable results: insist on specific targets (ranking positions, leads, ROAS) before signing a contract',
+        ],
+      },
+    ],
+    conclusion: 'Digital marketing is no longer a luxury for Sonipat businesses — it is the most effective way to grow revenue, attract new customers, and build a brand that lasts. Whether you start with a Google Ads campaign, a website, or local SEO, the key is to start now and measure results from day one. AddMads is Sonipat\'s go-to digital marketing partner — with 7+ years of experience, 60+ satisfied clients, and a team that genuinely understands the Haryana market. Contact us for a free audit of your digital presence.',
+  },
+
+  {
+    slug: 'geo-seo-chatgpt-gemini-perplexity-ai-search-2025',
+    title: 'GEO vs SEO: How to Get Your Business Found on ChatGPT, Gemini & Perplexity in 2025',
+    excerpt: 'GEO (Generative Engine Optimisation) is the new frontier of search. Learn why your business needs to appear in AI chat responses — and exactly how to make it happen.',
+    category: 'SEO Services',
+    categorySlug: 'seo',
+    date: '2025-08-05',
+    readTime: 11,
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop&q=80',
+    tags: ['GEO', 'Generative Engine Optimisation', 'AI Search', 'ChatGPT SEO', 'Gemini Visibility', 'Perplexity', 'AEO', 'SEO 2025'],
+    intro: 'Search is changing faster than at any point in the last 20 years. In 2025, hundreds of millions of people use AI tools like ChatGPT, Google Gemini, Perplexity, and Claude not just to chat — but to answer real buying questions: "What is the best marketing agency in Sonipat?", "Which web development company should I use in India?", "Who are the top performance marketing agencies in Delhi?". If your business does not appear in these AI-generated answers, you are invisible to a rapidly growing segment of your potential customers. This guide explains exactly how GEO (Generative Engine Optimisation) works and what you need to do to appear in AI search results.',
+    sections: [
+      {
+        heading: 'What Is GEO and Why Does It Matter?',
+        body: 'GEO — Generative Engine Optimisation — is the practice of optimising your business to appear in the answers generated by AI language models (ChatGPT, Gemini, Perplexity, Claude, Microsoft Copilot). Traditional SEO optimises for Google\'s blue links. GEO optimises for AI answers. The difference matters enormously: when Google shows 10 blue links, users click the one that looks best. When ChatGPT answers "who are the best marketing agencies in India?", it names 3–5 companies — the rest do not exist to that user. The prize for appearing in AI answers is massive: a single mention of your business in ChatGPT\'s response to a buying question can be worth thousands of customer interactions.',
+        list: [
+          'ChatGPT now receives over 100 million queries per day — many are buying-intent questions about services and products',
+          'Google AI Overviews (formerly Search Generative Experience) appears at the top of 40%+ of Google searches',
+          'Perplexity AI is growing at 3× year-on-year and its users are typically high-income, educated buyers',
+          'Businesses that appear in AI answers see an average 30%+ increase in branded search volume within 6 months',
+        ],
+      },
+      {
+        heading: 'Why Most Business Websites Do Not Appear in AI Answers',
+        body: 'AI language models are trained on vast amounts of text data from the web — but they do not simply repeat what they have read. They synthesise information from multiple sources and cite the entities (businesses, people, products) that appear most frequently and authoritatively across many different sources. If your business only has a website and a social media page, there simply is not enough information about you in the AI\'s training data or retrieval index to confidently recommend you. The businesses that appear in AI answers consistently have a strong presence across multiple independent sources.',
+        list: [
+          'Your website alone is not enough — AI models need to find you mentioned across multiple independent sources',
+          'Thin content (generic service pages with no specific expertise signals) does not build AI confidence',
+          'No structured data (schema markup) makes it hard for AI to correctly understand what your business does',
+          'Missing entity information (founding date, team, location, specific client outcomes) reduces AI confidence in recommending you',
+        ],
+      },
+      {
+        heading: 'The 5 Pillars of GEO: How to Appear in ChatGPT & Gemini Answers',
+        body: 'Getting your business to appear in AI answers requires a systematic approach across five areas: entity establishment, content signals, external citations, structured data, and technical crawlability.',
+        list: [
+          'Entity establishment: make sure your business is clearly defined on your own website, Wikipedia (if applicable), LinkedIn company page, and major directories (Clutch, GoodFirms, JustDial, Sulekha for India). AI models need multiple independent sources to confidently identify you as a real, established business.',
+          'Answer-first content: write content that directly answers the questions your customers ask AI. If someone asks ChatGPT "what is the best marketing agency in Sonipat?", you need content that explicitly answers this question with specific claims, data, and proof.',
+          'External citations: get your business mentioned on other authoritative websites — industry blogs, local news, business directories, partner websites. Each independent mention is a "vote of confidence" that AI models weigh when deciding which businesses to recommend.',
+          'Structured data (schema markup): implement Organisation, LocalBusiness, Service, FAQ, and Article schema so AI crawlers can accurately understand what your business does, where you are located, and what you specialise in.',
+          'Technical crawlability: allow AI crawlers (GPTBot, ClaudeBot, PerplexityBot) in your robots.txt, implement llms.txt (a structured summary file for AI models), and ensure your site renders correctly for non-JavaScript crawlers.',
+        ],
+      },
+      {
+        heading: 'The Difference Between AEO and GEO',
+        body: 'AEO (Answer Engine Optimisation) is specifically about appearing in Google\'s featured snippets and AI Overviews — the answers Google generates at the top of search results. GEO is broader — it covers all AI systems, including ChatGPT, Gemini standalone, Perplexity, Claude, and Microsoft Copilot. Both require similar content strategies: clear, factual, well-structured content that directly answers specific questions. The key difference is that AEO depends heavily on your existing Google rankings (Google primarily cites pages that already rank well), while GEO can surface any business that appears frequently and authoritatively across multiple sources, regardless of Google rank.',
+      },
+      {
+        heading: 'How to Write Content for AI Search (The BLUF Method)',
+        body: 'AI models extract answers from content by looking for clear, direct, fact-based statements that answer questions completely. The most effective content format for AI visibility is BLUF (Bottom Line Up Front): state the answer first, then provide supporting explanation and evidence. For example: instead of writing a 500-word article that finally concludes "AddMads is one of the best marketing agencies in Sonipat" at the end, write a page that opens with "AddMads is Sonipat\'s leading digital marketing agency, established in 2017 with 60+ clients and 250+ projects delivered across performance marketing, SEO, branding, and web development." The direct, factual statement at the start gives AI models exactly the confident, attributable answer they need to cite your business.',
+        list: [
+          'Start every key page and section with a direct, factual statement (not a question or vague intro)',
+          'Include specific numbers, dates, and verifiable claims — AI models trust specificity over vague assertions',
+          'Use FAQ sections with specific questions and direct answers — these are prime AI training material',
+          'Write in third person about your business ("AddMads provides...") as well as first person — AI models see both',
+        ],
+      },
+    ],
+    conclusion: 'GEO is not a future trend — it is happening right now, and businesses that optimise for AI visibility in 2025 will have a significant advantage over competitors who wait. The good news is that GEO and traditional SEO are complementary: strong, authoritative content that ranks on Google also gets cited by AI models. AddMads helps businesses build GEO-optimised digital presences — from schema markup and llms.txt to answer-first content and entity building — so they appear where their customers are asking questions, whether that is on Google, ChatGPT, Gemini, or Perplexity.',
+  },
+
+  {
+    slug: 'best-performance-marketing-agency-delhi-ncr-2025',
+    title: 'How to Choose the Best Performance Marketing Agency in Delhi NCR (2025 Guide)',
+    excerpt: 'Delhi NCR has hundreds of marketing agencies. This guide shows exactly what separates the best performance marketing agencies from the rest — and what to look for before you sign.',
+    category: 'Performance Marketing',
+    categorySlug: 'performance-marketing',
+    date: '2025-08-10',
+    readTime: 8,
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=450&fit=crop&q=80',
+    tags: ['Performance Marketing Agency Delhi', 'Marketing Agency Delhi NCR', 'Google Ads Delhi', 'Best Marketing Agency India', 'Digital Agency Delhi'],
+    intro: 'Delhi NCR is home to hundreds of digital marketing agencies — from one-person freelancers to large enterprise agencies with 100+ employees. Choosing the wrong one costs you both money and months of lost growth. Choosing the right one can 3×–6× your revenue within a year. This guide walks through exactly what separates the best performance marketing agencies in Delhi NCR from the mediocre ones — and gives you a framework to evaluate any agency before you commit.',
+    sections: [
+      {
+        heading: 'What Is Performance Marketing and Why Does It Matter in Delhi NCR?',
+        body: 'Performance marketing is digital advertising where you pay for measurable outcomes — clicks, leads, sales, calls — not just impressions or awareness. In Delhi NCR\'s competitive market, performance marketing (primarily Google Ads and Meta Ads) is the fastest way for a business to acquire new customers. Unlike traditional advertising, every rupee in performance marketing is tracked: you know exactly which ads generated which leads, what each lead cost, and what the return on your ad spend is. The Delhi NCR market is intensely competitive across most sectors — and performance marketing is where most battles for customers are won or lost.',
+      },
+      {
+        heading: 'The 6 Red Flags of Bad Marketing Agencies in Delhi',
+        body: 'Delhi has many agencies that promise the world and deliver very little. Before signing with any agency, watch for these red flags:',
+        list: [
+          'They promise guaranteed rankings or guaranteed ROAS — no legitimate agency can guarantee search rankings or specific ROAS numbers because both depend on market conditions, competition, and your own products',
+          'They retain ownership of your ad accounts — your Google Ads, Meta Ads, and Analytics accounts should always be owned by you, with the agency as a manager only',
+          'They report on vanity metrics (impressions, reach, followers) instead of business outcomes (leads, sales, revenue, cost per acquisition)',
+          'They do not have clear, transparent pricing — if you cannot tell exactly where your money goes, that is a serious problem',
+          'They cannot show you case studies with specific numbers — genuine results have specific data, not vague claims',
+          'They lock you into long contracts (12+ months) without performance clauses — good agencies let results speak for themselves and offer shorter initial commitments',
+        ],
+      },
+      {
+        heading: 'What to Expect from a Top Performance Marketing Agency',
+        body: 'The best performance marketing agencies in Delhi NCR share several characteristics. They start with a thorough audit of your current marketing before recommending anything. They set specific, measurable targets for ROAS, CPL (cost per lead), or CPA (cost per acquisition) before campaigns launch. They provide live dashboards so you can see campaign performance at any time. They communicate proactively — you should not have to chase them for updates. And they take ownership of results: when campaigns underperform, they identify why and fix it, not make excuses.',
+        list: [
+          'Initial audit: a good agency audits your existing accounts, website, and funnel before recommending a budget or strategy',
+          'Specific targets: expect a proposed ROAS range, CPL target, or CPA goal before signing — based on your industry benchmarks and budget',
+          'Live reporting: you should have access to a live dashboard (Google Looker Studio, for example) showing real-time performance',
+          'Monthly strategy calls: performance reviews should happen monthly with a plan for the next month, not just a report of what happened',
+        ],
+      },
+      {
+        heading: 'Google Ads vs Meta Ads: Which Should Delhi Businesses Prioritise?',
+        body: 'The answer depends on your business type and goals. Google Ads (Search) is best for capturing existing demand — people actively searching for your service or product right now. If someone searches "chartered accountant in South Delhi" or "wedding photographer Gurugram", Google Ads puts you in front of them at exactly the right moment. Meta Ads (Facebook & Instagram) is better for creating demand — reaching people who match your customer profile but are not actively searching yet. For most Delhi businesses, a combination works best: Google Ads to capture existing demand, Meta Ads to build brand awareness and reach new audiences.',
+      },
+      {
+        heading: 'How Much Should Delhi Businesses Spend on Performance Marketing?',
+        body: 'Delhi NCR is a highly competitive advertising market — CPCs (cost per click) are typically higher here than in smaller Indian cities. For search campaigns in competitive sectors (real estate, healthcare, financial services, legal), you need a minimum of ₹50,000–₹1,00,000/month in ad spend to generate statistically meaningful data. For less competitive sectors (local retail, education, hospitality), ₹25,000–₹50,000/month can be effective. Management fees add 15–25% on top of ad spend for quality agencies. Total monthly investment for serious performance marketing in Delhi NCR: ₹40,000–₹1,50,000/month depending on industry and goals.',
+      },
+    ],
+    conclusion: 'The best performance marketing agency in Delhi NCR is not necessarily the biggest or most expensive — it is the one that understands your specific business, provides genuine transparency about results, and has demonstrable experience in your sector. AddMads serves Delhi NCR businesses from our base in Sonipat, Haryana — delivering the same quality as premium Delhi agencies with more personal attention and competitive pricing. 60+ clients, 250+ projects, and a track record of 3×–6× ROAS across multiple industries. Request a free audit today.',
+  },
+
+  {
+    slug: 'local-seo-guide-small-businesses-haryana-india-2025',
+    title: 'Local SEO for Small Businesses in Haryana: Complete 2025 Guide',
+    excerpt: 'Local SEO helps businesses in Sonipat, Panipat, Ganaur, and across Haryana appear at the top of Google when local customers search. Here is exactly how to do it.',
+    category: 'SEO Services',
+    categorySlug: 'seo',
+    date: '2025-08-15',
+    readTime: 10,
+    image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&h=450&fit=crop&q=80',
+    tags: ['Local SEO Haryana', 'Local SEO India', 'Google Business Profile', 'SEO Sonipat', 'SEO Panipat', 'Local Search India', 'Google Maps Ranking'],
+    intro: 'Local SEO is the single most powerful digital marketing tool for small and medium-sized businesses in Haryana. When a potential customer in Sonipat, Panipat, Ganaur, or any other Haryana town searches "dentist near me", "AC repair in Panipat", or "best restaurant in Sonipat" — local SEO determines whether your business appears at the top of those results or is invisible. This guide explains exactly what local SEO is, why it matters for Haryana businesses, and how to implement it step by step.',
+    sections: [
+      {
+        heading: 'What Is Local SEO and How Does It Work?',
+        body: 'Local SEO is the process of optimising your online presence to appear in Google\'s local search results — specifically the "Local Pack" (the map with 3 business listings that appears at the top of local searches) and the organic results below it. Google determines local rankings using three main signals: relevance (does your business match what the user searched for?), distance (how close is your business to the searcher?), and prominence (how well-known and trusted is your business based on reviews, links, and citations?). Local SEO is about optimising all three of these signals.',
+      },
+      {
+        heading: 'Step 1: Claim and Optimise Your Google Business Profile',
+        body: 'Your Google Business Profile (GBP) — formerly Google My Business — is the single most important factor in local SEO. It is the listing that appears in Google Maps and the Local Pack. A fully optimised GBP includes: accurate business name, address, and phone number (NAP); correct business category (choose the most specific category that applies); high-quality photos of your business, team, and products/services; a description that includes your main services and locations served; your website URL; your service area if you serve customers at their location; business hours; and regular updates/posts.',
+        list: [
+          'Complete every field in your Google Business Profile — incomplete profiles rank lower',
+          'Upload at least 10 high-quality photos — businesses with photos get 42% more direction requests',
+          'Choose the right primary category — this single choice has the biggest impact on what searches you appear for',
+          'Add service areas and specific services/products to your profile',
+          'Post weekly updates (offers, news, events) — GBP posts are indexed and help with ranking',
+        ],
+      },
+      {
+        heading: 'Step 2: Build Local Citations',
+        body: 'A local citation is any online mention of your business name, address, and phone number (NAP). Citations on trusted directories signal to Google that your business is legitimate and locally established. For businesses in Haryana, the most important citation sources are: JustDial, Sulekha, IndiaMART (for B2B), Google Business Profile, Bing Places, Facebook, Instagram, LinkedIn, and industry-specific directories. The most important thing: ensure your NAP is exactly the same across every listing — even small discrepancies (street vs. St., different phone number formats) confuse Google and hurt your rankings.',
+      },
+      {
+        heading: 'Step 3: Build Reviews (The Right Way)',
+        body: 'Reviews are one of the most powerful ranking factors for local SEO — and the most trusted signal for potential customers. A business with 50 reviews and a 4.5 rating consistently beats a business with 5 reviews and a 5.0 rating in both rankings and click-through rates. The right way to build reviews: ask every satisfied customer to leave a Google review. Create a simple Google review link and send it via WhatsApp after a successful service. Never buy fake reviews — Google detects them and can remove your listing entirely. Respond to every review (positive and negative) professionally — this signals to Google and potential customers that you are active and responsive.',
+      },
+      {
+        heading: 'Step 4: Optimise Your Website for Local Keywords',
+        body: 'Your website must include location-specific content to rank in local organic results. Create dedicated pages for each service in each location you serve — for example, a page titled "AC Repair in Sonipat", "AC Repair in Ganaur", etc. Each page should include the location name in the H1, meta title, and naturally throughout the content. Include your full business address in the footer of every page. Add a Google Maps embed on your contact page. Use LocalBusiness schema markup so Google can clearly understand your location and services.',
+        list: [
+          'Include your city/area in the page title, H1, and naturally in the content — do not stuff keywords',
+          'Create separate pages for each major service in each location you serve',
+          'Add schema markup (LocalBusiness, Service) to every key page',
+          'Put your full NAP in the footer — consistent with your Google Business Profile',
+          'Embed a Google Map on your contact page',
+        ],
+      },
+      {
+        heading: 'Common Local SEO Mistakes Haryana Businesses Make',
+        body: 'The most common local SEO mistakes we see when auditing Haryana businesses include: inconsistent NAP across directories, an unverified or incomplete Google Business Profile, no reviews strategy (letting reviews accumulate passively rather than systematically asking), missing location pages on the website, and ignoring mobile optimisation (over 75% of local searches in Haryana happen on mobile devices).',
+      },
+    ],
+    conclusion: 'Local SEO is not a one-time task — it is an ongoing process of optimising your Google Business Profile, building citations, earning reviews, and creating locally relevant content. But the businesses that do it consistently dominate their local markets. For businesses in Sonipat, Panipat, Ganaur, and across Haryana, local SEO is the highest-ROI digital marketing channel available. AddMads specialises in local SEO for Haryana businesses — contact us for a free local SEO audit of your business.',
+  },
+
+  {
+    slug: 'answer-engine-optimisation-google-ai-overviews-2025',
+    title: 'AEO: How to Appear in Google AI Overviews & Answer Engines in 2025',
+    excerpt: 'Answer Engine Optimisation (AEO) is how businesses get cited in Google AI Overviews, featured snippets, and direct answers. Here is the complete strategy to appear at position zero.',
+    category: 'SEO Services',
+    categorySlug: 'seo',
+    date: '2025-08-20',
+    readTime: 12,
+    image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&h=450&fit=crop&q=80',
+    tags: ['AEO', 'Answer Engine Optimisation', 'Google AI Overviews', 'Featured Snippets', 'SGE', 'AI Search Optimisation', 'SEO 2025'],
+    intro: 'Google AI Overviews (previously called Search Generative Experience, or SGE) now appear at the very top of Google\'s search results for 40%+ of queries — above all blue links, above ads, above everything. When a user asks a question and Google generates an AI-powered answer, the businesses and websites cited in that answer receive a massive visibility advantage. This is AEO — Answer Engine Optimisation — and it is the most important new frontier in SEO for 2025. This guide covers exactly what AEO is, how Google chooses what to include in AI Overviews, and the specific tactics that get businesses cited.',
+    sections: [
+      {
+        heading: 'What Are Google AI Overviews and Why Do They Matter?',
+        body: 'Google AI Overviews are AI-generated summaries that Google displays at the top of search results for informational and conversational queries. They pull information from multiple web pages and synthesise a direct answer — citing the sources used. For businesses, appearing as a cited source in Google AI Overviews provides: massive visibility (before any blue links), direct traffic from users who click the cited sources, and a powerful authority signal that influences all other aspects of Google ranking. Studies show that pages cited in AI Overviews see 20–40% increases in organic traffic within weeks of being cited.',
+      },
+      {
+        heading: 'How Google Selects Content for AI Overviews',
+        body: 'Google\'s AI Overviews system does not simply pull from the highest-ranking page. It looks for content that most directly and accurately answers the specific question being asked, is from sources with established topical authority (proven expertise in the subject area), is clearly structured with the answer presented early in the content, includes specific, verifiable facts rather than vague claims, and is current and regularly updated. This means that a focused, well-structured article on a specific topic from an established source often outperforms a generic high-ranking page in AI Overviews.',
+        list: [
+          'Direct answers: content that answers the specific question in the first paragraph is far more likely to be cited',
+          'Topical authority: a website that has many pieces of content on a specific topic is considered more authoritative than a generalist site',
+          'Structured content: headers (H2, H3), bullet points, and numbered lists help AI extract clean answers',
+          'Specific facts: dates, numbers, percentages, and verifiable claims build AI confidence in citing your content',
+          'Currency: recently updated content is preferred for fast-changing topics',
+        ],
+      },
+      {
+        heading: 'The BLUF Framework: Writing Content for AI Answers',
+        body: 'BLUF stands for "Bottom Line Up Front" — a writing framework originally developed by the US military for clear communication. In AEO, BLUF means: state the answer to the question in the very first sentence or paragraph, then explain and support it. This is the opposite of how most marketing content is written (which builds up to a conclusion). AI models extract answers from the beginning of content sections, so if your answer is buried 500 words in, it will be missed. Every key section of every important page should open with a direct, specific answer — even before any introduction or context.',
+      },
+      {
+        heading: 'FAQ Schema: The Fastest Route to AI Overview Citations',
+        body: 'FAQ schema markup (structured data you add to your website) tells Google exactly where the questions and answers are on your page. Google frequently uses FAQ-schema-marked content in AI Overviews because the Q&A format perfectly matches how AI Overviews work — they answer a question with a direct response. Every service page, location page, and blog post on your website should include a relevant FAQ section with schema markup. Focus on the questions your customers actually ask — not generic industry questions. Use keyword research tools to find the exact questions people type into Google, then answer them directly with FAQ schema.',
+        list: [
+          'Add FAQ schema to every major service and location page',
+          'Focus questions on real buyer questions ("How much does X cost?", "How long does X take?", "What is the best X in Y?") rather than generic topics',
+          'Each FAQ answer should be 40–80 words — long enough to be useful, short enough to be extracted as a standalone answer',
+          'Update FAQ content regularly — AI Overviews prefer current, dated content for frequently-asked questions',
+        ],
+      },
+      {
+        heading: 'Building Topical Authority for AEO',
+        body: 'A single well-optimised page is rarely enough to appear consistently in AI Overviews for an entire topic. What works is topical authority — having a cluster of comprehensive, interconnected content on a specific topic. For a digital marketing agency, this means having dedicated, expert-level content covering every aspect of digital marketing: individual service pages, detailed "how to" guides, case studies with specific data, comparison articles, and FAQ pages. Each piece of content strengthens your authority on the overall topic, making it more likely that Google trusts your content as a source for AI Overview citations.',
+      },
+      {
+        heading: 'Technical Requirements for AI Overview Eligibility',
+        body: 'Beyond content quality, several technical factors affect whether your content is eligible for Google AI Overviews. Your pages must be indexable (not blocked in robots.txt). They must load quickly — Google AI Overviews prefer pages that load in under 2 seconds. Core Web Vitals (LCP, CLS, INP) must all be in the "Good" range. Your schema markup must be valid and not produce errors in Google\'s Rich Results Test. And your content must not trigger Google\'s content quality filters — thin content, duplicate content, and content that appears to be AI-generated without human review are all downranked.',
+      },
+    ],
+    conclusion: 'AEO is not a separate discipline from SEO — it is an evolution of it. The same content quality, technical excellence, and topical authority that earns top Google rankings also earns citations in Google AI Overviews. The key additions are: BLUF writing structure, FAQ schema implementation, and a systematic focus on answering specific buyer questions directly. AddMads implements AEO and GEO strategies for clients across India, UK, US, and UAE — getting businesses cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity answers for their target keywords and buying questions.',
+  },
+
+  {
+    slug: 'how-to-rank-page-1-google-india-2025',
+    title: 'How to Rank on Page 1 of Google in India: Complete 2025 SEO Guide',
+    excerpt: 'A complete, step-by-step guide to ranking your website on page 1 of Google in India in 2025 — covering technical SEO, on-page optimisation, content strategy, and link building.',
+    category: 'SEO Services',
+    categorySlug: 'seo',
+    date: '2025-08-25',
+    readTime: 13,
+    image: 'https://images.unsplash.com/photo-1571721795195-a2ca2d3370a9?w=800&h=450&fit=crop&q=80',
+    tags: ['SEO India', 'Google Page 1 Ranking', 'SEO Guide 2025', 'Rank on Google', 'SEO Strategy', 'Keyword Research India', 'Technical SEO'],
+    intro: 'Ranking on page 1 of Google is the most valuable thing a business can do for long-term growth. A page 1 Google ranking provides free, ongoing, highly-qualified traffic — people who are actively searching for exactly what you offer. But with Indian businesses increasingly competing for online visibility across every industry, achieving and maintaining page 1 rankings requires a systematic, multi-component SEO strategy. This guide covers the complete framework AddMads uses to get clients to page 1 — typically top-10 in 4–6 months, top-3 in 8–12 months for target keywords.',
+    sections: [
+      {
+        heading: 'Understanding How Google Ranks Websites in 2025',
+        body: 'Google uses over 200 ranking signals — but most of them can be grouped into four core areas: technical SEO (is your site fast, crawlable, and technically correct?), content quality (does your content comprehensively and accurately answer the user\'s query?), authority (do other trusted websites link to you?), and user experience (do users who land on your page stay and engage, or bounce immediately?). A strong SEO strategy must address all four areas — ignoring any one of them limits your ranking potential regardless of how good the others are.',
+      },
+      {
+        heading: 'Step 1: Technical SEO — The Foundation That Everything Else Depends On',
+        body: 'Technical SEO is often the least glamorous part of SEO, but it is the most important — it determines whether Google can find, crawl, index, and understand your website in the first place. If your technical SEO has problems, no amount of great content or link building will get you to page 1.',
+        list: [
+          'Page speed: Google uses Core Web Vitals (LCP, CLS, INP) as ranking factors. Your pages must load in under 2.5 seconds on mobile. Use PageSpeed Insights to identify and fix speed issues.',
+          'Mobile-first: Google indexes the mobile version of your site first. Your site must be fully mobile-responsive with no horizontal scrolling, readable text, and tappable buttons.',
+          'HTTPS: All pages must be served over HTTPS. Mixed content (HTTP images on HTTPS pages) hurts both security and rankings.',
+          'Crawlability: check that robots.txt is not blocking important pages, that your sitemap is submitted to Google Search Console, and that all important pages are indexed.',
+          'Schema markup: implement Organisation, WebPage, Article, FAQ, and Service schema on relevant pages — this helps Google understand your content and is increasingly important for AI features.',
+          'Canonical tags: every page should have a canonical tag pointing to the preferred URL to prevent duplicate content issues.',
+        ],
+      },
+      {
+        heading: 'Step 2: Keyword Research — Finding the Right Battles to Win',
+        body: 'Keyword research is the process of identifying which search terms your potential customers use and which of those terms are worth targeting given your current authority level. For Indian businesses, keyword research requires understanding search volume in India specifically (not global volume), local intent (searches with city names or "near me"), competition level (how strong are the sites currently ranking?), and buyer intent (informational vs. transactional). Tools like Ahrefs, SEMrush, and Google Search Console provide this data.',
+        list: [
+          'Target a mix of short-tail keywords ("digital marketing agency") and long-tail keywords ("digital marketing agency for small business in Delhi") — long-tail keywords have lower competition and higher buyer intent',
+          'Prioritise transactional and commercial keywords over purely informational ones for business pages',
+          'Check the first page of Google for each target keyword — if it is dominated by large established brands, find a more specific version of the keyword where you can compete',
+          'Use Google\'s "People also ask" section to find related questions your content should answer',
+        ],
+      },
+      {
+        heading: 'Step 3: On-Page SEO — Optimising Every Page to Win Its Target Keyword',
+        body: 'On-page SEO is the process of optimising individual web pages to rank for specific keywords. Every important page on your website should be optimised for one primary keyword and 2–3 secondary keywords. On-page optimisation includes: the page title (include the primary keyword near the beginning, keep it under 60 characters), the meta description (include the keyword, write it as a compelling ad, keep it under 155 characters), the H1 tag (one per page, include the primary keyword), the content (1,000+ words for most competitive keywords, naturally incorporating keywords without stuffing), internal links (link from your high-authority pages to the pages you want to rank), and image alt text (describe the image and include the keyword where relevant).',
+      },
+      {
+        heading: 'Step 4: Content Strategy — Building Topical Authority',
+        body: 'In 2025, the websites that rank best in competitive Indian markets are those that have built topical authority — comprehensive coverage of a specific topic area through interconnected, high-quality content. This is the content cluster model: one main "pillar" page covering a broad topic (e.g., "SEO Services") linked to multiple "cluster" pages covering specific subtopics (e.g., "Technical SEO", "On-Page SEO", "Local SEO", "Link Building"). Cluster pages link back to the pillar, and Google interprets the entire cluster as evidence of expertise in the topic area. This model beats publishing random blog posts with no strategic connection.',
+      },
+      {
+        heading: 'Step 5: Link Building — The Authority Signal That Moves Rankings',
+        body: 'Backlinks (links from other websites to yours) remain one of the strongest ranking signals in Google\'s algorithm. The quality, relevance, and authority of the websites linking to you is far more important than the quantity. For Indian businesses, the most effective and safe link building strategies are: creating genuinely useful content that other websites want to link to (data studies, comprehensive guides, unique tools), digital PR (getting your business mentioned in news and industry publications), guest posting on relevant industry blogs, and building local citations on Indian directories. Avoid buying links or using link farms — these can result in Google penalties that undo years of SEO work.',
+      },
+    ],
+    conclusion: 'Ranking on page 1 of Google in India in 2025 requires consistency across all four pillars: technical SEO, keyword-targeted content, on-page optimisation, and authoritative backlinks. There are no shortcuts — but there is a clear, proven process that delivers results. Most businesses that implement this framework consistently see top-10 rankings for target keywords in 4–6 months, and page 1 dominance across an entire topic area within 12–18 months. AddMads provides end-to-end SEO services for Indian businesses — from technical audits and keyword research to content creation and link building. Get a free SEO audit today.',
+  },
 ]

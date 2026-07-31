@@ -219,7 +219,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <Link key={p.slug} href={`/blog/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <article style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.07)' }}>
                       <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden' }}>
-                        <Image src={p.image} alt={p.title} fill sizes="30vw" style={{ objectFit: 'cover' }} unoptimized />
+                        <Image src={p.image} alt={p.title} fill sizes="30vw" style={{ objectFit: 'cover' }} />
                       </div>
                       <div style={{ padding: '16px 20px 20px' }}>
                         <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#C82A2A', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>

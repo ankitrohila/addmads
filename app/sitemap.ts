@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { MEGA_MENU_CATEGORIES } from '@/constants'
 import { BLOG_POSTS } from './blog/data'
+import { LOCATION_SLUGS } from './location/data'
 
 const BASE = 'https://addmads.com'
 
@@ -41,5 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ]
 
-  return [...staticPages, ...servicePages, ...blogPages]
+  const locationPages: MetadataRoute.Sitemap = LOCATION_SLUGS.map(city => ({
+    url: `${BASE}/location/${city}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.75,
+  }))
+
+  return [...staticPages, ...servicePages, ...blogPages, ...locationPages]
 }
