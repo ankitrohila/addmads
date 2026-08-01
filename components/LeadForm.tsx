@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Script from 'next/script'
 import { LEAD_FORM_SERVICES } from '@/constants'
 
 declare global {
@@ -46,11 +45,23 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
   const [serverError, setServerError] = useState('')
   const captchaRef = useRef<HTMLDivElement>(null)
   const widgetId = useRef<number | null>(null)
+  const scriptInjected = useRef(false)
 
   const renderCaptcha = useCallback(() => {
     if (!SITEKEY || !captchaRef.current || widgetId.current !== null || !window.grecaptcha?.render) return
     widgetId.current = window.grecaptcha.render(captchaRef.current, { sitekey: SITEKEY })
   }, [])
+
+  const loadRecaptcha = useCallback(() => {
+    if (scriptInjected.current || !SITEKEY) return
+    scriptInjected.current = true
+    window.onRecaptchaLoad = renderCaptcha
+    const s = document.createElement('script')
+    s.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit'
+    s.async = true
+    s.defer = true
+    document.head.appendChild(s)
+  }, [renderCaptcha])
 
   useEffect(() => {
     window.onRecaptchaLoad = renderCaptcha
@@ -130,14 +141,7 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
   }
 
   return (
-    <>
-      {SITEKEY && (
-        <Script
-          src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit"
-          strategy="lazyOnload"
-        />
-      )}
-      <form onSubmit={handleSubmit} noValidate className="grid gap-4">
+    <form onSubmit={handleSubmit} onFocus={loadRecaptcha} noValidate className="grid gap-4">
         <div className={compact ? 'grid gap-4' : 'grid gap-4 sm:grid-cols-2'}>
           <div>
             <label className="field-label" htmlFor={`lf-name-${sourceLabel}`}>Full name *</label>
@@ -226,7 +230,6 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
         <button type="submit" className="btn-red w-full sm:w-auto justify-self-start" disabled={loading}>
           {loading ? 'Sending…' : 'Send enquiry'}
         </button>
-      </form>
-    </>
+    </form>
   )
 }
