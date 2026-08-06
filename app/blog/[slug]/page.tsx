@@ -155,9 +155,10 @@ export default async function BlogPostPage({ params }: Props) {
               <h2 style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.3rem,2.2vw,1.8rem)', fontWeight: 700, color: '#111', marginBottom: 16, lineHeight: 1.25 }}>
                 {section.heading}
               </h2>
-              <p style={{ fontSize: '1rem', color: '#444', lineHeight: 1.8, marginBottom: section.list ? 16 : 0 }}>
-                {section.body}
-              </p>
+              <p
+                style={{ fontSize: '1rem', color: '#444', lineHeight: 1.8, marginBottom: section.list ? 16 : 0 }}
+                dangerouslySetInnerHTML={{ __html: section.body }}
+              />
               {section.list && (
                 <ul style={{ margin: '0', paddingLeft: 0, listStyle: 'none' }}>
                   {section.list.map((item, j) => (
