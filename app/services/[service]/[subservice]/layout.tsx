@@ -41,11 +41,11 @@ export async function generateMetadata({
       title: `${pageTitle} | AddMads`,
       description: pageDesc,
       type: 'website',
-      url: `https://addmads.com/services/${service}/${subservice}`,
+      url: `https://www.addmads.com/services/${service}/${subservice}`,
       siteName: 'AddMads',
     },
     alternates: {
-      canonical: `https://addmads.com/services/${service}/${subservice}`,
+      canonical: `https://www.addmads.com/services/${service}/${subservice}`,
     },
   }
 }

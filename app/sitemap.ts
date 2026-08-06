@@ -3,7 +3,7 @@ import { MEGA_MENU_CATEGORIES } from '@/constants'
 import { BLOG_POSTS } from './blog/data'
 import { LOCATION_SLUGS } from './location/data'
 
-const BASE = 'https://addmads.com'
+const BASE = 'https://www.addmads.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()

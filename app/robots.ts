@@ -19,7 +19,7 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'GoogleOther',      allow: '/' },
       { userAgent: 'Bingbot',          allow: '/' },
     ],
-    sitemap: 'https://addmads.com/sitemap.xml',
-    host: 'https://addmads.com',
+    sitemap: 'https://www.addmads.com/sitemap.xml',
+    host: 'https://www.addmads.com',
   }
 }

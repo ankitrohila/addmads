@@ -16,7 +16,7 @@ const Testimonials    = dynamic(() => import('@/components/Testimonials'))
 export const metadata: Metadata = {
   title: 'AddMads — Best Performance Marketing Agency in Sonipat, Delhi, Haryana | India',
   description: 'AddMads is a top-rated performance marketing and digital growth agency based in Sonipat, Haryana. Serving clients in Sonipat, Ganaur, Delhi, Panipat, UK, US, UAE. Google Ads, Meta Ads, SEO, AEO, GEO, Branding, Web Development. Call +91-9220872212.',
-  alternates: { canonical: 'https://addmads.com' },
+  alternates: { canonical: 'https://www.addmads.com' },
 }
 
 const FAQ_SCHEMA = {

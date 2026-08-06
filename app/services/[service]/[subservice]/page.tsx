@@ -1344,10 +1344,10 @@ export default async function SubservicePage({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home',        item: 'https://addmads.com' },
-      { '@type': 'ListItem', position: 2, name: 'Services',    item: 'https://addmads.com/services' },
-      { '@type': 'ListItem', position: 3, name: parentTitle,   item: `https://addmads.com/services/${serviceSlug}` },
-      { '@type': 'ListItem', position: 4, name: title,         item: `https://addmads.com/services/${serviceSlug}/${subserviceSlug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home',        item: 'https://www.addmads.com' },
+      { '@type': 'ListItem', position: 2, name: 'Services',    item: 'https://www.addmads.com/services' },
+      { '@type': 'ListItem', position: 3, name: parentTitle,   item: `https://www.addmads.com/services/${serviceSlug}` },
+      { '@type': 'ListItem', position: 4, name: title,         item: `https://www.addmads.com/services/${serviceSlug}/${subserviceSlug}` },
     ],
   }
 

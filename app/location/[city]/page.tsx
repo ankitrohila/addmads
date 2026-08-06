@@ -58,11 +58,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: titleMap[city] ?? `Digital Marketing Agency in ${loc.name}`,
       description: descMap[city] ?? loc.subheadline,
       type: 'website',
-      url: `https://addmads.com/location/${city}`,
+      url: `https://www.addmads.com/location/${city}`,
       siteName: 'AddMads',
     },
     alternates: {
-      canonical: `https://addmads.com/location/${city}`,
+      canonical: `https://www.addmads.com/location/${city}`,
     },
   }
 }
@@ -87,7 +87,7 @@ export default async function LocationPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': ['MarketingAgency', 'LocalBusiness'],
     name: `AddMads — Digital Marketing Agency serving ${loc.name}`,
-    url: 'https://addmads.com',
+    url: 'https://www.addmads.com',
     telephone: CONTACT_PHONE,
     email: CONTACT_EMAIL,
     description: `${loc.subheadline} Performance marketing, SEO, branding and web development by AddMads.`,

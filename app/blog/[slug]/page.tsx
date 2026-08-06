@@ -23,11 +23,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} | AddMads Blog`,
     description: post.excerpt,
     keywords: post.tags.join(', '),
+    alternates: {
+      canonical: `https://www.addmads.com/blog/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
       publishedTime: post.date,
+      url: `https://www.addmads.com/blog/${post.slug}`,
+      siteName: 'AddMads',
       images: [{ url: post.image, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
@@ -61,17 +66,17 @@ export default async function BlogPostPage({ params }: Props) {
     author: {
       '@type': 'Organization',
       name: 'AddMads',
-      url: 'https://addmads.com',
+      url: 'https://www.addmads.com',
     },
     publisher: {
       '@type': 'Organization',
       name: 'AddMads',
-      url: 'https://addmads.com',
-      logo: { '@type': 'ImageObject', url: 'https://addmads.com/logo.svg' },
+      url: 'https://www.addmads.com',
+      logo: { '@type': 'ImageObject', url: 'https://www.addmads.com/logo.svg' },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://addmads.com/blog/${post.slug}`,
+      '@id': `https://www.addmads.com/blog/${post.slug}`,
     },
     keywords: post.tags.join(', '),
   }

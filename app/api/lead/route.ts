@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
   fd.append('zc_gad', '')
   fd.append('xmIwtLD', ZOHO_XMIWTLD)
   fd.append('actionType', 'TGVhZHM=')
-  fd.append('returnURL', 'https://addmads.com/contact')
+  fd.append('returnURL', 'https://www.addmads.com/contact')
   fd.append('Company', 'Not Provided')
   fd.append('First Name', firstName)
   fd.append('Last Name', lastName)

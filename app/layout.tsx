@@ -33,18 +33,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'AddMads' }],
   creator: 'AddMads',
-  metadataBase: new URL('https://addmads.com'),
+  metadataBase: new URL('https://www.addmads.com'),
   openGraph: {
     title: 'AddMads — Performance Marketing & Digital Growth Agency',
     description:
       'Data-driven Google Ads, Meta Ads, SEO, branding, and web development that turn ad spend into measurable growth.',
     type: 'website',
     locale: 'en_IN',
-    url: 'https://addmads.com',
+    url: 'https://www.addmads.com',
     siteName: 'AddMads',
     images: [
       {
-        url: 'https://addmads.com/og-image.png',
+        url: 'https://www.addmads.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'AddMads — Performance Marketing & Digital Growth Agency',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: 'https://addmads.com',
+    canonical: 'https://www.addmads.com',
   },
   twitter: {
     card: 'summary_large_image',
@@ -85,17 +85,17 @@ const ORG_SCHEMA = {
   '@graph': [
     {
       '@type': ['MarketingAgency', 'LocalBusiness', 'ProfessionalService'],
-      '@id': 'https://addmads.com/#organization',
+      '@id': 'https://www.addmads.com/#organization',
       name: 'AddMads',
       legalName: 'AddMads Digital Marketing Agency',
-      url: 'https://addmads.com',
+      url: 'https://www.addmads.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://addmads.com/logo.svg',
+        url: 'https://www.addmads.com/logo.svg',
         width: 200,
         height: 60,
       },
-      image: 'https://addmads.com/logo.svg',
+      image: 'https://www.addmads.com/logo.svg',
       description:
         'AddMads is a performance marketing and digital growth agency based in Sonipat, Haryana, India. We offer Google Ads, Meta Ads, SEO, AEO, GEO, branding, graphics design, and web development for businesses across India (Sonipat, Ganaur, Delhi, Panipat, Haryana) and globally in the UK, USA, and UAE.',
       telephone: CONTACT_PHONE,
@@ -143,12 +143,12 @@ const ORG_SCHEMA = {
         '@type': 'OfferCatalog',
         name: 'Digital Marketing Services',
         itemListElement: [
-          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Google Ads & PPC Management', url: 'https://addmads.com/services/performance-marketing/google-ads' } },
-          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Meta Facebook & Instagram Ads', url: 'https://addmads.com/services/performance-marketing/meta-ads' } },
-          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO Services', url: 'https://addmads.com/services/seo' } },
-          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO', url: 'https://addmads.com/services/seo/local-seo' } },
-          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Branding & Logo Design', url: 'https://addmads.com/services/branding' } },
-          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website Development', url: 'https://addmads.com/services/it-services' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Google Ads & PPC Management', url: 'https://www.addmads.com/services/performance-marketing/google-ads' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Meta Facebook & Instagram Ads', url: 'https://www.addmads.com/services/performance-marketing/meta-ads' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO Services', url: 'https://www.addmads.com/services/seo' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO', url: 'https://www.addmads.com/services/seo/local-seo' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Branding & Logo Design', url: 'https://www.addmads.com/services/branding' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website Development', url: 'https://www.addmads.com/services/it-services' } },
         ],
       },
       aggregateRating: {
@@ -160,16 +160,16 @@ const ORG_SCHEMA = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://addmads.com/#website',
-      url: 'https://addmads.com',
+      '@id': 'https://www.addmads.com/#website',
+      url: 'https://www.addmads.com',
       name: 'AddMads',
       description: 'Performance Marketing & Digital Growth Agency',
-      publisher: { '@id': 'https://addmads.com/#organization' },
+      publisher: { '@id': 'https://www.addmads.com/#organization' },
       potentialAction: {
         '@type': 'SearchAction',
         target: {
           '@type': 'EntryPoint',
-          urlTemplate: 'https://addmads.com/blog?q={search_term_string}',
+          urlTemplate: 'https://www.addmads.com/blog?q={search_term_string}',
         },
         'query-input': 'required name=search_term_string',
       },
