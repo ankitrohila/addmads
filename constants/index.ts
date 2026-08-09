@@ -259,10 +259,10 @@ export const PROJECTS = [
 ]
 
 export const METRICS = [
-  { value: 98, suffix: '%', label: 'Client Satisfaction' },
-  { value: 250, suffix: '+', label: 'Projects Delivered' },
-  { value: 7, suffix: 'yr', label: 'Industry Experience' },
-  { value: 60, suffix: '+', label: 'Global Clients' },
+  { value: 4, suffix: '×+', label: 'Average ROI Delivered', tagline: 'Every rupee tracked, optimised, and compounded.' },
+  { value: 92, suffix: '%', label: 'Client Retention Rate', tagline: 'Not just satisfied — they stay, refer, and grow.' },
+  { value: 7, suffix: 'yr+', label: 'Industry Experience', tagline: 'New domain. Battle-tested strategy since 2018.' },
+  { value: 60, suffix: '+', label: 'Clients Across Continents', tagline: 'We read consumer behaviour, not just maps.' },
 ]
 
 export const TESTIMONIALS = [

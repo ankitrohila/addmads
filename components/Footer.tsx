@@ -4,6 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { FOOTER_SERVICES, CONTACT_PHONE, CONTACT_EMAIL } from '@/constants'
 
+const INSTA_POSTS = [
+  'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=200&h=200&fit=crop&q=75',
+  'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=200&h=200&fit=crop&q=75',
+  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=200&fit=crop&q=75',
+  'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=200&h=200&fit=crop&q=75',
+  'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=200&h=200&fit=crop&q=75',
+  'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=200&h=200&fit=crop&q=75',
+]
+
 const COL_COMPANY = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
@@ -35,7 +44,7 @@ export default function Footer() {
     <footer style={{ background: '#111', color: '#fff' }}>
       <div className="container-x" style={{ paddingTop: 'clamp(48px,6vw,80px)', paddingBottom: 'clamp(24px,3vw,40px)' }}>
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 mb-[clamp(32px,4vw,56px)]">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.6fr] mb-[clamp(32px,4vw,56px)]">
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block mb-4">
@@ -96,27 +105,68 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact + Instagram feed */}
           <div>
             <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/25 mb-5">Contact</h4>
-            <ul className="list-none space-y-4 text-[0.9375rem]">
+            <ul className="list-none space-y-3 text-[0.9rem] mb-6">
               <li>
                 <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-start gap-[10px] text-white/80 hover:text-white transition-colors">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[2px]"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[2px]"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   {CONTACT_EMAIL}
                 </a>
               </li>
               <li>
                 <a href={`tel:${CONTACT_PHONE.replace(/-/g, '')}`} className="flex items-start gap-[10px] text-white/80 hover:text-white transition-colors">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[2px]"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.18 6.18l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[2px]"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.18 6.18l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   {CONTACT_PHONE}
                 </a>
               </li>
               <li className="flex items-start gap-[10px] text-white/80">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[2px]"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[2px]"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 Sonipat, Haryana, India
               </li>
             </ul>
+
+            {/* Instagram feed */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/25">Instagram</h4>
+                <a
+                  href="https://www.instagram.com/theaddmads/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[0.7rem] text-white/40 hover:text-white transition-colors"
+                >
+                  @theaddmads →
+                </a>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+                {INSTA_POSTS.map((src, i) => (
+                  <a
+                    key={i}
+                    href="https://www.instagram.com/theaddmads/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ position: 'relative', aspectRatio: '1/1', display: 'block', borderRadius: 4, overflow: 'hidden' }}
+                    className="group"
+                  >
+                    <Image
+                      src={src}
+                      alt={`AddMads Instagram post ${i + 1}`}
+                      fill
+                      sizes="80px"
+                      className="object-cover transition-opacity group-hover:opacity-75"
+                      unoptimized
+                    />
+                    <div style={{
+                      position: 'absolute', inset: 0,
+                      background: 'rgba(230,0,0,0)',
+                      transition: 'background 0.2s',
+                    }} className="group-hover:[background:rgba(230,0,0,0.25)]" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 

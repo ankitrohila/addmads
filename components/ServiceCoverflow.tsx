@@ -2,12 +2,14 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface ServiceCard {
   title: string
   href: string
   description: string
   tag: string
+  img?: string
 }
 
 interface Props {
@@ -198,43 +200,69 @@ export default function ServiceCoverflow({ title, cards }: Props) {
               style={getCardStyle(i)}
               onClick={() => setActive(i)}
             >
+              {/* Background image overlay */}
+              {card.img && (
+                <>
+                  <Image
+                    src={card.img}
+                    alt=""
+                    fill
+                    sizes="280px"
+                    className="object-cover"
+                    style={{ borderRadius: 16, opacity: i === active ? 0.22 : 0.12 }}
+                    unoptimized
+                  />
+                  {/* gradient overlay so text stays readable */}
+                  <div style={{
+                    position: 'absolute', inset: 0, borderRadius: 16,
+                    background: i === active
+                      ? 'linear-gradient(to top, rgba(200,0,0,0.85) 40%, rgba(180,0,0,0.5) 100%)'
+                      : 'linear-gradient(to top, rgba(40,40,40,0.92) 40%, rgba(30,30,30,0.7) 100%)',
+                  }} />
+                </>
+              )}
+              {/* Card content — z-index above image layers */}
               <span style={{
                 position: 'absolute', top: 'clamp(16px,4vw,28px)', left: 'clamp(16px,4vw,28px)',
                 fontFamily: 'var(--font-sans)', fontSize: '0.6875rem', fontWeight: 600,
-                letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)',
+                letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)',
+                zIndex: 2,
               }}>
                 {String(i + 1).padStart(2, '0')}
               </span>
               <span style={{
                 position: 'absolute', top: 'clamp(16px,4vw,28px)', right: 'clamp(16px,4vw,28px)',
                 fontFamily: 'var(--font-sans)', fontSize: '0.6875rem', fontWeight: 500,
-                background: 'rgba(255,255,255,0.15)', padding: '4px 10px', borderRadius: 20,
-                color: 'rgba(255,255,255,0.85)',
+                background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(6px)',
+                padding: '4px 10px', borderRadius: 20,
+                color: 'rgba(255,255,255,0.9)', zIndex: 2,
               }}>
                 {card.tag}
               </span>
-              <h3 style={{
-                fontFamily: 'var(--font-tight)', fontSize: 'clamp(1rem,3vw,1.25rem)',
-                fontWeight: 600, color: '#FFFFFF', marginBottom: 10, lineHeight: 1.3,
-              }}>
-                {card.title}
-              </h3>
-              <p style={{
-                fontFamily: 'var(--font-sans)', fontSize: 'clamp(0.75rem,2vw,0.875rem)',
-                color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, marginBottom: 16,
-              }}>
-                {card.description}
-              </p>
-              {i === active && (
-                <Link href={card.href} style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 6,
-                  fontFamily: 'var(--font-sans)', fontSize: '0.875rem', fontWeight: 600,
-                  color: '#FFFFFF', textDecoration: 'none',
-                  borderBottom: '1px solid rgba(255,255,255,0.5)', paddingBottom: 2,
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                <h3 style={{
+                  fontFamily: 'var(--font-tight)', fontSize: 'clamp(1rem,3vw,1.25rem)',
+                  fontWeight: 600, color: '#FFFFFF', marginBottom: 10, lineHeight: 1.3,
                 }}>
-                  Learn More →
-                </Link>
-              )}
+                  {card.title}
+                </h3>
+                <p style={{
+                  fontFamily: 'var(--font-sans)', fontSize: 'clamp(0.75rem,2vw,0.875rem)',
+                  color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, marginBottom: 16,
+                }}>
+                  {card.description}
+                </p>
+                {i === active && (
+                  <Link href={card.href} style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    fontFamily: 'var(--font-sans)', fontSize: '0.875rem', fontWeight: 600,
+                    color: '#FFFFFF', textDecoration: 'none',
+                    borderBottom: '1px solid rgba(255,255,255,0.5)', paddingBottom: 2,
+                  }}>
+                    Learn More →
+                  </Link>
+                )}
+              </div>
             </div>
           ))}
         </div>

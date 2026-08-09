@@ -40,60 +40,48 @@ function CountUp({ value, suffix }: { value: number; suffix: string }) {
   )
 }
 
-// Decorative bar graph for the first card
-function BarGraph() {
-  const bars = [0.4, 0.65, 0.5, 0.8, 0.6, 0.9, 0.75]
+// Card icons — top-right decorative element per metric
+function ROIIcon() {
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 40 }}>
-      {bars.map((h, i) => (
-        <div
-          key={i}
-          style={{
-            width: 6,
-            height: `${h * 100}%`,
-            background: i === bars.length - 1 ? '#C82A2A' : 'rgba(200,42,42,0.18)',
-            borderRadius: 3,
-          }}
-        />
-      ))}
-    </div>
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+      <rect width="44" height="44" rx="12" fill="rgba(200,42,42,0.08)" />
+      <polyline points="8,30 16,20 22,24 30,14 36,18" stroke="#C82A2A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <polyline points="30,14 36,14 36,18" stroke="#C82A2A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    </svg>
   )
 }
 
-// Overlapping avatar circles for the clients card
-function AvatarStack() {
-  const colors = ['#E60000', '#6EE7B7', '#A78BFA', '#67E8F9', '#FCD34D']
-  const initials = ['R', 'P', 'V', 'A', '+']
+function RetentionIcon() {
   return (
-    <div style={{ display: 'flex' }}>
-      {colors.map((c, i) => (
-        <div
-          key={i}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: '50%',
-            background: c,
-            border: '2px solid #fff',
-            marginLeft: i === 0 ? 0 : -10,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '0.7rem',
-            fontWeight: 700,
-            color: '#fff',
-            zIndex: colors.length - i,
-            position: 'relative',
-          }}
-        >
-          {initials[i]}
-        </div>
-      ))}
-    </div>
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+      <rect width="44" height="44" rx="12" fill="rgba(200,42,42,0.08)" />
+      <path d="M22 31s-9-5.5-9-12a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-9 12-9 12z" stroke="#C82A2A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="rgba(200,42,42,0.12)" />
+      <path d="M18.5 22l2.5 2.5 4.5-5" stroke="#C82A2A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   )
 }
 
-const CARD_EXTRAS = [<BarGraph key="bar" />, <AvatarStack key="av" />, null, null]
+function ExperienceIcon() {
+  return (
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+      <rect width="44" height="44" rx="12" fill="rgba(200,42,42,0.08)" />
+      <circle cx="22" cy="22" r="9" stroke="#C82A2A" strokeWidth="2" />
+      <polyline points="22,16 22,22 27,25" stroke="#C82A2A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function GlobeIcon() {
+  return (
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+      <rect width="44" height="44" rx="12" fill="rgba(200,42,42,0.08)" />
+      <circle cx="22" cy="22" r="9" stroke="#C82A2A" strokeWidth="2" />
+      <path d="M13 22h18M22 13c-3 3-4 5.5-4 9s1 6 4 9M22 13c3 3 4 5.5 4 9s-1 6-4 9" stroke="#C82A2A" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+const CARD_ICONS = [<ROIIcon key="roi" />, <RetentionIcon key="ret" />, <ExperienceIcon key="exp" />, <GlobeIcon key="globe" />]
 
 export default function Metrics() {
   return (
@@ -109,13 +97,13 @@ export default function Metrics() {
                 className="h-display text-[#111]"
                 style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5rem)', lineHeight: 1.08 }}
               >
-                Why brands choose AddMads
+                Why businesses trust AddMads
               </h2>
               <p
                 className="mt-5 text-[#555] max-w-[36ch]"
                 style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.08rem)', lineHeight: 1.7 }}
               >
-                Numbers that prove the process works — and the principles behind them.
+                Revenues that prove the strategy works — and the sales that drive the outcomes.
               </p>
             </Reveal>
           </div>
@@ -126,9 +114,9 @@ export default function Metrics() {
               <Reveal key={m.label} delay={i * 100}>
                 <div
                   className="flex flex-col justify-between bg-white rounded-2xl border border-black/[0.06]"
-                  style={{ padding: 'clamp(24px,2.8vw,36px)', minHeight: 'clamp(160px,20vh,200px)' }}
+                  style={{ padding: 'clamp(24px,2.8vw,36px)', minHeight: 'clamp(180px,22vh,220px)' }}
                 >
-                  {/* Top row: big number + decorative element */}
+                  {/* Top row: big number + icon */}
                   <div className="flex items-start justify-between gap-4">
                     <div
                       style={{
@@ -141,21 +129,25 @@ export default function Metrics() {
                     >
                       <CountUp value={m.value} suffix={m.suffix} />
                     </div>
-                    {CARD_EXTRAS[i] && (
-                      <div className="shrink-0 mt-1">{CARD_EXTRAS[i]}</div>
+                    <div className="shrink-0 mt-1">{CARD_ICONS[i]}</div>
+                  </div>
+                  {/* Label + tagline */}
+                  <div style={{ marginTop: 16 }}>
+                    <p
+                      className="text-[#111]"
+                      style={{ fontSize: 'clamp(0.88rem, 1vw, 1rem)', fontWeight: 600, lineHeight: 1.4 }}
+                    >
+                      {m.label}
+                    </p>
+                    {'tagline' in m && (
+                      <p
+                        className="text-[#777]"
+                        style={{ fontSize: '0.8rem', lineHeight: 1.5, marginTop: 4 }}
+                      >
+                        {(m as typeof m & { tagline: string }).tagline}
+                      </p>
                     )}
                   </div>
-                  {/* Label */}
-                  <p
-                    className="text-[#555]"
-                    style={{
-                      fontSize: 'clamp(0.88rem, 1vw, 1rem)',
-                      lineHeight: 1.55,
-                      marginTop: 16,
-                    }}
-                  >
-                    {m.label}
-                  </p>
                 </div>
               </Reveal>
             ))}

@@ -50,8 +50,7 @@ export default function ServiceShowcase() {
       const scrollable = el.offsetHeight - window.innerHeight
       if (scrollable <= 0) return
       const progress = Math.min(scrolled / scrollable, 0.9999)
-      // N*2 travel so services loop 01→04→01→04 before section ends
-      setActive(Math.floor(progress * N * 2) % N)
+      setActive(Math.min(Math.floor(progress * N), N - 1))
     }
     window.addEventListener('scroll', update, { passive: true })
     update()
@@ -62,7 +61,7 @@ export default function ServiceShowcase() {
 
   return (
     // Tall wrapper — each service gets 100 vh of scroll travel
-    <div ref={wrapperRef} style={{ height: `${N * 2 * 100}vh` }}>
+    <div ref={wrapperRef} style={{ height: `${N * 100}vh` }}>
       {/* Sticky viewport panel */}
       <div
         style={{
@@ -249,9 +248,9 @@ export default function ServiceShowcase() {
               <div
                 key={cur.num}
                 className="animate-pop-in bg-white text-[#111] rounded-2xl overflow-hidden"
-                style={{ boxShadow: '0 16px 48px rgba(0,0,0,0.22)' }}
+                style={{ boxShadow: '0 16px 48px rgba(0,0,0,0.22)', maxHeight: '55vh', display: 'flex', flexDirection: 'column' }}
               >
-                <div className="relative aspect-video">
+                <div className="relative shrink-0" style={{ height: 'clamp(100px,20vh,160px)', overflow: 'hidden' }}>
                   <Image
                     src={cur.img}
                     alt={cur.name}
@@ -261,22 +260,26 @@ export default function ServiceShowcase() {
                     unoptimized
                   />
                 </div>
-                <div style={{ padding: 'clamp(16px,4vw,22px)' }}>
+                <div style={{ padding: 'clamp(14px,3.5vw,20px)', overflow: 'hidden' }}>
                   <h3
                     style={{
                       fontFamily: 'var(--font-tight)',
-                      fontSize: 'clamp(1.05rem, 3.5vw, 1.25rem)',
+                      fontSize: 'clamp(1rem, 3.5vw, 1.2rem)',
                       fontWeight: 500,
+                      marginBottom: 4,
                     }}
                   >
                     {cur.name}
                   </h3>
                   <p
                     style={{
-                      marginTop: 5,
-                      fontSize: '0.88rem',
+                      fontSize: '0.83rem',
                       color: '#555',
-                      lineHeight: 1.55,
+                      lineHeight: 1.5,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
                     }}
                   >
                     {cur.desc}
@@ -285,9 +288,9 @@ export default function ServiceShowcase() {
                     href={cur.href}
                     className="btn-dark"
                     style={{
-                      padding: '9px 18px',
-                      fontSize: '0.82rem',
-                      marginTop: 12,
+                      padding: '7px 16px',
+                      fontSize: '0.8rem',
+                      marginTop: 10,
                       display: 'inline-flex',
                     }}
                   >
