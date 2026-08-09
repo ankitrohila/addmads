@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Refund & Return Policy — AddMads',
   description:
     'Refund and Return Policy for AddMads digital marketing and web development services, compliant with the Consumer Protection Act, 2019.',
+  alternates: { canonical: 'https://www.addmads.com/refund-policy' },
 }
 
 const SECTIONS = [

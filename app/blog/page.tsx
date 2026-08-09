@@ -14,6 +14,11 @@ export const metadata: Metadata = {
     title: 'Blog — Digital Marketing Insights | AddMads',
     description: 'Expert articles on Google Ads, SEO, AEO, Generative Engine Optimisation, branding, and web development from the AddMads team.',
     type: 'website',
+    url: 'https://www.addmads.com/blog',
+    siteName: 'AddMads',
+  },
+  alternates: {
+    canonical: 'https://www.addmads.com/blog',
   },
 }
 

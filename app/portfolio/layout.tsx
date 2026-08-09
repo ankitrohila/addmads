@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     title: 'Our Portfolio',
     description: 'Explore our best work in digital design and development.',
     type: 'website',
+    url: 'https://www.addmads.com/portfolio',
+    siteName: 'AddMads',
+  },
+  alternates: {
+    canonical: 'https://www.addmads.com/portfolio',
   },
 }
 

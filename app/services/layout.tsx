@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     title: 'Our Services',
     description: 'Comprehensive digital solutions for your business growth.',
     type: 'website',
+    url: 'https://www.addmads.com/services',
+    siteName: 'AddMads',
+  },
+  alternates: {
+    canonical: 'https://www.addmads.com/services',
   },
 }
 

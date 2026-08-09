@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: 'About AddMads',
     description: 'Performance marketing & digital growth. We turn ad spend into measurable results.',
     type: 'website',
+    url: 'https://www.addmads.com/about',
+    siteName: 'AddMads',
+  },
+  alternates: {
+    canonical: 'https://www.addmads.com/about',
   },
 }
 

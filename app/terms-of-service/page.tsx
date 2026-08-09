@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Terms of Service — AddMads',
   description: 'Terms of Service for AddMads, governed by Indian Contract Act 1872 and IT Act 2000.',
+  alternates: { canonical: 'https://www.addmads.com/terms-of-service' },
 }
 
 const SECTIONS = [

@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Cancellation & Refund Policy — AddMads',
   description: 'Cancellation and Refund Policy for AddMads, compliant with India\'s Consumer Protection Act 2019.',
+  alternates: { canonical: 'https://www.addmads.com/cancellation-policy' },
 }
 
 const SECTIONS = [

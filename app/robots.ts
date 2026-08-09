@@ -3,7 +3,21 @@ import type { MetadataRoute } from 'next'
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: '*',                allow: '/', disallow: ['/api/'] },
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: [
+          '/api/',
+          '/*?q=',
+          '/*?category=',
+          '/*?search=',
+          '/*?page=',
+          '/*?filter=',
+          '/*?sort=',
+          '/*?ref=',
+          '/*?utm_',
+        ],
+      },
       // AI / LLM crawlers — explicit allow so they index the full site
       { userAgent: 'GPTBot',           allow: '/' },
       { userAgent: 'ChatGPT-User',     allow: '/' },

@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     title: 'Contact Us',
     description: 'Let\'s discuss your next digital project and how we can help.',
     type: 'website',
+    url: 'https://www.addmads.com/contact',
+    siteName: 'AddMads',
+  },
+  alternates: {
+    canonical: 'https://www.addmads.com/contact',
   },
 }
 

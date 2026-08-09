@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Privacy Policy — AddMads',
   description: 'Privacy Policy for AddMads, compliant with India\'s Digital Personal Data Protection Act 2023 and IT Act 2000.',
+  alternates: { canonical: 'https://www.addmads.com/privacy-policy' },
 }
 
 const SECTIONS = [

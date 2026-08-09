@@ -20,6 +20,11 @@ export async function generateMetadata({ params }: { params: Promise<{ service: 
       title: service.title,
       description: service.description,
       type: 'website',
+      url: `https://www.addmads.com/services/${serviceSlug}`,
+      siteName: 'AddMads',
+    },
+    alternates: {
+      canonical: `https://www.addmads.com/services/${serviceSlug}`,
     },
   }
 }

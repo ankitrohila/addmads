@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Shipping & Delivery Policy — AddMads',
   description:
     'Shipping and Delivery Policy for AddMads digital services — how and when deliverables for marketing, design, and development engagements are delivered.',
+  alternates: { canonical: 'https://www.addmads.com/shipping-delivery-policy' },
 }
 
 const SECTIONS = [
