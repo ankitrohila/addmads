@@ -18,7 +18,7 @@ const SERVICE_DATA: Record<string, {
   description: string
   benefits: { title: string; body: string }[]
   process: { title: string; body: string }[]
-  coverflow: { title: string; description: string; tag: string; href: string }[]
+  coverflow: { title: string; description: string; tag: string; href: string; img?: string }[]
   faqs: { question: string; answer: string }[]
 }> = {
   'performance-marketing': {
