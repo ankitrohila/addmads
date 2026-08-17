@@ -166,6 +166,24 @@ export default function Footer() {
                   </a>
                 ))}
               </div>
+              <a
+                href="https://www.instagram.com/theaddmads/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+                  marginTop: 10, padding: '8px 0',
+                  border: '1px solid rgba(255,255,255,0.18)', borderRadius: 6,
+                  fontSize: '0.78rem', fontWeight: 600, color: 'rgba(255,255,255,0.7)',
+                  textDecoration: 'none', transition: 'all 0.2s',
+                }}
+                className="hover:bg-white hover:!text-[#111] hover:border-white"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+                </svg>
+                Follow @theaddmads
+              </a>
             </div>
           </div>
         </div>

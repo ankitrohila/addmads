@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import UnifiedForm from '@/components/UnifiedForm'
+import TrendingSidebar from '@/components/TrendingSidebar'
 import { BLOG_POSTS } from './data'
 import BlogCard from './BlogCard'
 
@@ -107,7 +108,7 @@ export default function BlogListingPage() {
           </div>
         </div>
 
-        <div style={{ padding: 'clamp(56px,8vw,100px) var(--container-px)', maxWidth: 1240, margin: '0 auto' }}>
+        <div style={{ padding: 'clamp(56px,8vw,100px) var(--container-px)', maxWidth: 1340, margin: '0 auto' }}>
 
           {/* Featured post */}
           <Link href={`/blog/${featured.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', marginBottom: 'clamp(48px,6vw,80px)' }}>
@@ -143,15 +144,22 @@ export default function BlogListingPage() {
             </div>
           </Link>
 
-          {/* All posts grid */}
-          <h2 style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.5rem,2.5vw,2rem)', fontWeight: 700, color: '#111', marginBottom: 32, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-            All Articles
-          </h2>
-
-          <div style={{ display: 'grid', gap: 32, gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))' }}>
-            {rest.map(post => (
-              <BlogCard key={post.slug} post={post} />
-            ))}
+          {/* Two-column: articles + sidebar */}
+          <div style={{ display: 'grid', gap: 'clamp(32px,4vw,56px)', gridTemplateColumns: 'minmax(0,1fr) clamp(280px,28vw,340px)', alignItems: 'start' }}
+               className="blog-grid">
+            <div>
+              <h2 style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.5rem,2.5vw,2rem)', fontWeight: 700, color: '#111', marginBottom: 32, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+                All Articles
+              </h2>
+              <div style={{ display: 'grid', gap: 32, gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))' }}>
+                {rest.map(post => (
+                  <BlogCard key={post.slug} post={post} />
+                ))}
+              </div>
+            </div>
+            <div className="hidden lg:block" style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
+              <TrendingSidebar />
+            </div>
           </div>
         </div>
 
