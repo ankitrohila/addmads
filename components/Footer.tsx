@@ -2,16 +2,9 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { FOOTER_SERVICES, CONTACT_PHONE, CONTACT_EMAIL } from '@/constants'
-
-const INSTA_POSTS = [
-  'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=200&h=200&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=200&h=200&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=200&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=200&h=200&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=200&h=200&fit=crop&q=75',
-  'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=200&h=200&fit=crop&q=75',
-]
+import type { InstaPost } from '@/app/api/instagram/route'
 
 const COL_COMPANY = [
   { label: 'Home', href: '/' },
@@ -39,6 +32,15 @@ const SOCIALS = [
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const [instaPosts, setInstaPosts] = useState<InstaPost[]>([])
+  const [instaLoading, setInstaLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/instagram')
+      .then(r => r.json())
+      .then((posts: InstaPost[]) => { setInstaPosts(posts); setInstaLoading(false) })
+      .catch(() => setInstaLoading(false))
+  }, [])
 
   return (
     <footer style={{ background: '#111', color: '#fff' }}>
@@ -140,32 +142,70 @@ export default function Footer() {
                   @theaddmads →
                 </a>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
-                {INSTA_POSTS.map((src, i) => (
-                  <a
-                    key={i}
-                    href="https://www.instagram.com/theaddmads/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ position: 'relative', aspectRatio: '1/1', display: 'block', borderRadius: 4, overflow: 'hidden' }}
-                    className="group"
-                  >
-                    <Image
-                      src={src}
-                      alt={`AddMads Instagram post ${i + 1}`}
-                      fill
-                      sizes="80px"
-                      className="object-cover transition-opacity group-hover:opacity-75"
-                      unoptimized
-                    />
-                    <div style={{
-                      position: 'absolute', inset: 0,
-                      background: 'rgba(230,0,0,0)',
-                      transition: 'background 0.2s',
-                    }} className="group-hover:[background:rgba(230,0,0,0.25)]" />
-                  </a>
-                ))}
-              </div>
+
+              {/* Loading skeletons */}
+              {instaLoading && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+                  {[0,1,2,3,4,5].map(i => (
+                    <div key={i} style={{ aspectRatio: '1/1', borderRadius: 4, background: 'rgba(255,255,255,0.07)', animation: 'pulse 1.5s infinite' }} />
+                  ))}
+                </div>
+              )}
+
+              {/* Real Instagram posts */}
+              {!instaLoading && instaPosts.length > 0 && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+                  {instaPosts.map((post) => {
+                    const imgSrc = post.media_type === 'VIDEO' ? (post.thumbnail_url ?? '') : post.media_url
+                    return imgSrc ? (
+                      <a
+                        key={post.id}
+                        href={post.permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ position: 'relative', aspectRatio: '1/1', display: 'block', borderRadius: 4, overflow: 'hidden' }}
+                        className="group"
+                      >
+                        <Image
+                          src={imgSrc}
+                          alt="AddMads Instagram post"
+                          fill
+                          sizes="80px"
+                          className="object-cover transition-opacity group-hover:opacity-75"
+                          unoptimized
+                        />
+                        {post.media_type === 'VIDEO' && (
+                          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                          </div>
+                        )}
+                        <div style={{ position: 'absolute', inset: 0, background: 'transparent', transition: 'background 0.2s' }} className="group-hover:[background:rgba(200,42,42,0.28)]" />
+                      </a>
+                    ) : null
+                  })}
+                </div>
+              )}
+
+              {/* No token configured — show a clean CTA instead of fake grid */}
+              {!instaLoading && instaPosts.length === 0 && (
+                <a
+                  href="https://www.instagram.com/theaddmads/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8,
+                    padding: '24px 0', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8,
+                    textDecoration: 'none', color: 'rgba(255,255,255,0.6)',
+                  }}
+                  className="hover:border-white/30 hover:text-white transition-colors"
+                >
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+                  </svg>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 600 }}>@theaddmads</span>
+                </a>
+              )}
+
               <a
                 href="https://www.instagram.com/theaddmads/"
                 target="_blank"
@@ -184,6 +224,7 @@ export default function Footer() {
                 </svg>
                 Follow @theaddmads
               </a>
+              <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}`}</style>
             </div>
           </div>
         </div>

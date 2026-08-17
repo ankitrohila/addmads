@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.addmads.com/case-studies' },
 }
 
-interface Result { label: string; value: string; icon: string }
+interface Result { label: string; value: string; icon: ReactNode }
 interface CaseStudy {
   slug: string
   client: string
@@ -36,6 +37,25 @@ interface CaseStudy {
   img: string
   color: string
   accentLight: string
+}
+
+const S = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
+const ico = (paths: ReactNode) => <svg width="22" height="22" viewBox="0 0 24 24" {...S}>{paths}</svg>
+
+const ICONS = {
+  trending:  ico(<><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></>),
+  money:     ico(<><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></>),
+  phone:     ico(<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.18 6.18l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>),
+  target:    ico(<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>),
+  home:      ico(<><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></>),
+  globe:     ico(<><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></>),
+  chart:     ico(<><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></>),
+  search:    ico(<><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>),
+  building:  ico(<><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></>),
+  link:      ico(<><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></>),
+  mail:      ico(<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></>),
+  briefcase: ico(<><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></>),
+  users:     ico(<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>),
 }
 
 const CASES: CaseStudy[] = [
@@ -57,10 +77,10 @@ const CASES: CaseStudy[] = [
       { step: 'Bid strategy rotation', detail: 'Ran Target CPA bidding for stable service types, Maximize Conversions for emergency campaigns during peak weather periods. Adjusted bids by time-of-day for highest-intent windows.' },
     ],
     results: [
-      { label: 'ROAS', value: '4.2×', icon: '📈' },
-      { label: 'CPC reduction', value: '41%', icon: '💰' },
-      { label: 'Lead volume increase', value: '+230%', icon: '📞' },
-      { label: 'Cost per lead', value: '$48 avg', icon: '🎯' },
+      { label: 'ROAS', value: '4.2×', icon: ICONS.trending },
+      { label: 'CPC reduction', value: '41%', icon: ICONS.money },
+      { label: 'Lead volume increase', value: '+230%', icon: ICONS.phone },
+      { label: 'Cost per lead', value: '$48 avg', icon: ICONS.target },
     ],
     quote: 'We had tried three agencies before AddMads. None of them understood local service businesses. Within 60 days our phone was ringing non-stop — at half the cost.',
     quoteAuthor: 'Operations Director, US Home Services Network',
@@ -86,10 +106,10 @@ const CASES: CaseStudy[] = [
       { step: 'WhatsApp integration', detail: 'Connected Meta Lead Ads directly to a WhatsApp Business CRM for instant follow-up. Response time went from 4 hours to under 8 minutes.' },
     ],
     results: [
-      { label: 'Qualified inquiries', value: '+280%', icon: '🏠' },
-      { label: 'Cost per qualified lead', value: '↓58%', icon: '💰' },
-      { label: 'NRI lead share', value: '34%', icon: '🌍' },
-      { label: 'Sales team efficiency', value: '3× better', icon: '📊' },
+      { label: 'Qualified inquiries', value: '+280%', icon: ICONS.home },
+      { label: 'Cost per qualified lead', value: '↓58%', icon: ICONS.money },
+      { label: 'NRI lead share', value: '34%', icon: ICONS.globe },
+      { label: 'Sales team efficiency', value: '3× better', icon: ICONS.chart },
     ],
     quote: 'We went from 10 unqualified calls a day to 25 genuinely interested buyers a week. The NRI segment alone closed two units in the first month.',
     quoteAuthor: 'Sales Head, Bluebells Luxury Real Estate',
@@ -115,10 +135,10 @@ const CASES: CaseStudy[] = [
       { step: 'Lead magnet + email capture', detail: 'Created a Solar ROI Calculator tool that captured email in exchange for a personalized report. Generated 420 qualified email subscribers in 6 months — now a direct nurture pipeline.' },
     ],
     results: [
-      { label: 'Keywords ranking', value: '140+', icon: '🔍' },
-      { label: 'Organic traffic growth', value: '+320%', icon: '📈' },
-      { label: 'Inbound B2B leads', value: '+320%', icon: '🏭' },
-      { label: 'Domain Authority', value: '28 → 41', icon: '🔗' },
+      { label: 'Keywords ranking', value: '140+', icon: ICONS.search },
+      { label: 'Organic traffic growth', value: '+320%', icon: ICONS.trending },
+      { label: 'Inbound B2B leads', value: '+320%', icon: ICONS.building },
+      { label: 'Domain Authority', value: '28 → 41', icon: ICONS.link },
     ],
     quote: 'We used to depend entirely on word of mouth. Now our website brings us serious industrial inquiries every week. The Solar ROI Calculator alone brought us 3 large contracts.',
     quoteAuthor: 'Director, Maxvolt Energy',
@@ -144,10 +164,10 @@ const CASES: CaseStudy[] = [
       { step: 'Schema + AEO optimization', detail: 'Structured all event pages and FAQ content for AI Overviews and featured snippets. AIMA now appears in Google AI Overviews for 14 high-volume management certification queries.' },
     ],
     results: [
-      { label: 'Organic traffic growth', value: '+156%', icon: '📈' },
-      { label: 'New email subscribers', value: '+4,200', icon: '📧' },
-      { label: 'Event registrations', value: '+88%', icon: '🎯' },
-      { label: 'LinkedIn followers gained', value: '+1,400', icon: '💼' },
+      { label: 'Organic traffic growth', value: '+156%', icon: ICONS.trending },
+      { label: 'New email subscribers', value: '+4,200', icon: ICONS.mail },
+      { label: 'Event registrations', value: '+88%', icon: ICONS.target },
+      { label: 'LinkedIn followers gained', value: '+1,400', icon: ICONS.briefcase },
     ],
     quote: 'AddMads understood that AIMA needed to reach a new generation without losing institutional gravitas. The content strategy struck exactly the right tone.',
     quoteAuthor: 'Head of Communications, AIMA',
@@ -172,10 +192,10 @@ const CASES: CaseStudy[] = [
       { step: 'LinkedIn Sales Navigator outreach', detail: 'Identified and directly approached 200+ supply chain managers and procurement heads monthly. 18% connection acceptance rate; 6% converted to inquiry calls — a ₹380 average cost per qualified B2B lead.' },
     ],
     results: [
-      { label: 'Organic traffic growth', value: '+190%', icon: '📈' },
-      { label: 'B2B inquiries per month', value: '+145%', icon: '🏭' },
-      { label: 'Cost per B2B lead', value: '₹380', icon: '💰' },
-      { label: 'Page 1 keyword rankings', value: '28', icon: '🔍' },
+      { label: 'Organic traffic growth', value: '+190%', icon: ICONS.trending },
+      { label: 'B2B inquiries per month', value: '+145%', icon: ICONS.building },
+      { label: 'Cost per B2B lead', value: '₹380', icon: ICONS.money },
+      { label: 'Page 1 keyword rankings', value: '28', icon: ICONS.search },
     ],
     quote: 'Before AddMads, nobody found us online. Now we get 15–20 quality B2B inquiries every month, and our cost of customer acquisition is a fraction of what we paid agents.',
     quoteAuthor: 'Managing Director, AVG Logistics',
@@ -200,10 +220,10 @@ const CASES: CaseStudy[] = [
       { step: 'Google Ads — retainer intent targeting', detail: 'Ran a focused Google Ads campaign targeting businesses searching for marketing retainers and agency services. Monthly ad budget: ₹25,000. Generated 18 qualified inquiries in month 1.' },
     ],
     results: [
-      { label: 'Brand search volume', value: '+340%', icon: '🔍' },
-      { label: 'Retainer inquiries', value: '+160%', icon: '📞' },
-      { label: 'LinkedIn impressions/mo', value: '85K+', icon: '💼' },
-      { label: 'Sales call conversion', value: '+45%', icon: '🤝' },
+      { label: 'Brand search volume', value: '+340%', icon: ICONS.trending },
+      { label: 'Retainer inquiries', value: '+160%', icon: ICONS.phone },
+      { label: 'LinkedIn impressions/mo', value: '85K+', icon: ICONS.briefcase },
+      { label: 'Sales call conversion', value: '+45%', icon: ICONS.users },
     ],
     quote: 'The case study program changed everything. Every prospect we talk to has already read about our results before the call. It is the best asset we have ever built.',
     quoteAuthor: 'Founder, Brandforce360',
@@ -216,7 +236,7 @@ const CASES: CaseStudy[] = [
 function formatResult(r: Result) {
   return (
     <div key={r.label} className="text-center p-4 bg-white rounded-xl border border-black/[0.07]">
-      <div style={{ fontSize: '1.8rem', lineHeight: 1, marginBottom: 6 }}>{r.icon}</div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8, color: '#C82A2A' }}>{r.icon}</div>
       <div style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 700, color: '#111', lineHeight: 1 }}>{r.value}</div>
       <div style={{ fontSize: '0.78rem', color: '#777', marginTop: 6, lineHeight: 1.4 }}>{r.label}</div>
     </div>
