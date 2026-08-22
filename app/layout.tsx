@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Inter_Tight } from 'next/font/google'
 import ClientWidgets from '@/components/ClientWidgets'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import MetaPixel from '@/components/MetaPixel'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '@/constants'
 import './globals.css'
 
@@ -195,6 +196,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <ClientWidgets />
         <GoogleAnalytics />
+        <MetaPixel />
       </body>
     </html>
   )

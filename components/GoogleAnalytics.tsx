@@ -1,7 +1,7 @@
 import Script from 'next/script'
 
 // GA4 Measurement ID — env override first, hardcoded fallback for production
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-C8DBLE06XF'
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-776LWG561F'
 
 export default function GoogleAnalytics() {
   if (!GA_ID) return null

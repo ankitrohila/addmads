@@ -13,6 +13,7 @@ declare global {
     onRecaptchaLoad?: () => void
     gtag?: (...args: unknown[]) => void
     dataLayer?: unknown[]
+    fbq?: (...args: unknown[]) => void
   }
 }
 
@@ -118,13 +119,15 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
       }
       setSubmitted(true)
       onSuccess?.()
-      // GA4 key event: generate_lead
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'generate_lead', {
+      if (typeof window !== 'undefined') {
+        // GA4 key event
+        window.gtag?.('event', 'generate_lead', {
           event_category: 'Lead Form',
           event_label: sourceLabel,
           service: form.service,
         })
+        // Meta Pixel Lead event
+        window.fbq?.('track', 'Lead', { content_name: sourceLabel })
       }
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
