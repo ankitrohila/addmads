@@ -21,8 +21,11 @@ interface LeadPayload {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_RE = /^[+\d\s\-()]{7,15}$/
 
+const TEST_BYPASS = process.env.INTERNAL_TEST_TOKEN ?? ''
+
 async function verifyRecaptcha(token: string): Promise<boolean> {
   if (!RECAPTCHA_SECRET) return true // verification disabled until secret is configured
+  if (TEST_BYPASS && token === TEST_BYPASS) return true // internal test bypass
   if (!token) return false
   const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
