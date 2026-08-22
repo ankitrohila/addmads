@@ -11,6 +11,8 @@ declare global {
       reset: (widgetId?: number) => void
     }
     onRecaptchaLoad?: () => void
+    gtag?: (...args: unknown[]) => void
+    dataLayer?: unknown[]
   }
 }
 
@@ -116,6 +118,14 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
       }
       setSubmitted(true)
       onSuccess?.()
+      // GA4 key event: generate_lead
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'Lead Form',
+          event_label: sourceLabel,
+          service: form.service,
+        })
+      }
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
       if (SITEKEY && window.grecaptcha) window.grecaptcha.reset(widgetId.current ?? undefined)
