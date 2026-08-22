@@ -260,10 +260,10 @@ export const PROJECTS = [
 ]
 
 export const METRICS = [
-  { value: 4, suffix: '×+', label: 'Average ROI Delivered', tagline: 'Every rupee tracked, optimised, and compounded.' },
-  { value: 92, suffix: '%', label: 'Client Retention Rate', tagline: 'Not just satisfied — they stay, refer, and grow.' },
-  { value: 7, suffix: 'yr+', label: 'Industry Experience', tagline: 'New domain. Battle-tested strategy since 2018.' },
-  { value: 60, suffix: '+', label: 'Clients Across Continents', tagline: 'We read consumer behaviour, not just maps.' },
+  { value: 10, suffix: 'Cr+', label: 'Ad Spend Managed (₹)', tagline: 'From Google Ads to Meta — every rupee tracked and optimised.' },
+  { value: 4, suffix: '×+', label: 'Average ROAS Delivered', tagline: 'Return on ad spend achieved across 60+ active accounts.' },
+  { value: 250, suffix: '+', label: 'Projects Delivered', tagline: 'Campaigns, websites, brands, and SEO programmes — built end to end.' },
+  { value: 92, suffix: '%', label: 'Client Retention Rate', tagline: 'Not just satisfied — they stay, refer, and grow with us.' },
 ]
 
 export const TESTIMONIALS = [
