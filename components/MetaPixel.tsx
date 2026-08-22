@@ -1,6 +1,7 @@
 import Script from 'next/script'
 
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? ''
+// Meta Pixel ID — env override first, hardcoded fallback for production
+const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '1390331476377427'
 
 export default function MetaPixel() {
   if (!PIXEL_ID) return null
