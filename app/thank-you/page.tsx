@@ -7,8 +7,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-const BOOKING_URL =
-  'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3mZADagJfsXnSImoQqBhp_zOMpt4qZBk7lGCNs3vj-4a0lhoTCRpoB1PnJT8aLOjiQnJkqAvJ6?gv=1'
+const SCHEDULE_ID =
+  'AcZssZ3mZADagJfsXnSImoQqBhp_zOMpt4qZBk7lGCNs3vj-4a0lhoTCRpoB1PnJT8aLOjiQnJkqAvJ6'
+// ?gv=1 is Google's embed mode — it needs ~700px and does not reflow narrower,
+// so mobile gets a link to the standalone page, which is properly responsive.
+const BOOKING_EMBED_URL = `https://calendar.google.com/calendar/appointments/schedules/${SCHEDULE_ID}?gv=1`
+const BOOKING_PAGE_URL = `https://calendar.google.com/calendar/appointments/schedules/${SCHEDULE_ID}`
 
 const SOCIAL = [
   {
@@ -61,24 +65,26 @@ const QUOTES = [
 ]
 
 const RESPONSIVE_CSS = `
-/* Booking embed — Google Calendar needs more vertical room once it stacks */
+/* Booking embed — Google's ?gv=1 view needs ~700px and will not reflow below it,
+   so below 760px we swap the iframe for a CTA to the standalone booking page. */
 .ty-cal-frame { height: 680px; }
+.ty-cal-cta { display: none; }
 .ty-stat:last-child { border-right: none !important; }
 
 @media (max-width: 900px) {
-  .ty-cal-frame { height: 760px; }
+  .ty-cal-frame { height: 740px; }
+}
+@media (max-width: 760px) {
+  .ty-cal-embed { display: none !important; }
+  .ty-cal-cta { display: block !important; }
 }
 @media (max-width: 640px) {
-  .ty-cal-frame { height: 820px; }
   .ty-stat {
     border-right: none !important;
     font-size: 0.75rem !important;
     padding: 3px 10px !important;
   }
   .ty-social a { width: 100%; justify-content: center; }
-}
-@media (max-width: 400px) {
-  .ty-cal-frame { height: 880px; }
 }
 `
 
@@ -193,8 +199,9 @@ export default function ThankYouPage() {
             </p>
           </div>
 
-          {/* Google Calendar embed */}
+          {/* Google Calendar embed — desktop / tablet */}
           <div
+            className="ty-cal-embed"
             style={{
               background: '#fff',
               borderRadius: 16,
@@ -204,13 +211,75 @@ export default function ThankYouPage() {
             }}
           >
             <iframe
-              src={BOOKING_URL}
+              src={BOOKING_EMBED_URL}
               width="100%"
               className="ty-cal-frame"
               style={{ border: 0, display: 'block', width: '100%' }}
               title="Book a free strategy call with AddMads"
               loading="lazy"
             />
+          </div>
+
+          {/* Mobile CTA — opens Google's own responsive booking page */}
+          <div
+            className="ty-cal-cta"
+            style={{
+              background: '#fff',
+              borderRadius: 16,
+              padding: '36px 24px',
+              textAlign: 'center',
+              boxShadow: '0 4px 40px rgba(0,0,0,0.08)',
+              border: '1px solid rgba(0,0,0,0.06)',
+            }}
+          >
+            <div
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: '50%',
+                background: '#FDECEC',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px',
+              }}
+            >
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C82A2A" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" />
+                <path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+            </div>
+            <p style={{ fontSize: '1.15rem', fontWeight: 700, color: '#111', marginBottom: 8 }}>
+              Pick a time that suits you
+            </p>
+            <p style={{ fontSize: '0.92rem', color: '#666', lineHeight: 1.6, marginBottom: 24 }}>
+              60-minute call over Google Meet · Available every day, 9 AM&ndash;10 PM IST
+            </p>
+            <a
+              href={BOOKING_PAGE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 10,
+                background: '#C82A2A',
+                color: '#fff',
+                fontSize: '1rem',
+                fontWeight: 600,
+                padding: '16px 32px',
+                borderRadius: 999,
+                textDecoration: 'none',
+                width: '100%',
+                maxWidth: 320,
+              }}
+            >
+              Book your free call
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
           </div>
 
           <p style={{ textAlign: 'center', color: '#999', fontSize: '0.78rem', marginTop: 16 }}>
