@@ -60,9 +60,33 @@ const QUOTES = [
   { text: 'Make it simple. Make it memorable. Make it measurable.', author: 'AddMads' },
 ]
 
+const RESPONSIVE_CSS = `
+/* Booking embed — Google Calendar needs more vertical room once it stacks */
+.ty-cal-frame { height: 680px; }
+.ty-stat:last-child { border-right: none !important; }
+
+@media (max-width: 900px) {
+  .ty-cal-frame { height: 760px; }
+}
+@media (max-width: 640px) {
+  .ty-cal-frame { height: 820px; }
+  .ty-stat {
+    border-right: none !important;
+    font-size: 0.75rem !important;
+    padding: 3px 10px !important;
+  }
+  .ty-social a { width: 100%; justify-content: center; }
+}
+@media (max-width: 400px) {
+  .ty-cal-frame { height: 880px; }
+}
+`
+
 export default function ThankYouPage() {
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: RESPONSIVE_CSS }} />
+
       {/* Hero */}
       <section
         style={{
@@ -110,7 +134,7 @@ export default function ThankYouPage() {
             You&rsquo;re in. Let&rsquo;s grow.
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 'clamp(1rem,1.2vw,1.15rem)', lineHeight: 1.7, maxWidth: 480, margin: '0 auto' }}>
-            Our team will review your enquiry and reach out within 24 hours. In the meantime, book a free 30-minute strategy call directly on our calendar — and follow us for daily digital marketing insights.
+            Our team will review your enquiry and reach out within 24 hours. In the meantime, book a free 1-hour strategy call directly on our calendar — and follow us for daily digital marketing insights.
           </p>
         </div>
       </section>
@@ -131,6 +155,7 @@ export default function ThankYouPage() {
           {['₹10Cr+ Ad Spend Managed', '4×+ Average ROAS', '250+ Projects Delivered', '92% Client Retention'].map((s) => (
             <span
               key={s}
+              className="ty-stat"
               style={{
                 color: '#fff',
                 fontSize: '0.82rem',
@@ -164,7 +189,7 @@ export default function ThankYouPage() {
               Book your free strategy call
             </h2>
             <p style={{ color: '#555', fontSize: '1rem', lineHeight: 1.7, maxWidth: 500, margin: '0 auto' }}>
-              30 minutes. No pitch. No pressure. Just a clear audit of your current marketing and a growth plan you can act on immediately.
+              A full hour. No pitch. No pressure. Just a clear audit of your current marketing and a growth plan you can act on immediately. Available every day, 9 AM to 10 PM IST.
             </p>
           </div>
 
@@ -181,8 +206,8 @@ export default function ThankYouPage() {
             <iframe
               src={BOOKING_URL}
               width="100%"
-              height="680"
-              style={{ border: 0, display: 'block' }}
+              className="ty-cal-frame"
+              style={{ border: 0, display: 'block', width: '100%' }}
               title="Book a free strategy call with AddMads"
               loading="lazy"
             />
@@ -255,7 +280,7 @@ export default function ThankYouPage() {
           Google Ads tips, Meta strategies, SEO wins — straight to your feed.
         </p>
 
-        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 48 }}>
+        <div className="ty-social" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 48, maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
           {SOCIAL.map((s) => (
             <a
               key={s.label}
