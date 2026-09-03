@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { LEAD_FORM_SERVICES } from '@/constants'
 
 declare global {
@@ -41,10 +42,10 @@ const GROUPS = LEAD_FORM_SERVICES.reduce<Record<string, typeof LEAD_FORM_SERVICE
 }, {})
 
 export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'Website Lead' }: LeadFormProps) {
+  const router = useRouter()
   const [form, setForm] = useState<FormState>(INITIAL)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState('')
   const captchaRef = useRef<HTMLDivElement>(null)
   const widgetId = useRef<number | null>(null)
@@ -117,7 +118,6 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
         const data = await res.json().catch(() => ({}))
         throw new Error(data.error ?? 'Something went wrong. Please try again.')
       }
-      setSubmitted(true)
       onSuccess?.()
       if (typeof window !== 'undefined') {
         // GA4 key event
@@ -129,28 +129,13 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
         // Meta Pixel Lead event
         window.fbq?.('track', 'Lead', { content_name: sourceLabel })
       }
+      router.push('/thank-you')
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
       if (SITEKEY && window.grecaptcha) window.grecaptcha.reset(widgetId.current ?? undefined)
     } finally {
       setLoading(false)
     }
-  }
-
-  if (submitted) {
-    return (
-      <div className="animate-pop-in text-center py-12 px-6">
-        <div className="mx-auto mb-5 w-14 h-14 rounded-full bg-[#C82A2A] flex items-center justify-center">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 6L9 17l-5-5" />
-          </svg>
-        </div>
-        <h3 style={{ fontSize: '1.4rem' }}>Thank you!</h3>
-        <p className="mt-2 text-[#666] text-[0.95rem] max-w-[36ch] mx-auto">
-          Your enquiry has been received. Our team will get back to you within 24 hours.
-        </p>
-      </div>
-    )
   }
 
   return (
