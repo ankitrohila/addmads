@@ -49,3 +49,6 @@ Thumbs.db
 
 .vercel
 .env*
+
+# opennext build output
+.open-next/

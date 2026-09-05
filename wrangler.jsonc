@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "addmads",
+  "account_id": "97f4edd0f0eb9f5455434b83c772728e",
+  "main": ".open-next/worker.js",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "addmads.com/*", "zone_name": "addmads.com" },
+    { "pattern": "www.addmads.com/*", "zone_name": "addmads.com" }
+  ],
+  "compatibility_date": "2025-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
