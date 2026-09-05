@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 const SCHEDULE_ID =
-  'AcZssZ3mZADagJfsXnSImoQqBhp_zOMpt4qZBk7lGCNs3vj-4a0lhoTCRpoB1PnJT8aLOjiQnJkqAvJ6'
+  'AcZssZ3P6DvF2rYdsuLER7Fg_kipPONU0Ij9BYBvv6ciwKitV5_fON03lEwHr-G680unMlNe_Fw9joAH'
 // ?gv=1 is Google's embed mode — it needs ~700px and does not reflow narrower,
 // so mobile gets a link to the standalone page, which is properly responsive.
 const BOOKING_EMBED_URL = `https://calendar.google.com/calendar/appointments/schedules/${SCHEDULE_ID}?gv=1`
