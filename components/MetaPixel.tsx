@@ -7,7 +7,7 @@ export default function MetaPixel() {
   if (!PIXEL_ID) return null
   return (
     <>
-      <Script id="meta-pixel-init" strategy="afterInteractive">
+      <Script id="meta-pixel-init" strategy="lazyOnload">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
