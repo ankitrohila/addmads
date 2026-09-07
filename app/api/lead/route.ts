@@ -38,7 +38,13 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ secret: RECAPTCHA_SECRET, response: token }),
   })
-  const data = (await res.json()) as { success?: boolean }
+  const data = (await res.json()) as { success?: boolean; 'error-codes'?: string[] }
+  if (data.success !== true) {
+    // Surface Google's reason. 'invalid-input-secret' means the deployed
+    // RECAPTCHA_SECRET_KEY is wrong; 'timeout-or-duplicate' means the token
+    // expired (2 min) or was already used.
+    console.error('reCAPTCHA verify failed:', JSON.stringify(data['error-codes'] ?? []))
+  }
   return data.success === true
 }
 
