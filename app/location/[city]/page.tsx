@@ -21,19 +21,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!loc) return {}
 
   const titleMap: Record<string, string> = {
-    sonipat: 'Best Digital Marketing Agency in Sonipat, Haryana | AddMads',
-    ganaur:  'Digital Marketing Agency in Ganaur, Sonipat | AddMads',
-    delhi:   'Best Digital Marketing Agency in Delhi NCR | AddMads',
-    panipat: 'Digital Marketing Agency in Panipat, Haryana | AddMads',
-    uk:      'Digital Marketing Agency for UK Businesses | AddMads India',
-    usa:     'Digital Marketing Agency for US Businesses | AddMads India',
-    uae:     'Digital Marketing Agency in Dubai & UAE | AddMads',
+    sonipat: 'Best Digital Marketing Agency in Sonipat, Haryana',
+    ganaur:  'Digital Marketing Agency in Ganaur, Sonipat',
+    delhi:   'Best Digital Marketing Agency in Delhi NCR',
+    noida:   'Digital Marketing Agency in Noida & Greater Noida',
+    panipat: 'Digital Marketing Agency in Panipat, Haryana',
+    uk:      'Digital Marketing Agency for UK Businesses — From India',
+    usa:     'Digital Marketing Agency for US Businesses — From India',
+    uae:     'Digital Marketing Agency in Dubai & UAE',
   }
 
   const descMap: Record<string, string> = {
     sonipat: 'AddMads — top digital marketing agency in Sonipat, Haryana. Google Ads, Meta Ads, SEO, branding & web development. 60+ clients, 7+ years. Get a free audit today.',
     ganaur:  'AddMads provides digital marketing services in Ganaur — local SEO, Google Ads, social media, web development. Affordable packages for Ganaur & Sonipat district businesses.',
     delhi:   'Best performance marketing agency for Delhi NCR businesses. AddMads delivers Google Ads with 3–6× ROAS, page 1 SEO, branding, and web development for Delhi companies.',
+    noida:   'Google Ads, Meta Ads, SEO & web development for Noida and Greater Noida businesses. AddMads builds campaigns for high-ticket B2B leads — not junk enquiries. Free audit.',
     panipat: 'Digital marketing agency in Panipat — local SEO, Google Ads, social media & web development. AddMads serves textile, manufacturing & retail businesses in Panipat, Haryana.',
     uk:      'India-based digital marketing agency for UK businesses. AddMads delivers Google Ads, Meta Ads, SEO & web development at UK-quality but significantly lower cost than UK agencies.',
     usa:     'India-based digital marketing agency for US businesses. AddMads delivers Google Ads, SEO, Shopify development & performance marketing for American companies at competitive rates.',
@@ -44,6 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     sonipat: ['digital marketing agency sonipat', 'marketing company sonipat', 'seo services sonipat', 'google ads sonipat', 'web development sonipat', 'best marketing agency haryana'],
     ganaur:  ['digital marketing agency ganaur', 'marketing services ganaur', 'seo ganaur', 'web design ganaur', 'social media marketing ganaur'],
     delhi:   ['digital marketing agency delhi', 'performance marketing agency delhi ncr', 'google ads agency delhi', 'seo services delhi', 'best marketing agency delhi'],
+    noida:   ['digital marketing agency noida', 'google ads agency noida', 'meta ads agency noida', 'seo services noida', 'performance marketing agency greater noida', 'b2b lead generation agency noida', 'website development noida'],
     panipat: ['digital marketing agency panipat', 'marketing services panipat', 'seo panipat', 'google ads panipat', 'web development panipat'],
     uk:      ['digital marketing agency india for uk', 'indian agency uk clients', 'seo agency uk india', 'google ads management uk'],
     usa:     ['digital marketing agency india for us', 'indian agency usa clients', 'seo agency usa india', 'performance marketing us'],
@@ -51,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: titleMap[city] ?? `Digital Marketing Agency in ${loc.name} | AddMads`,
+    title: titleMap[city] ?? `Digital Marketing Agency in ${loc.name}`,
     description: descMap[city] ?? loc.subheadline,
     keywords: kwMap[city] ?? [loc.name.toLowerCase(), 'digital marketing', 'AddMads'],
     openGraph: {

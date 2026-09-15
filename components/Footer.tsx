@@ -23,6 +23,17 @@ const COL_LEGAL = [
   { label: 'Sitemap', href: '/sitemap' },
 ]
 
+const COL_LOCATIONS = [
+  { label: 'Sonipat', href: '/location/sonipat' },
+  { label: 'Ganaur', href: '/location/ganaur' },
+  { label: 'Delhi NCR', href: '/location/delhi' },
+  { label: 'Noida', href: '/location/noida' },
+  { label: 'Panipat', href: '/location/panipat' },
+  { label: 'United Kingdom', href: '/location/uk' },
+  { label: 'United States', href: '/location/usa' },
+  { label: 'Dubai & UAE', href: '/location/uae' },
+]
+
 const SOCIALS = [
   { label: 'Instagram', href: 'https://instagram.com/addmads', svg: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg> },
   { label: 'YouTube', href: 'https://youtube.com/@addmads', svg: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg> },
@@ -228,6 +239,23 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Locations — site-wide internal links so every city page is crawlable */}
+        <nav aria-label="Locations we serve" className="border-t border-white/[0.07] pt-6 mb-6">
+          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/25 mb-4">Locations We Serve</h4>
+          <ul className="list-none flex flex-wrap gap-x-6 gap-y-3 p-0 m-0">
+            {COL_LOCATIONS.map(l => (
+              <li key={l.label}>
+                <Link
+                  href={l.href}
+                  className="text-[0.875rem] text-white/60 hover:text-white transition-colors"
+                >
+                  Digital Marketing in {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         <div className="border-t border-white/[0.07] pt-5 flex flex-wrap items-center justify-between gap-3">
           <span className="text-[0.875rem] text-white/45 font-medium">© {year} AddMads. All rights reserved.</span>

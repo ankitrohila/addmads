@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { pickCaseStudies } from '@/lib/case-studies'
 
 export const metadata: Metadata = {
-  title: 'Thank You | AddMads',
+  title: 'Thank You',
   description: 'Your enquiry has been received. Book a free strategy call with the AddMads team.',
   robots: { index: false, follow: false },
 }
@@ -88,7 +89,14 @@ const RESPONSIVE_CSS = `
 }
 `
 
-export default function ThankYouPage() {
+export default async function ThankYouPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ s?: string }>
+}) {
+  const { s } = await searchParams
+  const studies = pickCaseStudies(s ?? '', 3)
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: RESPONSIVE_CSS }} />
@@ -332,6 +340,67 @@ export default function ThankYouPage() {
       </section>
 
       {/* Social links */}
+      {/* Relevant proof while the enquiry is still warm */}
+      <section style={{ background: '#fff', padding: 'clamp(56px,7vw,88px) 24px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <p className="eyebrow" style={{ marginBottom: 14 }}>Results like yours</p>
+          <h2
+            className="h-display"
+            style={{ fontSize: 'clamp(1.8rem,3.6vw,2.9rem)', lineHeight: 1.12, color: '#111', marginBottom: 12 }}
+          >
+            While you wait, see the proof
+          </h2>
+          <p style={{ color: '#555', fontSize: '1rem', lineHeight: 1.7, maxWidth: '56ch', marginBottom: 34 }}>
+            These are the closest matches to what you just asked us about — real clients, real numbers,
+            and the exact approach that produced them.
+          </p>
+
+          <div
+            style={{
+              display: 'grid',
+              gap: 16,
+              gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
+            }}
+          >
+            {studies.map(c => (
+              <Link
+                key={c.slug}
+                href={`/case-studies#${c.slug}`}
+                style={{
+                  display: 'block',
+                  textDecoration: 'none',
+                  border: '1px solid rgba(0,0,0,0.08)',
+                  borderRadius: 16,
+                  padding: 'clamp(20px,2.4vw,28px)',
+                  background: '#fff',
+                  transition: 'border-color .2s, transform .2s',
+                }}
+                className="hover:!border-black/20"
+              >
+                <div style={{ color: '#888', fontSize: '0.7rem', letterSpacing: '.1em', textTransform: 'uppercase', fontWeight: 600 }}>
+                  {c.industry}
+                </div>
+                <div style={{ color: '#111', fontSize: '1.05rem', fontWeight: 600, marginTop: 8, lineHeight: 1.35 }}>
+                  {c.client}
+                </div>
+                <div style={{ color: '#C82A2A', fontSize: '0.95rem', fontWeight: 600, marginTop: 12, lineHeight: 1.5 }}>
+                  {c.headline}
+                </div>
+                <div style={{ color: '#111', fontSize: '0.85rem', fontWeight: 600, marginTop: 16 }}>
+                  Read the case study →
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 28 }}>
+            <Link href="/case-studies" style={{ color: '#C82A2A', fontWeight: 600, textDecoration: 'none' }}>
+              See all case studies →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section
         style={{
           background: '#0a0a0a',

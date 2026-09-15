@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = BLOG_POSTS.find(p => p.slug === slug)
   if (!post) return {}
   return {
-    title: `${post.title} | AddMads Blog`,
+    title: post.title,
     description: post.excerpt,
     keywords: post.tags.join(', '),
     alternates: {

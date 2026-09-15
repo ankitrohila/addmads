@@ -129,7 +129,9 @@ export default function LeadForm({ compact = false, onSuccess, sourceLabel = 'We
         // Meta Pixel Lead event
         window.fbq?.('track', 'Lead', { content_name: sourceLabel })
       }
-      router.push('/thank-you')
+      // Carry the service (a category, never personal data) so the thank-you
+      // page can surface case studies matching what they asked about.
+      router.push(`/thank-you?s=${encodeURIComponent(form.service)}`)
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
       if (SITEKEY && window.grecaptcha) window.grecaptcha.reset(widgetId.current ?? undefined)

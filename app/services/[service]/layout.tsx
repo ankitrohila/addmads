@@ -7,13 +7,13 @@ export async function generateMetadata({ params }: { params: Promise<{ service: 
 
   if (!service) {
     return {
-      title: 'Service Not Found | AddMads',
+      title: 'Service Not Found',
       description: 'The service page you are looking for does not exist.',
     }
   }
 
   return {
-    title: `${service.title} — Professional Digital Solutions | AddMads`,
+    title: `${service.title} Services`,
     description: service.description,
     keywords: [service.title.toLowerCase(), 'digital services', 'solutions', 'AddMads'],
     openGraph: {

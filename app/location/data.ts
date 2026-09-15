@@ -354,6 +354,55 @@ export const LOCATIONS: Record<string, LocationData> = {
       addressRegion: 'Dubai',
     },
   },
+
+  noida: {
+    name: 'Noida',
+    region: 'Uttar Pradesh',
+    country: 'India',
+    countryCode: 'IN',
+    isInternational: false,
+    headline: 'Digital Marketing Agency in Noida',
+    subheadline: 'Google Ads, Meta Ads, SEO & website development for Noida and Greater Noida businesses — built for high-ticket B2B lead generation.',
+    intro: 'AddMads works with businesses across Noida, Greater Noida and the wider Delhi NCR belt — from commercial interior and fit-out firms in Sector 62 and Sector 63 to manufacturers in the Noida Special Economic Zone, IT services companies, real estate developers, and D2C brands. Noida is one of the most competitive paid-search markets in India: cost per click on commercial B2B terms routinely runs 3–5× the Haryana average, and a poorly structured campaign burns budget on unqualified enquiries. We build Noida campaigns around qualification, not volume — tight intent-matched keyword sets, negative-keyword discipline, project-value qualifying questions on the form, and conversion tracking wired to your CRM from day one, so you can see which keyword produced a ₹1 crore enquiry and which produced a tyre-kicker.',
+    whySection: [
+      {
+        heading: 'High-Ticket B2B Lead Generation',
+        body: 'Most Noida agencies optimise for cost per lead. That is the wrong target when one qualified project is worth more than a hundred enquiries. We structure Google Ads and Meta Ads campaigns around project value — filtering on budget, timeline and decision authority before the lead ever reaches your sales team, so your team spends its hours on the enquiries that can actually close.',
+      },
+      {
+        heading: 'Google Ads Built for Noida CPCs',
+        body: 'Commercial search terms in Noida and Greater Noida are expensive and crowded with national agencies bidding broad. We run precise geotargeting down to sector and industrial-block level, exact and phrase match on buying-intent terms, and aggressive negative-keyword lists that strip out job seekers, students, DIY searches and low-value residential queries before they cost you a click.',
+      },
+      {
+        heading: 'Meta Ads for Considered, High-Value Purchases',
+        body: 'Meta works in Noida when it is used for demand capture and retargeting rather than cold lead forms. We build creative around completed project proof, run Advantage+ campaigns against lookalikes of your best past clients, and retarget site visitors who viewed pricing or case studies — the audience closest to an enquiry.',
+      },
+      {
+        heading: 'Websites That Survive an NCR Sales Cycle',
+        body: 'In Noida, prospects compare four or five vendors before they call. We build fast, credible websites — WordPress, Shopify or Next.js — with the project gallery, specification detail, and case-study depth a procurement team actually reads. Sub-1.5-second load times, mobile-first, and instrumented so every enquiry is attributed to the campaign that produced it.',
+      },
+    ],
+    localFacts: [
+      'Serving Noida, Greater Noida, Greater Noida West (Noida Extension), and the wider Delhi NCR corridor',
+      'Industries served: commercial interiors & fit-out, real estate, manufacturing & NSEZ units, IT & SaaS, healthcare, education, D2C',
+      'Sector-level geotargeting — campaigns can be restricted to Sectors 16, 18, 62, 63, 132, 135 and the Expressway belt',
+      'In-person meetings available across Noida and Delhi NCR; our team is 60 minutes away in Sonipat',
+    ],
+    currency: '₹',
+    heroStats: [
+      { value: '7+', label: 'Years in NCR' },
+      { value: '60+', label: 'Clients Served' },
+      { value: '3–6×', label: 'Client ROAS' },
+      { value: '4.9★', label: 'Client Rating' },
+    ],
+    schema: {
+      addressLocality: 'Noida',
+      addressRegion: 'Uttar Pradesh',
+      postalCode: '201301',
+      latitude: 28.5355,
+      longitude: 77.3910,
+    },
+  },
 }
 
 export const LOCATION_SLUGS = Object.keys(LOCATIONS)

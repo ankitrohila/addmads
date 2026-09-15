@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Services — Comprehensive Digital Solutions | AddMads',
+  title: 'Services — Google Ads, Meta Ads, SEO & Web',
   description: 'Explore our digital services: web development, SEO, digital marketing, graphics design, social media management, and branding. Transform your business today.',
   keywords: ['web development', 'SEO services', 'digital marketing', 'graphics design', 'social media management', 'branding', 'digital services'],
   openGraph: {

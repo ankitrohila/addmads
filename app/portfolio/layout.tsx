@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Portfolio — Our Best Work in Web Design & Branding | AddMads',
+  title: 'Portfolio — Web Design & Branding Work',
   description: 'See our portfolio of successful digital projects. From web design to branding, explore case studies of how we help businesses achieve excellence.',
   keywords: ['portfolio', 'web design', 'case studies', 'branding projects', 'digital work', 'web development'],
   openGraph: {

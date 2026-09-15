@@ -26,7 +26,7 @@ export async function generateMetadata({
     `Professional ${title} services from AddMads. Expert ${parentTitle.toLowerCase()} solutions for businesses in Sonipat, Delhi, Ganaur, Panipat, Haryana and globally. Measurable results, transparent reporting.`
 
   return {
-    title: `${pageTitle} | AddMads`,
+    title: pageTitle,
     description: pageDesc,
     keywords: [
       title.toLowerCase(),

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { pickCaseStudies, caseStudyUrl, CASE_STUDIES_URL } from '@/lib/case-studies'
 
 export const runtime = 'nodejs'
 
@@ -54,12 +55,39 @@ function escapeHtml(v: string): string {
 }
 
 /**
- * Emails the customer a confirmation with the booking link.
+ * Emails the customer a confirmation with the booking link plus the two or
+ * three case studies that match the service they enquired about - prospects
+ * ask for proof before they book, so it ships with the first reply instead of
+ * waiting for a sales call.
  * Never throws - a failed auto-reply must not fail the lead.
  */
-async function sendAutoReply(toEmail: string, toName: string): Promise<void> {
+async function sendAutoReply(toEmail: string, toName: string, service: string): Promise<void> {
   if (!RESEND_API_KEY) return
   const first = escapeHtml((toName.split(/\s+/)[0] || 'there'))
+
+  // utm_* only - never put the lead's own details in a URL.
+  const utm = 'utm_source=email&utm_medium=autoreply&utm_campaign=lead_case_studies'
+  const studies = pickCaseStudies(service, 3)
+  const studyRows = studies.map(c => `
+    <tr><td style="padding:0 0 10px">
+      <a href="${caseStudyUrl(c.slug)}&${utm}" style="display:block;text-decoration:none;border:1px solid #eee;border-radius:10px;padding:14px 16px">
+        <div style="color:#111;font-size:14px;font-weight:600;line-height:1.4">${escapeHtml(c.client)}</div>
+        <div style="color:#888;font-size:11px;letter-spacing:.04em;text-transform:uppercase;margin-top:3px">${escapeHtml(c.industry)}</div>
+        <div style="color:#C82A2A;font-size:13px;font-weight:600;margin-top:7px">${escapeHtml(c.headline)}</div>
+      </a>
+    </td></tr>`).join('')
+
+  const caseStudyBlock = studies.length ? `
+  <tr><td style="padding:4px 32px 0">
+    <div style="border-top:1px solid #eee;padding-top:24px">
+      <div style="color:#111;font-size:15px;font-weight:600;margin-bottom:4px">While you wait &mdash; results like yours</div>
+      <div style="color:#666;font-size:13px;line-height:1.6;margin-bottom:16px">Picked because you asked about ${escapeHtml(service || 'growth')}.</div>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${studyRows}</table>
+      <div style="margin-top:6px">
+        <a href="${CASE_STUDIES_URL}?${utm}" style="color:#C82A2A;font-size:13px;font-weight:600;text-decoration:none">See all case studies &rarr;</a>
+      </div>
+    </div>
+  </td></tr>` : ''
   const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:32px 16px">
 <tr><td align="center">
@@ -75,7 +103,8 @@ async function sendAutoReply(toEmail: string, toName: string): Promise<void> {
   <tr><td align="center" style="padding:0 32px 32px">
     <a href="${BOOKING_URL}" style="display:inline-block;background:#C82A2A;color:#fff;font-size:15px;font-weight:600;padding:15px 34px;border-radius:999px;text-decoration:none">Book your free call</a>
   </td></tr>
-  <tr><td style="padding:0 32px 30px;color:#888;font-size:12px;line-height:1.6;border-top:1px solid #eee;padding-top:20px">
+  ${caseStudyBlock}
+  <tr><td style="padding:24px 32px 30px;color:#888;font-size:12px;line-height:1.6;border-top:1px solid #eee">
     AddMads &middot; Performance marketing that pays for itself<br>
     <a href="https://www.addmads.com" style="color:#C82A2A;text-decoration:none">www.addmads.com</a>
   </td></tr>
@@ -93,7 +122,7 @@ async function sendAutoReply(toEmail: string, toName: string): Promise<void> {
         from: AUTOREPLY_FROM,
         to: [toEmail],
         reply_to: AUTOREPLY_REPLY_TO,
-        subject: 'Thanks for reaching out - book your free strategy call',
+        subject: `Thanks ${toName.split(/\s+/)[0] || 'there'} - your free strategy call + 3 relevant case studies`,
         html,
       }),
     })
@@ -173,7 +202,7 @@ export async function POST(req: NextRequest) {
 
   // Fire the customer auto-reply after Zoho has accepted the lead. Awaited so the
   // Worker is not torn down mid-request, but its failure cannot fail the response.
-  await sendAutoReply(email, name)
+  await sendAutoReply(email, name, service)
 
   return NextResponse.json({ ok: true })
 }

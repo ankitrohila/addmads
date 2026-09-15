@@ -9,7 +9,7 @@ import { BLOG_POSTS } from './data'
 import BlogCard from './BlogCard'
 
 export const metadata: Metadata = {
-  title: 'Blog — Digital Marketing Insights | AddMads',
+  title: 'Blog — Digital Marketing, SEO & Google Ads Insights',
   description: 'Expert insights on performance marketing, SEO, AEO, GEO, branding, UI/UX design, and web development. Stay ahead with AddMads.',
   openGraph: {
     title: 'Blog — Digital Marketing Insights | AddMads',

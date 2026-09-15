@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Contact Us — Get Started With Your Digital Transformation | AddMads',
+  title: 'Contact Us — Free Growth Audit in 24 Hours',
   description: 'Ready to transform your digital presence? Contact AddMads today. We respond within 24 hours with transparent pricing and comprehensive solutions.',
   keywords: ['contact', 'get in touch', 'inquiry', 'project consultation', 'digital solutions', 'web development'],
   openGraph: {

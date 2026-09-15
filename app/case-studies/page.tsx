@@ -8,7 +8,7 @@ import UnifiedForm from '@/components/UnifiedForm'
 import Reveal from '@/components/Reveal'
 
 export const metadata: Metadata = {
-  title: 'Case Studies — Real Results from Real Clients | AddMads',
+  title: 'Case Studies — Real Client Results',
   description: 'Detailed case studies showing how AddMads delivered measurable ROI through performance marketing, SEO, branding, and web development for clients across India and USA.',
   openGraph: {
     title: 'Case Studies — Real Results from Real Clients | AddMads',
