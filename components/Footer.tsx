@@ -242,7 +242,9 @@ export default function Footer() {
 
         {/* Locations — site-wide internal links so every city page is crawlable */}
         <nav aria-label="Locations we serve" className="border-t border-white/[0.07] pt-6 mb-6">
-          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/25 mb-4">Locations We Serve</h4>
+          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/25 mb-4">
+            <Link href="/location" className="text-white/25 hover:text-white/60 transition-colors">Locations We Serve</Link>
+          </h4>
           <ul className="list-none flex flex-wrap gap-x-6 gap-y-3 p-0 m-0">
             {COL_LOCATIONS.map(l => (
               <li key={l.label}>
@@ -254,6 +256,11 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/location" className="text-[0.875rem] font-semibold text-white/80 hover:text-white transition-colors">
+                All locations →
+              </Link>
+            </li>
           </ul>
         </nav>
 

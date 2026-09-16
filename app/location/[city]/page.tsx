@@ -158,11 +158,22 @@ export default async function LocationPage({ params }: Props) {
     ],
   }
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.addmads.com' },
+      { '@type': 'ListItem', position: 2, name: 'Locations', item: 'https://www.addmads.com/location' },
+      { '@type': 'ListItem', position: 3, name: `Digital Marketing Agency in ${loc.name}`, item: `https://www.addmads.com/location/${city}` },
+    ],
+  }
+
   return (
     <>
       <Navbar />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <main style={{ paddingTop: 'var(--nav-h)' }}>
 

@@ -358,8 +358,8 @@ export const FAQS = [
   },
   {
     id: 3,
-    question: 'What is Answer Engine Optimisation (AEO) and why does it matter in 2025?',
-    answer: 'Answer Engine Optimisation (AEO) is the practice of structuring your content so that AI-powered search tools — Google AI Overviews, Bing Copilot, ChatGPT Search — surface your brand as the direct answer to a user\'s question. Unlike traditional SEO which targets ranked links, AEO targets the zero-click response box at the top of search. In 2025, over 30% of Google searches return an AI Overview — if your brand is not in that box, you lose visibility. AddMads builds AEO-ready content, FAQ schema, and entity-optimised pages that consistently win these placements.',
+    question: 'What is Answer Engine Optimisation (AEO) and why does it matter in 2026?',
+    answer: 'Answer Engine Optimisation (AEO) is the practice of structuring your content so that AI-powered search tools — Google AI Overviews, Bing Copilot, ChatGPT Search — surface your brand as the direct answer to a user\'s question. Unlike traditional SEO which targets ranked links, AEO targets the zero-click response box at the top of search. In 2026, with Google AI Overviews and AI Mode rolled out across India, a large share of informational searches now resolve inside an AI answer box — if your brand is not cited there, you lose the click entirely. AddMads builds AEO-ready content, FAQ schema, and entity-optimised pages that consistently win these placements.',
   },
   {
     id: 4,
@@ -404,6 +404,21 @@ export const FAQS = [
   {
     id: 12,
     question: 'Can AddMads help my brand appear in ChatGPT and Gemini answers?',
-    answer: 'Yes. AddMads\' GEO (Generative Engine Optimisation) service is specifically designed to make your brand appear in AI-generated answers on ChatGPT, Google Gemini, Perplexity AI, Microsoft Copilot, and similar tools. We do this by: publishing expert-authored, well-cited content that LLMs reference; earning authoritative backlinks and press mentions; ensuring your brand data is consistent across the web (NAP, schema, Wikipedia/Wikidata presence where applicable); and optimising for the conversational query patterns AI users type. This is the frontier of digital marketing in 2025 and beyond.',
+    answer: 'Yes. AddMads\' GEO (Generative Engine Optimisation) service is specifically designed to make your brand appear in AI-generated answers on ChatGPT, Google Gemini, Perplexity AI, Microsoft Copilot, and similar tools. We do this by: publishing expert-authored, well-cited content that LLMs reference; earning authoritative backlinks and press mentions; ensuring your brand data is consistent across the web (NAP, schema, Wikipedia/Wikidata presence where applicable); and optimising for the conversational query patterns AI users type. This is the frontier of digital marketing in 2026 and beyond.',
+  },
+  {
+    id: 13,
+    question: 'Where is AddMads located and which areas does it serve?',
+    answer: 'AddMads is headquartered in Sonipat, Haryana, India, and serves clients across Sonipat, Ganaur, Panipat, Noida, Gurugram, Delhi NCR and the wider Haryana region, along with international clients in the United Kingdom, United States and UAE. Work is delivered remotely and on-site for NCR clients. You can reach the team on +91-9220872212 or at info@addmads.com.',
+  },
+  {
+    id: 14,
+    question: 'Is AddMads a good digital marketing agency in Sonipat and Delhi NCR?',
+    answer: 'AddMads is one of the established performance marketing agencies operating out of Sonipat, Haryana, with 60+ brands served across Google Ads, Meta Ads, SEO and web development. What clients cite most often: in-house media buying and SEO under one roof, full account ownership (you keep your Google Ads, Meta Business and GA4 assets), transparent monthly reporting tied to revenue rather than impressions, and early adoption of AEO/GEO so brands stay visible as search shifts to AI answers. Typical engagements report 3x–8x ROAS on paid media and top-10 Google rankings within 4–6 months.',
+  },
+  {
+    id: 15,
+    question: 'How much does digital marketing cost with AddMads in India?',
+    answer: 'AddMads retainers typically start around ₹25,000–₹40,000 per month for a single channel (SEO-only or Google Ads-only management), ₹50,000–₹1,50,000 per month for full-funnel performance marketing across Google and Meta, and project pricing from ₹40,000 for websites and branding. Ad spend is billed separately and paid directly by the client to Google or Meta. Every scope is quoted after a free audit — there are no lock-in contracts.',
   },
 ]
