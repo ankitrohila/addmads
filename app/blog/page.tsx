@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import UnifiedForm from '@/components/UnifiedForm'
 import TrendingSidebar from '@/components/TrendingSidebar'
 import { BLOG_POSTS } from './data'
-import BlogCard from './BlogCard'
+import BlogArchive from './BlogArchive'
 
 export const metadata: Metadata = {
   title: 'Blog — Digital Marketing, SEO & Google Ads Insights',
@@ -151,11 +151,7 @@ export default function BlogListingPage() {
               <h2 style={{ fontFamily: 'var(--font-tight)', fontSize: 'clamp(1.5rem,2.5vw,2rem)', fontWeight: 700, color: '#111', marginBottom: 32, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.08)' }}>
                 All Articles
               </h2>
-              <div style={{ display: 'grid', gap: 32, gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))' }}>
-                {rest.map(post => (
-                  <BlogCard key={post.slug} post={post} />
-                ))}
-              </div>
+              <BlogArchive posts={rest} />
             </div>
             <div className="hidden lg:block" style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
               <TrendingSidebar />

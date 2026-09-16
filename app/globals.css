@@ -229,3 +229,49 @@ select.field-input {
   user-select: none;
   pointer-events: none;
 }
+
+/* ─── Blog listing: mobile layout ────────────────
+   The article/sidebar grid carried a `blog-grid` class that no CSS ever
+   defined, so its inline two-column template applied at every width. Below
+   1024px the sidebar is hidden but its 280px track still existed, crushing
+   the article column and pushing the cards out of alignment with the rest of
+   the page. Inline styles outrank class selectors, hence !important. */
+@media (max-width: 1023px) {
+  .blog-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+  }
+}
+
+/* Load more.
+   Every card is rendered into the HTML so crawlers and AI answer engines see
+   the full archive; the overflow is only hidden visually on small screens.
+   That keeps the mobile page short without hiding content from search. */
+.blog-more-btn { display: none; }
+
+@media (max-width: 767px) {
+  .blog-archive[data-collapsed='true'] .blog-archive-grid > *:nth-child(n + 7) {
+    display: none;
+  }
+  .blog-archive[data-collapsed='true'] .blog-more-btn {
+    display: inline-flex;
+  }
+  /* Single column edge to edge, with the page gutter doing the spacing so the
+     cards line up with the hero and the form below them. */
+  .blog-archive-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 20px !important;
+  }
+}
+
+/* Long URLs and unbroken strings in post bodies must not force the whole page
+   to scroll sideways on a phone. */
+@media (max-width: 767px) {
+  article p,
+  article li,
+  article h1,
+  article h2,
+  article h3 {
+    overflow-wrap: break-word;
+  }
+}
