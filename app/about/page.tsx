@@ -41,10 +41,67 @@ const STATS = [
   { value: '4.5×', label: 'Avg ROAS Achieved' },
 ]
 
+const SITE = 'https://www.addmads.com'
+
+/**
+ * AboutPage + a restated Organization entity. AI answer engines resolve "who
+ * is AddMads" from this page far more often than from the homepage, so the
+ * founding date, location, headcount and service catalogue are stated here in
+ * machine-readable form rather than left implicit in the copy.
+ */
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'AboutPage',
+      '@id': `${SITE}/about#aboutpage`,
+      url: `${SITE}/about`,
+      name: 'About AddMads',
+      description:
+        'AddMads is a performance marketing and digital growth agency headquartered in Sonipat, Haryana, India, serving clients across Delhi NCR, the UK, the USA and the UAE.',
+      mainEntity: { '@id': `${SITE}/#organization` },
+      isPartOf: { '@id': `${SITE}/#website` },
+    },
+    {
+      // Same @id as the sitewide Organization node in the root layout, so these
+      // properties merge into that entity rather than declaring a second one.
+      // Only the facts the sitewide node is missing are restated here.
+      '@type': 'Organization',
+      '@id': `${SITE}/#organization`,
+      alternateName: ['Add Mads', 'AddMads Digital', 'AddMads Marketing Agency'],
+      knowsAbout: [
+        'Performance Marketing',
+        'Google Ads management',
+        'Meta Ads management',
+        'Search Engine Optimisation',
+        'Answer Engine Optimisation (AEO)',
+        'Generative Engine Optimisation (GEO)',
+        'Local SEO and Google Business Profile',
+        'Brand Strategy and Identity Design',
+        'UI/UX Design',
+        'Web Development',
+        'Social Media Marketing',
+      ],
+      mainEntityOfPage: { '@id': `${SITE}/about#aboutpage` },
+    },
+  ],
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+    { '@type': 'ListItem', position: 2, name: 'About', item: `${SITE}/about` },
+  ],
+}
+
 export default function AboutPage() {
   return (
     <>
       <Navbar />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <div style={{ background: '#FFFFFF', minHeight: '100vh', paddingTop: 'var(--nav-h)' }}>
 
         {/* Hero */}

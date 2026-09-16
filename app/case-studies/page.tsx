@@ -301,10 +301,60 @@ function formatResult(r: Result) {
   )
 }
 
+const SITE = 'https://www.addmads.com'
+
+/**
+ * Case studies are the page AI answer engines cite most often for AddMads —
+ * the best lead of September 2026 arrived from a ChatGPT referral on this URL.
+ * These graphs let an answer engine name the client, the service, the market
+ * and the measured outcome without having to parse the prose.
+ */
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+    { '@type': 'ListItem', position: 2, name: 'Case Studies', item: `${SITE}/case-studies` },
+  ],
+}
+
+const caseStudyListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'AddMads client case studies',
+  description:
+    'Documented performance marketing, SEO, branding and web development engagements run by AddMads, with the measured outcome of each.',
+  numberOfItems: CASES.length,
+  itemListElement: CASES.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Article',
+      '@id': `${SITE}/case-studies#${c.slug}`,
+      url: `${SITE}/case-studies#${c.slug}`,
+      headline: `${c.client} — ${c.tagline}`,
+      abstract: c.tagline,
+      about: { '@type': 'Thing', name: `${c.service} for ${c.industry}` },
+      articleSection: c.service,
+      locationCreated: { '@type': 'Place', name: c.location },
+      author: { '@type': 'Organization', name: 'AddMads', url: SITE },
+      publisher: { '@type': 'Organization', name: 'AddMads', url: SITE },
+      image: c.img,
+      mentions: c.results.map(r => ({
+        '@type': 'Thing',
+        name: r.label,
+        description: `${r.label}: ${r.value}`,
+      })),
+    },
+  })),
+}
+
 export default function CaseStudiesPage() {
   return (
     <>
       <Navbar />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudyListSchema) }} />
       <main>
         {/* Hero */}
         <section style={{ background: '#111', color: '#fff', paddingTop: 'calc(var(--nav-h) + clamp(64px,10vw,120px))', paddingBottom: 'clamp(64px,8vw,100px)', padding: `calc(var(--nav-h) + clamp(64px,10vw,120px)) var(--container-px) clamp(64px,8vw,100px)` }}>
