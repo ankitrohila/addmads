@@ -5,7 +5,7 @@ import UnifiedForm from '@/components/UnifiedForm'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'About AddMads — Performance Marketing & Digital Growth Agency',
+  title: 'About Us — Performance Marketing & Digital Growth Agency in Sonipat',
   description: 'AddMads is a performance marketing and digital growth agency. We deliver data-driven campaigns, SEO, branding, web development and more — built to maximise your ROI.',
   keywords: ['digital marketing', 'performance marketing', 'SEO', 'digital agency', 'AddMads', 'Google Ads', 'Meta Ads'],
   openGraph: {
