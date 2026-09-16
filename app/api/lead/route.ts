@@ -5,8 +5,11 @@ export const runtime = 'nodejs'
 
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY ?? ''
 const ZOHO_WEB_TO_LEAD_URL = 'https://crm.zoho.in/crm/WebToLeadForm'
-const ZOHO_XNQSJSDP = process.env.ZOHO_XNQSJSDP ?? '4c7905d5759a0daffb3468ae9a3699cdb4a57be9e884a22532d13d9b5cc98998'
-const ZOHO_XMIWTLD = process.env.ZOHO_XMIWTLD ?? '32a1e2d59c171a4b580dd87720a20d10a8b9b3bd70960328052dd2fa712820137fda61d6c2fa85d6cc23b2727a7993c0'
+// Credentials live only as Worker secrets (wrangler secret put / dashboard).
+// Both are confirmed set on the production Worker; there is deliberately no
+// hardcoded fallback, because this repository is public.
+const ZOHO_XNQSJSDP = process.env.ZOHO_XNQSJSDP ?? ''
+const ZOHO_XMIWTLD = process.env.ZOHO_XMIWTLD ?? ''
 
 // Customer auto-reply (Resend). Optional: if RESEND_API_KEY is unset the send is
 // skipped entirely and the lead still succeeds - the auto-reply must never be able
@@ -156,6 +159,15 @@ export async function POST(req: NextRequest) {
   if (!EMAIL_RE.test(email)) return NextResponse.json({ error: 'Please enter a valid email address' }, { status: 400 })
   if (!PHONE_RE.test(phone)) return NextResponse.json({ error: 'Please enter a valid phone number' }, { status: 400 })
   if (!service) return NextResponse.json({ error: 'Please select a service' }, { status: 400 })
+
+  // Fail loudly rather than silently posting an unauthenticated lead to Zoho.
+  if (!ZOHO_XNQSJSDP || !ZOHO_XMIWTLD) {
+    console.error('Zoho Web-to-Lead secrets are not configured on this Worker')
+    return NextResponse.json(
+      { error: 'Could not save your enquiry. Please try again or call us.' },
+      { status: 500 },
+    )
+  }
 
   const captchaOk = await verifyRecaptcha(body.recaptchaToken ?? '')
   if (!captchaOk) {
