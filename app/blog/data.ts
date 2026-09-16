@@ -1655,7 +1655,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'ecommerce-d2c-brand-marketing-india-scale-performance-2025',
     title: 'E-commerce & D2C Brand Marketing in India: How to Scale Profitably in 2026',
-    excerpt: 'India\'s D2C e-commerce market will reach $100 billion by 2025. This guide covers the full-funnel marketing strategy that helps Indian D2C brands scale customer acquisition while maintaining profitable unit economics.',
+    excerpt: 'India\'s D2C e-commerce market is now a $100 billion-plus category. This guide covers the full-funnel marketing strategy that helps Indian D2C brands scale customer acquisition while maintaining profitable unit economics.',
     category: 'Performance Marketing',
     categorySlug: 'performance-marketing',
     date: '2026-01-20',
