@@ -1,0 +1,53 @@
+# Deploy addmads.com to Cloudflare Workers on every push to main.
+#
+# This exists so the site can be updated from anywhere — including a phone —
+# without a laptop. Commit from the GitHub mobile app (or push from any
+# machine) and this workflow builds and deploys automatically.
+#
+# One-time setup, both doable from a phone:
+#   1. Cloudflare dashboard -> My Profile -> API Tokens -> Create Token
+#      -> use the "Edit Cloudflare Workers" template, scoped to the account
+#      that owns addmads.com. Copy the token.
+#   2. GitHub repo -> Settings -> Secrets and variables -> Actions ->
+#      New repository secret. Add:
+#        CLOUDFLARE_API_TOKEN   = the token from step 1
+#        CLOUDFLARE_ACCOUNT_ID  = the account id that owns the worker
+#
+# Worker runtime secrets (ZOHO_XNQSJSDP, ZOHO_XMIWTLD, RESEND_API_KEY,
+# RECAPTCHA_SECRET_KEY) are NOT set here — they live on the Worker itself via
+# `wrangler secret put`, and persist across deploys.
+
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build and deploy
+        run: npx opennextjs-cloudflare build && npx opennextjs-cloudflare deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
