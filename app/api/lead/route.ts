@@ -11,9 +11,10 @@ const ZOHO_WEB_TO_LEAD_URL = 'https://crm.zoho.in/crm/WebToLeadForm'
 const ZOHO_XNQSJSDP = process.env.ZOHO_XNQSJSDP ?? ''
 const ZOHO_XMIWTLD = process.env.ZOHO_XMIWTLD ?? ''
 
-// Customer auto-reply (Resend). Optional: if RESEND_API_KEY is unset the send is
-// skipped entirely and the lead still succeeds - the auto-reply must never be able
-// to fail a submission.
+// Customer auto-reply (Resend). If RESEND_API_KEY is unset the send is skipped and
+// the lead still succeeds - the auto-reply must never be able to fail a submission -
+// but the skip is logged loudly, because a silently missing key means no enquirer
+// ever receives a confirmation and nothing surfaces to say so.
 const RESEND_API_KEY = process.env.RESEND_API_KEY ?? ''
 const AUTOREPLY_FROM = process.env.AUTOREPLY_FROM ?? 'AddMads <hello@addmads.com>'
 const AUTOREPLY_REPLY_TO = process.env.AUTOREPLY_REPLY_TO ?? 'theaddmads@gmail.com'
@@ -65,7 +66,13 @@ function escapeHtml(v: string): string {
  * Never throws - a failed auto-reply must not fail the lead.
  */
 async function sendAutoReply(toEmail: string, toName: string, service: string): Promise<void> {
-  if (!RESEND_API_KEY) return
+  if (!RESEND_API_KEY) {
+    console.error(
+      'RESEND_API_KEY is not set on this Worker - customer auto-reply skipped. ' +
+      'The lead was still captured, but no confirmation email was sent.',
+    )
+    return
+  }
   const first = escapeHtml((toName.split(/\s+/)[0] || 'there'))
 
   // utm_* only - never put the lead's own details in a URL.
