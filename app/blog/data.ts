@@ -21,6 +21,111 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'ai-generated-ads-disclosure-rules-india-google-asci-2026',
+    title: 'AI-Generated Ads in India: The 2026 Disclosure Rules You Have to Follow',
+    excerpt: 'Google began rolling out AI labelling for image and video creatives in July 2026, and ASCI published draft labelling guidelines for synthetically generated advertising in India in May 2026. Here is what each requires, which creative is caught, and how to stay compliant without gutting your ad output.',
+    category: 'Performance Marketing',
+    categorySlug: 'performance-marketing',
+    date: '2026-09-16',
+    readTime: 9,
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop&q=80',
+    tags: ['AI Advertising', 'ASCI', 'Google Ads Policy', 'Compliance', 'Ad Policy', '2026 Updates'],
+    intro: 'Most Indian advertisers are now using generative AI somewhere in their creative pipeline — a generated background, an upscaled product shot, a synthetic voiceover, a virtual presenter. Through 2026 that stopped being a purely creative decision and became a compliance one. Google began rolling out AI labelling for image and video ad creatives in July 2026, driven by regulation in the EU, India and New York. ASCI published draft guidelines for labelling synthetically generated content in advertising in May 2026, aligned to the IT Intermediary Guidelines amendment rules of the same year. Neither is optional reading if you run ads in India. Here is what they actually say, in plain terms.',
+    sections: [
+      {
+        heading: 'What Google Now Requires',
+        body: 'Google\'s July 2026 update covers image and video ad creatives that were generated or modified using AI, across Google Ads, Display & Video 360, Campaign Manager 360, Merchant Center and Ads Editor. Advertisers can either add text or visual labels directly inside the creative, or use the AI label setting that rolled out across Google\'s advertising products through July 2026. Election advertisers have a separate obligation: synthetic or digitally altered content must be disclosed through the campaign settings checkbox under the Political Content policy.',
+        list: [
+          'Applies to image and video creative, not text ads',
+          'Covers creative that was generated OR modified using AI — editing counts, not just generation',
+          'Two compliant routes: label inside the creative, or use the platform AI label setting',
+          'Election advertising carries an additional, separate disclosure through campaign settings',
+        ],
+      },
+      {
+        heading: 'The Catch Most Advertisers Miss',
+        body: 'Google states plainly that using the AI label setting in its advertising products does not by itself guarantee compliance with any specific regulation, and advises advertisers to seek legal guidance and meet their local obligations independently. Read that carefully, because it shifts the risk. Ticking a box in Google Ads is not a compliance programme. If you are advertising in India, your obligation runs to Indian law and the ASCI Code, and Google\'s setting is a tool that helps you meet it — not a substitute for knowing what it requires.',
+      },
+      {
+        heading: 'ASCI\'s Risk-Based Framework for India',
+        body: 'ASCI\'s May 2026 draft takes a more nuanced approach than a blanket "label everything" rule, sorting synthetic content into three tiers. This is genuinely useful, because it means routine retouching does not need a disclaimer while the things that actually mislead consumers are either labelled or banned outright.',
+        list: [
+          'High risk — prohibited outright, labelling does not rescue it: fabricated testimonials, unauthorised deepfakes, and AI-generated authority figures falsely implying expertise (the AI "doctor" endorsing a supplement)',
+          'Medium risk — labelling required: virtual influencers, AI replicas of real individuals, synthetic product demonstrations, realistic AI-created settings, demonstrations of products that do not exist, and AI-generated sponsored recommendations',
+          'Low risk — no labelling required: basic image enhancement, colour correction, noise reduction, decorative backgrounds, and accessibility tooling',
+        ],
+      },
+      {
+        heading: 'How to Label Without Wrecking the Creative',
+        body: 'ASCI\'s draft contemplates labels along the lines of "Audio/Video created using AI" or "Audio/Video enhanced using AI", subject to its disclaimer requirements. The practical craft question is where to put it. Our approach: treat the label as a design element from the first draft rather than something stamped on at the end. Place it where it is legible without competing with the hook — usually bottom-left or bottom-right, outside the safe-area overlays that Reels and Stories impose. Keep it consistent across the campaign so it reads as a standard, not an apology. And never place it where a crop for a different placement will remove it, because an ad that loses its label at 9:16 is an unlabelled ad.',
+      },
+      {
+        heading: 'The Line That Actually Matters: Enhancement vs Fabrication',
+        body: 'Strip away the tiers and one principle runs through both frameworks. Using AI to make a real thing look its best is enhancement. Using AI to create the impression of something that did not happen is fabrication. A cleaned-up photo of a product you actually sell is low risk. A generated video of a customer you invented praising a result you did not produce is prohibited, and no label makes it acceptable. That distinction is worth training into your creative team, because it generalises better than any checklist and it will survive the next revision of the rules.',
+      },
+      {
+        heading: 'A Practical Compliance Routine',
+        body: 'This does not need to be heavy. For clients we run a short, repeatable process rather than a legal review on every asset.',
+        list: [
+          'Tag every creative at production time with how AI was used — generated, modified, or not at all',
+          'Sort each one into the ASCI tiers; anything landing in high risk goes back to the brief, not to legal',
+          'Apply labels at design stage for everything in the medium tier, checked across all aspect ratios',
+          'Set the platform AI label where applicable, treating it as a supplement to the in-creative label rather than a replacement',
+          'Keep a simple register of what was generated and by which tool, so a query months later has an answer',
+          'Re-check the register when ASCI moves the draft to final, since the medium-risk tier is where the boundaries are most likely to shift',
+        ],
+      },
+    ],
+    conclusion: 'The ASCI guidelines were still in draft as of mid-2026 and the final text may move, so treat the tiers as direction rather than settled law and take your own legal advice on anything borderline. But the direction is not in doubt: disclosure of synthetic advertising content is becoming standard across the EU, India and parts of the US simultaneously. Advertisers who build labelling into their creative process now will find the final rules a formality. Advertisers who wait will be retrofitting labels across a live campaign library under time pressure. We are already tagging and tiering creative for every client account we run — if you want a hand auditing yours, get in touch.',
+  },
+  {
+    slug: 'ad-policy-changes-2026-eu-political-ban-dma-ai-labelling',
+    title: 'The 2026 Ad Policy Changes That Can Quietly Break Your Campaigns',
+    excerpt: 'A political and social issue ad ban across the EU, targeting capabilities removed under the DMA, new European location fees, and AI labelling obligations. None of these are algorithm updates — they are rules, and they apply whether or not you noticed.',
+    category: 'Performance Marketing',
+    categorySlug: 'performance-marketing',
+    date: '2026-09-16',
+    readTime: 8,
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
+    tags: ['Ad Policy', 'Compliance', 'Meta Ads', 'Google Ads', 'DMA', 'International Marketing'],
+    intro: 'Marketers track algorithm changes obsessively and policy changes barely at all, which is backwards — an algorithm change costs you performance, a policy change costs you the account. The last eighteen months have produced a cluster of rule changes that hit Indian agencies serving international clients particularly hard, because they apply to where the ad is delivered rather than where the advertiser sits. If you run campaigns into Europe, or you have ever assumed a cause-related ad is just another ad, this is the briefing.',
+    sections: [
+      {
+        heading: 'Political and Social Issue Ads Are Finished in the EU',
+        body: 'On 6 October 2025, Meta stopped delivering political, electoral and social issue advertising in the European Union, in response to the EU\'s Transparency and Targeting of Political Advertising regulation. Google made a comparable move. The decision was specific to the EU — political advertising tools remain available in other markets — and organic content is untouched: politicians and citizens can still post and debate, it is paid amplification that stopped.',
+      },
+      {
+        heading: 'Why This Catches Brands That Are Not Political',
+        body: 'The trap is the phrase "social issue". It is a broader category than most marketers assume, and it has historically covered advertising touching subjects like immigration, civil rights, health policy and the environment. A sustainability campaign, a diversity recruitment push, a public-health-adjacent product, or a brand taking a visible stance on a social cause can all land inside it. If you are running that kind of messaging into EU markets and it is being rejected with no obvious explanation, this policy is the likeliest reason — not a creative quality issue, and not something a support ticket will overturn.',
+      },
+      {
+        heading: 'DMA Removed Targeting You May Still Be Planning Around',
+        body: 'In June 2026, Meta removed certain targeting capabilities in European markets to comply with Digital Markets Act requirements. If your media plan for an EU client was built on audience definitions that no longer exist, the plan needs rebuilding rather than adjusting. This compounds with the broader 2026 direction of travel on Meta — placement exclusions at ad-set level were removed in August 2026, and detailed targeting exclusions went earlier. The workable response is the same one the Generative Recommender demands: stop expressing strategy through targeting settings and start expressing it through creative and conversion signal.',
+      },
+      {
+        heading: 'European Advertising Got More Expensive in July 2026',
+        body: 'From July 2026, Meta began charging location-based fees on top of standard CPMs for European advertising, which raises effective cost per acquisition in EU markets. For an Indian agency quoting EU clients, this is a commercial issue rather than a technical one. Media plans and CPL projections built on 2025 European benchmarks will under-forecast cost. Rebuild the model on current numbers, and be explicit with the client about why the same budget now buys less — arriving at that conversation three months into a retainer is considerably worse than having it during the proposal.',
+      },
+      {
+        heading: 'AI Labelling Is Now a Live Obligation',
+        body: 'Google began rolling out AI labelling for image and video ad creatives through July 2026, driven by regulation in the EU, India and New York, and ASCI published draft labelling guidelines for synthetic advertising content in India in May 2026. Google is explicit that using its AI label setting does not by itself guarantee compliance with any specific regulation. We have written this up in detail separately, but the headline for account managers is simple: know which of your creatives were AI-generated or AI-modified, because you will eventually be asked.',
+      },
+      {
+        heading: 'Build a Policy Review Into the Account Rhythm',
+        body: 'None of this is difficult to manage. It is difficult to manage retroactively. The fix is treating policy as a standing agenda item rather than an incident response.',
+        list: [
+          'Review platform policy changelogs monthly, not when something breaks',
+          'Flag at proposal stage whether a client\'s messaging could fall inside the social issue definition in any target market',
+          'Keep media plans market-specific — assumptions that hold for India do not hold for the EU',
+          'Maintain a record of AI usage in creative production',
+          'Re-forecast EU budgets on current CPMs including location-based fees',
+          'When an ad is rejected, check policy before assuming it is a creative or landing-page problem',
+        ],
+      },
+    ],
+    conclusion: 'The pattern across 2025 and 2026 is regulation arriving faster than platform tooling, and platforms responding by removing capability rather than building compliance features. Expect that to continue: fewer targeting levers, more disclosure obligations, more market-specific divergence. That is genuinely harder to operate in, and it rewards agencies that read the rules over agencies that read the dashboards. If you are running international campaigns and have not audited them against these changes, that audit is worth an afternoon — we are happy to run it with you.',
+  },
+  {
     slug: 'google-ads-ai-max-migration-september-2026-what-changes',
     title: 'Google Ads AI Max Migration: What Changes in September 2026 (And What To Do Now)',
     excerpt: 'Google is migrating campaign-level broad match and automatically created assets to AI Max through September 2026, and new legacy structures can no longer be created. Here is the timeline, what actually changes in your account, and the controls you still have.',

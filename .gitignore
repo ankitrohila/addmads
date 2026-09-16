@@ -52,3 +52,6 @@ Thumbs.db
 
 # opennext build output
 .open-next/
+
+# build artefact - should never have been tracked
+tsconfig.tsbuildinfo
